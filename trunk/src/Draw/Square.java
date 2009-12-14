@@ -3,13 +3,9 @@ package Draw;
 
 public class Square extends Rectangle {
 
-	public Square (int width)
+	public Square (int w)
 	{
-		super(width, width);
-	}
-	public Square (int x, int y, int width)
-	{
-		super(x, y, width, width);
+		super(w, w);
 	}
         public void setSide (int s) {
             setWidth(s);

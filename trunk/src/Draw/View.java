@@ -22,6 +22,14 @@ public class View {
 		fillColor = fillC;
 		fillPattern = fillP;
 	}
+        /* Constructeur de copie (copie profonde) */
+        public View (View v)
+        {
+		setLineColor(v.getLineColor());
+		setLineWidth(new Float(v.getLineWidth()));
+		fillColor = v.getFillColor();
+		fillPattern = v.getFillPattern();
+	}
 	
 	public void setLineColor(Color lineColor) {
 		this.lineColor = lineColor;

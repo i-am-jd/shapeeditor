@@ -2,6 +2,6 @@ package Draw;
 
 
 
-public class Polygon extends Geometry {
+public abstract class Polygon extends Geometry {
 
 }

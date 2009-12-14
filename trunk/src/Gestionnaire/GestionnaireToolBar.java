@@ -45,19 +45,13 @@ public class GestionnaireToolBar implements ActionListener
                     g.getOptionZone().changeShapeList(1);
                     return;
                 case DRAW_TRIANGLE: // effacement de la derni�re ligne trac�e
-                    JOptionPane.showMessageDialog(null, "TRIANGLE",
-                            "TRIANGLE", JOptionPane.INFORMATION_MESSAGE);
-                    //optionZone.changeShapeList(2);
+                    g.getOptionZone().changeShapeList(2);
                     return;
                 case DRAW_STAR: // boite de dialogue "� propos"
-                    JOptionPane.showMessageDialog(null, "STAR",
-                            "STAR", JOptionPane.INFORMATION_MESSAGE);
-                    //g.getOptionZone().changeShapeList(3);
+                    g.getOptionZone().changeShapeList(3);
                     return;
                 case DRAW_POLYGON: // effacement de la derni�re ligne trac�e
-                    JOptionPane.showMessageDialog(null, "POLYGON",
-                            "POLYGON", JOptionPane.INFORMATION_MESSAGE);
-                    //g.getOptionZone().changeShapeList(4);
+                    g.getOptionZone().changeShapeList(4);
                     return;
             } throw new AssertionError("ActionToPerform::unknown assertion : " + this);
         }

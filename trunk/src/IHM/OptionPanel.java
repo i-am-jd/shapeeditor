@@ -8,21 +8,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  * La barre d'infos situee en bas de la fenetre pour afficher
  * differentes informations
  * @author Boris Dadachev
  */
-public class OptionPanel extends JPanel
-{
+public class OptionPanel extends JPanel {
 
     /** Le premier label */
     private JComboBox shapeList;
@@ -34,6 +36,7 @@ public class OptionPanel extends JPanel
     private JLabeledComboBox fillPatternList;
     /** Le second label */
     private JLabel info2;
+    private JTextField textField;
     private DrawPanel drawZone;
 
     /**
@@ -43,55 +46,92 @@ public class OptionPanel extends JPanel
         super();
 
         this.drawZone = drawZone;
+
         /* Mise en place de la combobox pour la couleur de ligne */
-        Color[] colors = { Color.black, Color.blue, Color.cyan, Color.green, Color.yellow,
-		        Color.orange, Color.red, Color.magenta };
-	String libelleColors[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
-		        "Red", "Magenta" };
+        Color[] colors = {Color.black, Color.blue, Color.cyan, Color.green, Color.yellow,
+            Color.orange, Color.red, Color.magenta};
+        String libelleColors[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
+            "Red", "Magenta"};
         lineColorList = new JLabeledComboBox("Line Colors", libelleColors, 0,
-                new GestionnaireColors(colors));
+                new GestionnaireColors(drawZone.getSceneGraph(), colors, 0));
 
         /* Mise en place de la combobox pour l'epaisseur de ligne */
-	float[] widths = { 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f };
-	String[] libelleEpaisseurs = new String[10];
-	DecimalFormat numberFormat = new DecimalFormat("00");
-	for (int i = 0; i < widths.length; i++)
-	{
-		libelleEpaisseurs[i] = numberFormat.format(widths[i]);
-	}
-        lineWidthList = new JLabeledComboBox("Width", libelleEpaisseurs, 0, new
-                GestionnaireWidth(widths));
+        float[] widths = {1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f};
+        String[] libelleEpaisseurs = new String[10];
+        DecimalFormat numberFormat = new DecimalFormat("00");
+        for (int i = 0; i < widths.length; i++) {
+            libelleEpaisseurs[i] = numberFormat.format(widths[i]);
+        }
+        lineWidthList = new JLabeledComboBox("Width", libelleEpaisseurs, 0, new GestionnaireWidth(drawZone.getSceneGraph(), widths));
 
         /* Mise en place de la combobox pour la couleur de ligne */
-        Color[] fill = { Color.black, Color.blue, Color.cyan, Color.green,
-            Color.yellow, Color.orange, Color.red, Color.magenta };
-	String libelleFill[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
-		        "Red", "Magenta" };
+        Color[] fill = {Color.black, Color.blue, Color.cyan, Color.green,
+            Color.yellow, Color.orange, Color.red, Color.magenta};
+        String libelleFill[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
+            "Red", "Magenta", "Pattern1", "Pattern2", "Pattern3"};
         fillPatternList = new JLabeledComboBox("Fill Patterns", libelleFill, 0,
-                new GestionnaireColors(fill));
+                new GestionnaireColors(drawZone.getSceneGraph(), fill, 1));
+
+        this.textField = new JTextField();
+        KeyAdapter kAdapter = new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent event) {
+                if (!isNumeric(event.getKeyChar()) || textField.getText().length() > 2) {
+                    //a modifier : enleve toutes les occurences d'un meme caractere
+                    textField.setText(textField.getText().replace(String.valueOf(event.getKeyChar()), ""));
+                }
+                if (textField.getText().equals("")) {
+                    getDrawZone().setNbSides(0);
+                } else {
+                    getDrawZone().setNbSides(Integer.parseInt(textField.getText()));
+                }
+            }
+
+            private boolean isNumeric(char carac) {
+                try {
+                    int i = Integer.parseInt(String.valueOf(carac));
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+                return true;
+            }
+        };
+        this.textField.addKeyListener(kAdapter);
+        this.textField.setColumns(2);
+        //this.textField.setPreferredSize(new Dimension(50, 20));
 
         shapeList = new JComboBox();
         //shapeList.setPreferredSize(new Dimension(100,20));
-        shapeList.addItem("Rectangle");
-        shapeList.addItem("Square");
         shapeList.addActionListener(new ActionListener() {
+
+            @Override
             public void actionPerformed(ActionEvent arg0) {
-                //System.out.println(shapeList.getSelectedItem());
-                getDrawZone().setCurrentShapeType((String)shapeList.getSelectedItem());
+                getDrawZone().setCurrentShapeType((String) shapeList.getSelectedItem());
+                if (shapeList.getSelectedItem() != null) {
+                    if (((String) shapeList.getSelectedItem()).equals(new String("Regular Polygon")) ||
+                            //((String) shapeList.getSelectedItem()).equals(new String("Irregular Polygon")) ||
+                            ((String) shapeList.getSelectedItem()).equals(new String("Other Star"))) {
+                        textField.setEnabled(true);
+                    } else {
+                        textField.setEnabled(false);
+                    }
+                }
             }
         });
+        changeShapeList(0);
 
-        this.setLayout(new GridLayout(1, 5));
+        this.setLayout(new GridLayout(1, 6));
         this.add(shapeList);
-        this.add(info2 = new JLabel("Essai"));
+        this.add(info2 = new JLabel("Number of sides : "));
+        this.add(textField);
         this.add(lineColorList);
         this.add(lineWidthList);
         this.add(fillPatternList);
         this.setBorder(BorderFactory.createEtchedBorder());
     }
 
-    public void changeShapeList(int id)
-    {
+    public void changeShapeList(int id) {
         shapeList.removeAllItems();
         switch (id) {
             case 0:
@@ -103,10 +143,18 @@ public class OptionPanel extends JPanel
                 shapeList.addItem("Ellipse");
                 return;
             case 2:
+                shapeList.addItem("Equilateral Triangle");
+                shapeList.addItem("Isosceles Triangle");
+                shapeList.addItem("Right-angled Triangle");
                 return;
             case 3:
+                shapeList.addItem("Five-pointed Star");
+                shapeList.addItem("Six-pointed Star");
+                shapeList.addItem("Other Star");
                 return;
             case 4:
+                shapeList.addItem("Regular Polygon");
+                shapeList.addItem("Irregular Polygon");
                 return;
         }
     }

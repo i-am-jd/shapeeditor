@@ -2,6 +2,7 @@ package IHM;
 
 import Draw.*;
 
+import java.awt.BasicStroke;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,23 +12,32 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class DrawPanel extends JPanel 
-        implements MouseListener, MouseMotionListener
-{
+public class DrawPanel extends JPanel
+        implements MouseListener, MouseMotionListener {
 
-    private float x = 100;
-    private float y = 100;
+    private int x;
+    private int y;
+    private int[] origin = new int[2];
     private Shape shape = null;
     private InfoBar infoBar;
     //private TreePanel treeZone;
     private SceneGraph sceneGraph;
     private String currentShapeType;
-    
+    private int nbSides;
+    private ArrayList<int[]> polygon;
+
     public DrawPanel(InfoBar infoBar, SceneGraph sceneGraph) {
         super();
+
+        //this.setMaximumSize(new Dimension(JWIDTH, JHEIGHT));
+        //this.setAutoscrolls(true);
+        this.nbSides = 0;
+        this.polygon = new ArrayList();
 
         this.infoBar = infoBar;
         this.sceneGraph = sceneGraph;
@@ -35,12 +45,16 @@ public class DrawPanel extends JPanel
         this.currentShapeType = "Rectangle";
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 
+        this.origin[0] = this.getWidth() / 2;
+        this.origin[1] = this.getHeight() / 2;
+
         addMouseListener(this);
-	addMouseMotionListener(this);
+        addMouseMotionListener(this);
         //this.setLayout(new BorderLayout());
         //this.add(new JScrollPane()); //, BorderLayout.CENTER);
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         // caract�ristiques graphiques : mise en place de l'antialiasing
         Graphics2D g2d = (Graphics2D) g;
@@ -53,41 +67,47 @@ public class DrawPanel extends JPanel
         g2d.clearRect(0, 0, d.width, d.height);
 
         for (Enumeration en = sceneGraph.children(); en.hasMoreElements();) {
-            ((Shape)en.nextElement()).drawShape(g2d);
+            ((Shape) en.nextElement()).drawShape(g2d);
         }
 
         if (shape != null) {
             shape.drawShape(g2d);
         }
-        /*int x1 = this.getWidth()/4;
-        int y1 = this.getHeight()/4;   
-        g.drawOval(x1, y1, this.getWidth()/2, this.getHeight()/2);*/
+        if (polygon.isEmpty() == false) {
+            View currentView = Window.sceneGraph.getView();
+            g2d.setStroke(new BasicStroke(currentView.getLineWidth()));
+            g2d.setColor(currentView.getLineColor());
+            int size = polygon.size();
+            if (size >= 2) {
+                for (int i = 0; i < size - 1; i++) {
+                    int[] init, end;
+                    init = polygon.get(i);
+                    end = polygon.get(i + 1);
+                    g2d.drawLine(init[0], init[1], end[0], end[1]);
+                }
+            }
+            g2d.drawLine(polygon.get(size - 1)[0], polygon.get(size - 1)[1], this.x, this.y);
+        }
+    }
 
-        /*Circle c = new Circle(100);
-        g2d.draw(new Ellipse2D.Double((int)c.getX(), (int)c.getY(), (int)c.getRadius(), (int)c.getRadius()));
-        
-        View v = new View(Color.YELLOW, 10, Color.BLUE, null);
-        Triangle t = new Triangle(new int[]{10,10,110}, new int[]{10,110,110});
-        g2d.setColor(v.getFillColor());
-        g.fillPolygon(t.getX(), t.getY(), 3);
-        BasicStroke st = new BasicStroke(v.getLineWidth());
-        g2d.setStroke(st);
-        g2d.setColor(v.getLineColor());
-        g.drawPolygon(t.getX(), t.getY(), 3);*/
+    public void calculateOrigin() {
+        this.origin[0] = this.getWidth() / 2;
+        this.origin[1] = this.getHeight() / 2;
 
-        /*Geometry ge1 = new Rectangle(100, 100, 100, 100);
-        View v = new View(Color.YELLOW, 10, Color.BLUE, null);
-        Shape rect = new Shape(v, ge1);
-        rect.drawShape(g2d);
+        repaint();
+    }
 
-        Geometry ge2 = new Circle(400, 400, 50);
-        Shape circ = new Shape(v, ge2);
-        circ.drawShape(g2d);*/
-        
-        /*Rectangle r = new Rectangle(10,10,10,10);
-        g.fillRect(r.getX(), r.getY(), r.getHeight(), r.getWidth());
-        Square s =  new Square(500);
-        g.fillRect(s.getX(), s.getY(), s.getHeight(), s.getWidth());*/
+    public int[] getOrigin() {
+        int[] tab = {this.origin[0], this.origin[1]};
+        return tab;
+    }
+
+    public SceneGraph getSceneGraph() {
+        return (this.sceneGraph);
+    }
+
+    public void setNbSides(int nb) {
+        this.nbSides = nb;
     }
 
     @Override
@@ -97,127 +117,119 @@ public class DrawPanel extends JPanel
 
     @Override
     public void mousePressed(MouseEvent e) {
-        this.x = e.getX();
-        this.y = e.getY();
-        if (currentShapeType.equals("Square")) {
-            shape = new Shape(sceneGraph.getView(), new Square((int)x, (int)y, 0));
+        View currentView = Window.sceneGraph.getView();
+        /* Verification de la correction du nombre de cotes voulu (si necessaire) */
+        if (currentShapeType.equals("Regular Polygon") || currentShapeType.equals("Other Star")) {
+            if (this.nbSides < 3) {
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, "Please enter a valid number of sides in the appropriate text field.",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+        }
+        if (currentShapeType.equals("Irregular Polygon")) {
+            if (polygon.isEmpty() == false) {
+                int[] head = polygon.get(0);
+                if (Math.abs(head[0] - e.getX()) < 8 && Math.abs(head[1] - e.getY()) < 8) {
+                    int[][] tab = new int[2][polygon.size()];
+                    for (int i = 0; i < polygon.size(); i++) {
+                        tab[0][i] = polygon.get(i)[0];
+                        tab[1][i] = polygon.get(i)[1];
+                    }
+                    polygon.clear();
+                    shape = new Shape(new View(currentView), new IrregularPolygon(tab));
+                    shape.insertShape(sceneGraph);
+                    shape = null;
+                    //verifier que l'on finit le polygone avant de faire autre chose
+                } else {
+                    polygon.add(new int[]{e.getX(), e.getY()});
+                }
+            } else {
+                polygon.add(new int[]{e.getX(), e.getY()});
+            }
+        } else if (currentShapeType.equals("Square")) {
+            shape = new Shape(new View(currentView),
+                    new Square(Math.abs(e.getY() - origin[1])));
         } else if (currentShapeType.equals("Rectangle")) {
-            shape = new Shape(sceneGraph.getView(), new Rectangle((int)x, (int)y, 0, 0));
-                //(int)x-e.getX(), (int)y-e.getY()));
+            shape = new Shape(new View(currentView),
+                    new Rectangle(Math.abs(e.getX() - origin[0]), Math.abs(e.getY() - origin[1])));
+        } else if (currentShapeType.equals("Equilateral Triangle")) {
+            shape = new Shape(new View(currentView),
+                    new RegularPolygon((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), 3));
+        } else if (currentShapeType.equals("Isoscele Triangle")) {
+        } else if (currentShapeType.equals("Right-angled Triangle")) {
+        } else if (currentShapeType.equals("Five-pointed Star")) {
+            shape = new Shape(new View(currentView),
+                    new Star((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), 5));
+        } else if (currentShapeType.equals("Six-pointed Star")) {
+            shape = new Shape(new View(currentView),
+                    new Star((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), 6));
+        } else if (currentShapeType.equals("Other Star")) {
+            shape = new Shape(new View(currentView),
+                    new Star((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), nbSides));
         } else if (currentShapeType.equals("Circle")) {
-            shape = new Shape(sceneGraph.getView(), new Circle((int)x, (int)y, 0));
+            shape = new Shape(new View(currentView),
+                    new Circle((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2))));
         } else if (currentShapeType.equals("Ellipse")) {
-            shape = new Shape(sceneGraph.getView(), new Ellipse((int)x, (int)y, 0, 0));
+            shape = new Shape(new View(currentView),
+                    new Ellipse(Math.abs(e.getX() - origin[0]), Math.abs(e.getY() - origin[1])));
+        } else if (currentShapeType.equals("Regular Polygon")) {
+            shape = new Shape(new View(currentView),
+                    new RegularPolygon((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), nbSides));
+        } else if (currentShapeType.equals("Irregular Polygon")) {
         }
         infoBar.printMessage("Release to draw the shape");
-        System.out.println("mousePressed");
-        /* x += 10;
-        y += 10;
-        Geometry ge = new Rectangle((int)x, (int)y, 100, 100);
-        View v = new View(Color.YELLOW, 3, Color.BLUE, null);
-        new Shape(v, ge).insertShape(sceneGraph);
-        repaint();*/
-        //treeZone.reloadJTree();
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        shape.insertShape(sceneGraph); // stockage de la droite
-        // lib�ration de la droite temporaire
+        if (shape != null) {
+            shape.insertShape(sceneGraph);
+            shape = null;
+            repaint();
+        } // stockage de la droite
+        // liberation de la droite temporaire
         // destruction de sa r�f�rence sachant qu'elle est
-        // sauvegard�e dans la classe dessin
-        shape = null;
+        // sauvegardee dans la classe dessin
 
-        repaint();
-
-        infoBar.printMessage("Cliquez pour initier une figure");
+        infoBar.printMessage("Click to initiate a shape.");
     }
 
     @Override
-    public void mouseEntered(MouseEvent e)
-    {
+    public void mouseEntered(MouseEvent e) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e)
-    {
+    public void mouseExited(MouseEvent e) {
         infoBar.printDefaultCoordinates();
     }
 
     @Override
-    public void mouseDragged(MouseEvent e)
-    {
+    public void mouseDragged(MouseEvent e) {
         int x = e.getX();
-	int y = e.getY();
+        int y = e.getY();
 
         // affichage des coordonn�es
         infoBar.printCoordinates(x, y);
 
-        // d�placement de l'extr�mit� de la droite
+        if (shape == null) {
+            return;
+        }
+        // deplacement de l'extr�mit� de la droite
         if (shape.getGeometry() instanceof Square) {
             Square s = (Square) shape.getGeometry();
-            if (x-this.x>0 && y-this.y>0) {
-                s.setX((int)this.x);
-                s.setY((int)this.y);
-                s.setSide(y-(int)this.y);
-            } else if (x-this.x>0) {
-                s.setX((int)this.x);
-                s.setY(y);
-                s.setSide((int)this.y-y);
-            } else if (y-this.y>0) {
-                s.setX(x);
-                s.setY((int)this.y);
-                s.setSide(y-(int)this.y);
-                //System.out.println(s.getX()+" "+s.getY()+" "+s.getSide());
-             } else {
-                s.setX(x);
-                s.setY(y);
-                s.setSide((int)this.y-y);
-            }
+            s.setSide(Math.abs(y - origin[1]));
         } else if (shape.getGeometry() instanceof Rectangle) {
             Rectangle r = (Rectangle) shape.getGeometry();
-            if (x-this.x>0 && y-this.y>0) {
-                r.setX((int)this.x);
-                r.setY((int)this.y);
-                r.setHeight(y-(int)this.y);
-                r.setWidth(x-(int)this.x);
-            } else if (x-this.x>0) {
-                r.setX((int)this.x);
-                r.setY(y);
-                r.setHeight(y-(int)this.y);
-                r.setWidth((int)this.x-x);
-            } else if (y-this.y>0) {
-                r.setX(x);
-                r.setY((int)this.y);
-                r.setHeight((int)this.y-y);
-                r.setWidth(x-(int)this.x);
-            } else {
-                r.setX(x);
-                r.setY(y);
-                r.setHeight((int)this.y-y);
-                r.setWidth((int)this.x-x);
-            }
+            r.setWidth(Math.abs(x - origin[0]));
+            r.setHeight(Math.abs(y - origin[1]));
         } else if (shape.getGeometry() instanceof Circle) {
             Circle r = (Circle) shape.getGeometry();
-            r.setX((int)this.x);
-            r.setY((int)this.y);
-            r.setRadius((int)Math.sqrt(Math.pow(x-this.x,2)+Math.pow(y-this.y,2)));
+            r.setRadius((int) Math.sqrt(Math.pow(x - origin[0], 2) + Math.pow(y - origin[1], 2)));
         } else if (shape.getGeometry() instanceof Ellipse) {
             Ellipse el = (Ellipse) shape.getGeometry();
-            if (x-this.x>0 && y-this.y>0) {
-                el.setSemiMajorAxis(x-(int)this.x);
-                el.setSemiMinorAxis(y-(int)this.y);
-            } else if (x-this.x>0) {
-                el.setSemiMajorAxis(x-(int)this.x);
-                el.setSemiMinorAxis((int)this.y-y);
-            } else if (y-this.y>0) {
-                el.setSemiMajorAxis((int)this.x-x);
-                el.setSemiMinorAxis(y-(int)this.y);
-            } else {
-                el.setSemiMajorAxis((int)this.x-x);
-                el.setSemiMinorAxis((int)this.y-y);
-            }
+            el.setSemiMajorAxis(Math.abs(x - origin[0]));
+            el.setSemiMinorAxis(Math.abs(y - origin[1]));
         }
 
         // dessin du graphe de scene et de la forme en construction
@@ -225,9 +237,11 @@ public class DrawPanel extends JPanel
     }
 
     @Override
-    public void mouseMoved(MouseEvent e)
-    {
+    public void mouseMoved(MouseEvent e) {
+        this.x = e.getX();
+        this.y = e.getY();
         infoBar.printCoordinates(e.getX(), e.getY());
+        repaint();
     }
 
     public void setCurrentShapeType(String s) {

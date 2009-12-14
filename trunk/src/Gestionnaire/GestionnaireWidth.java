@@ -1,11 +1,11 @@
 package gestionnaire;
 
+import Draw.SceneGraph;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.JComboBox;
 
-import IHM.DrawPanel;
+
 
 /**
  * Gestionnaire d'action pour changer la couleur de dessin
@@ -15,20 +15,20 @@ public class GestionnaireWidth implements ItemListener
 {
 
 	/** La liste des couleurs */
-	private float[] width;
+	private float[] widths;
 	/** La zone de dessin concenrn�e par le changement de couleurs */
-	private DrawPanel drawZone;
+	private SceneGraph sceneGraph;
 
 	/**
 	 * Constructeur du gestionnaire de couleurs
 	 * @param colors la liste des couleurs
 	 * @param zone la zone de dessin
 	 */
-	public GestionnaireWidth(float[] width)
+	public GestionnaireWidth(SceneGraph sceneGraph, float[] widths)
 	{
-		this.width = width;
-		//this.drawZone = drawZone;
-		//drawZone.changeCouleur(this.colors[0]);
+		this.widths = widths;
+		this.sceneGraph = sceneGraph;
+		sceneGraph.getView().setLineWidth(this.widths[0]);
 	}
 
 	/**
@@ -40,8 +40,8 @@ public class GestionnaireWidth implements ItemListener
 	@Override
 	public void itemStateChanged(ItemEvent e)
 	{
-		JComboBox liste = (JComboBox) e.getSource();
-		//drawZone.changeCouleur(colors[liste.getSelectedIndex()]);
+            JComboBox liste = (JComboBox) e.getSource();
+            sceneGraph.getView().setLineWidth(widths[liste.getSelectedIndex()]);
 	}
 }
 
