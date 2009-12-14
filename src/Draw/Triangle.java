@@ -1,11 +1,11 @@
 package Draw;
 
 
-public class Triangle extends Polygon {
+public abstract class Triangle extends Polygon {
 	
-	/* Coordonnees x des sommets du triangle */
+	/* Coordonnees x des sommets du triangle /
 	private int[] x = new int[3];
-	/* Coordonnees y des sommets du triangle */
+	/ Coordonnees y des sommets du triangle /
 	private int[] y = new int[3];
 	
 	public Triangle (int[] x, int[] y)
@@ -28,6 +28,6 @@ public class Triangle extends Polygon {
 	}
 	public int[] getY() {
 		return y;
-	}
+	}*/
 	
 }

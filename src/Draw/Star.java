@@ -1,31 +1,42 @@
 package Draw;
 
+import java.awt.Graphics2D;
 
-public class Star extends Polygon {
-	/* Coordonnees x des sommets du triangle */
-	private int[] x = new int[10];
-	/* Coordonnees y des sommets du triangle */
-	private int[] y = new int[10];
-	
-	public Star(int[] x, int[] y)
-	{
-		for(int i=0; i<10; i++) {
-			this.x[i] = x[i];
-			this.y[i] = y[i];
-		}
-	}
 
-	public void setX(int[] x) {
-		this.x = x;
-	}
-	public int[] getX() {
-		return x;
-	}
+public class Star extends RegularPolygon {
 
-	public void setY(int[] y) {
-		this.y = y;
-	}
-	public int[] getY() {
-		return y;
-	}
+    public Star (int rad, int nbSides)
+    {
+        super(rad, 2*nbSides);
+    }
+
+    public int[][] calculateCoordinates ()
+    {
+        int[][] tab = new int[2][nbSides];
+        int[] origin = {894/2, 613/2};
+        int r = this.getRadius();
+        double angle = Math.PI/2;
+        for (int i=0; i<this.nbSides; i++) {
+            if (i%2==0) {
+                tab[0][i] = origin[0] - (int)((double)r*Math.cos(angle));
+                tab[1][i] = origin[1] - (int)((double)r*Math.sin(angle));
+            } else {
+                tab[0][i] = origin[0] - (int)((double)2*r/6*Math.cos(angle));
+                tab[1][i] = origin[1] - (int)((double)2*r/6*Math.sin(angle));
+            }
+            angle += 2*Math.PI/(this.nbSides);
+        }
+        return tab;
+    }
+
+     public void fillGeometry(Graphics2D g2d)
+     {
+         int[][] tab = this.calculateCoordinates();
+        g2d.fillPolygon(tab[0], tab[1], nbSides);
+     }
+    public void drawGeometry(Graphics2D g2d)
+    {
+        int[][] tab = this.calculateCoordinates();
+        g2d.drawPolygon(tab[0], tab[1], nbSides);
+    }
 }

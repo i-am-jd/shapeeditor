@@ -1,5 +1,6 @@
 package Draw;
 
+import java.awt.Color;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
@@ -18,7 +19,7 @@ public class SceneGraph extends DefaultMutableTreeNode {
 	public SceneGraph(String name)
 	{
             super(name);
-            view = null;
+            view = new View(Color.BLACK, 1, Color.BLACK, null);
 	}
 	
 	/**

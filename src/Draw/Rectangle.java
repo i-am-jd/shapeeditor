@@ -1,44 +1,19 @@
 package Draw;
 
+import java.awt.Graphics2D;
 
-public class Rectangle extends Polygon {
-	/* Coordonnee x du rectangle */
-	protected int x;
-	/* Coordonnee y du rectangle */
-	protected int y;
-	/* Hauteur du rectangle */
+
+public class Rectangle extends Polygon
+{
+	/* Demi-hauteur du rectangle */
 	protected int height;
-	/* Longueur du rectangle */
+	/* Demi-longueur du rectangle */
 	protected int width;
 	
 	public Rectangle(int width, int height)
 	{
-		this.setX(0);
-		this.setY(0);
 		this.setHeight(height);
 		this.setWidth(width);
-	}
-	public Rectangle(int x, int y, int width, int height)
-	{
-		this.setX(x);
-		this.setY(y);
-		this.setHeight(height);
-		this.setWidth(width);
-	}
-	
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getX() {
-		return x;
-	}
-	
-	public void setY(int y) {
-		this.y = y;
-	}
-	
-	public int getY() {
-		return y;
 	}
 	
 	public void setHeight(int height) {
@@ -55,5 +30,12 @@ public class Rectangle extends Polygon {
 		return width;
 	}
 	
-	
+	public void fillGeometry(Graphics2D g2d)
+     {
+         g2d.fillRect(894/2-getWidth(), 613/2-getHeight(), getWidth()*2, getHeight()*2);
+     }
+    public void drawGeometry(Graphics2D g2d)
+    {
+        g2d.drawRect(894/2-getWidth(), 613/2-getHeight(), getWidth()*2, getHeight()*2);
+    }
 }

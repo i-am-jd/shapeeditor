@@ -8,6 +8,8 @@ import javax.swing.JSplitPane;
 import Draw.SceneGraph;
 import Draw.View;
 import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * @author Boris Dadachev & Jean-Denis Koeck
@@ -28,7 +30,8 @@ public class Window extends JFrame {
     private JSplitPane split;
     private InfoBar infoBar;
     private OptionPanel optionZone;
-    private SceneGraph sceneGraph;
+    /** Le graphe de scene : variable globale */
+    public static SceneGraph sceneGraph;
     //private Shape shape;
 
     public Window() {
@@ -36,8 +39,7 @@ public class Window extends JFrame {
         super();
 
         /* */
-        sceneGraph = new SceneGraph(new View(Color.BLACK, 1, Color.YELLOW, null),
-                "Scene Graph");
+        sceneGraph = new SceneGraph("Scene Graph");
 
         /* Proprietes generales de la fenetre */
         /* Titre de la fenetre */
@@ -71,5 +73,12 @@ public class Window extends JFrame {
 
         /* Affiche la fenetre a l'ecran */
         this.setVisible(true);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                drawZone.calculateOrigin();
+            }
+        });
     }
 }

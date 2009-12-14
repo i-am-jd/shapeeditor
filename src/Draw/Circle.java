@@ -3,9 +3,9 @@ package Draw;
 
 public class Circle extends Ellipse {
 	
-	public Circle (int xC, int yC, int rad)
+	public Circle (int rad)
 	{
-		super(xC, yC, rad, rad);
+		super(rad, rad);
 	}
 
 	public int getRadius()
