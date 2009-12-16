@@ -43,7 +43,15 @@ public class Shape extends SceneGraph
 
     public void drawShape(Graphics2D g2d)
     {
-        g2d.setColor(view.getFillColor());
+        if (view.getFillPattern()==null) {
+            g2d.setPaint(view.getFillColor());
+        } else { // view.getFillPattern() != null
+            g2d.setPaint(view.getFillPattern());
+        }
+        //g2d.scale(0.5, 0.5);
+        //g2d.rotate(Math.PI/4);
+        //g2d.shear(0.5, 0.5);
+        //g2d.translate(100.5, 100.5);
         this.geometry.fillGeometry(g2d);
         g2d.setStroke(new BasicStroke(view.getLineWidth()));
         g2d.setColor(view.getLineColor());

@@ -1,8 +1,8 @@
 package gestionnaire;
 
-import Draw.SceneGraph;
 import IHM.Window;
 import java.awt.Color;
+import java.awt.TexturePaint;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -17,26 +17,29 @@ public class GestionnaireColors implements ItemListener
 {
 
 	/** La liste des couleurs */
-	private Color[] colors;
+	private Object[] patterns;
 	/** La zone de dessin concenrn�e par le changement de couleurs */
-	//private DrawPanel drawZone;
         private int type;
-        private SceneGraph sceneGraph;
 
 	/**
 	 * Constructeur du gestionnaire de couleurs
 	 * @param colors la liste des couleurs
 	 * @param zone la zone de dessin
 	 */
-	public GestionnaireColors(SceneGraph sceneGraph, Color[] colors, int type)
+	public GestionnaireColors(Object[] patterns, int type)
 	{
-		this.colors = colors;
+		this.patterns = patterns;
                 this.type = type;
-		this.sceneGraph = sceneGraph;
                 if (type==0) {
-                    Window.sceneGraph.getView().setLineColor(this.colors[0]);
+                    Window.sceneGraph.getView().setLineColor((Color)this.patterns[0]);
                 } else if (type==1) {
-                    Window.sceneGraph.getView().setFillColor(this.colors[0]);
+                    if (this.patterns[0] instanceof Color) {
+                        Window.sceneGraph.getView().setFillColor((Color)this.patterns[0]);
+                        Window.sceneGraph.getView().setFillPattern(null);
+                    } else {
+                        Window.sceneGraph.getView().setFillColor(null);
+                        Window.sceneGraph.getView().setFillPattern((TexturePaint)this.patterns[0]);
+                    }
                 }
 	}
 
@@ -46,15 +49,20 @@ public class GestionnaireColors implements ItemListener
 	 * la zone de dessin.
 	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
 	 */
-	@Override
-	public void itemStateChanged(ItemEvent e)
-	{
-		JComboBox liste = (JComboBox) e.getSource();
-                if (type==0) {
-                     Window.sceneGraph.getView().setLineColor(colors[liste.getSelectedIndex()]);
-                } else if (type==1) {
-                     Window.sceneGraph.getView().setFillColor(colors[liste.getSelectedIndex()]);
-                }
-	}
+	   @Override
+    public void itemStateChanged(ItemEvent e) {
+        JComboBox liste = (JComboBox) e.getSource();
+        if (type == 0) {
+            Window.sceneGraph.getView().setLineColor((Color)patterns[liste.getSelectedIndex()]);
+        } else if (type == 1) {
+            if (patterns[liste.getSelectedIndex()] instanceof Color) {
+                Window.sceneGraph.getView().setFillColor((Color)patterns[liste.getSelectedIndex()]);
+                Window.sceneGraph.getView().setFillPattern(null);
+            } else {
+                Window.sceneGraph.getView().setFillColor(null);
+                Window.sceneGraph.getView().setFillPattern((TexturePaint)patterns[liste.getSelectedIndex()]);
+            }
+        }
+    }
 }
 

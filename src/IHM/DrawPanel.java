@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -26,21 +27,21 @@ public class DrawPanel extends JPanel
     private Shape shape = null;
     private InfoBar infoBar;
     //private TreePanel treeZone;
-    private SceneGraph sceneGraph;
     private String currentShapeType;
     private int nbSides;
     private ArrayList<int[]> polygon;
+    private Vector<? extends SceneGraph> selection;
 
-    public DrawPanel(InfoBar infoBar, SceneGraph sceneGraph) {
+    public DrawPanel(InfoBar infoBar) {
         super();
 
         //this.setMaximumSize(new Dimension(JWIDTH, JHEIGHT));
         //this.setAutoscrolls(true);
         this.nbSides = 0;
         this.polygon = new ArrayList();
+        this.selection = new Vector();
 
         this.infoBar = infoBar;
-        this.sceneGraph = sceneGraph;
         /*this.treeZone = treeZone;*/
         this.currentShapeType = "Rectangle";
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -66,7 +67,7 @@ public class DrawPanel extends JPanel
         // on commence par effacer le fond
         g2d.clearRect(0, 0, d.width, d.height);
 
-        for (Enumeration en = sceneGraph.children(); en.hasMoreElements();) {
+        for (Enumeration en = Window.sceneGraph.children(); en.hasMoreElements();) {
             ((Shape) en.nextElement()).drawShape(g2d);
         }
 
@@ -80,9 +81,8 @@ public class DrawPanel extends JPanel
             int size = polygon.size();
             if (size >= 2) {
                 for (int i = 0; i < size - 1; i++) {
-                    int[] init, end;
-                    init = polygon.get(i);
-                    end = polygon.get(i + 1);
+                    int[] init = polygon.get(i);
+                    int[] end = polygon.get(i + 1);
                     g2d.drawLine(init[0], init[1], end[0], end[1]);
                 }
             }
@@ -100,10 +100,6 @@ public class DrawPanel extends JPanel
     public int[] getOrigin() {
         int[] tab = {this.origin[0], this.origin[1]};
         return tab;
-    }
-
-    public SceneGraph getSceneGraph() {
-        return (this.sceneGraph);
     }
 
     public void setNbSides(int nb) {
@@ -138,7 +134,7 @@ public class DrawPanel extends JPanel
                     }
                     polygon.clear();
                     shape = new Shape(new View(currentView), new IrregularPolygon(tab));
-                    shape.insertShape(sceneGraph);
+                    shape.insertShape(Window.sceneGraph);
                     shape = null;
                     //verifier que l'on finit le polygone avant de faire autre chose
                 } else {
@@ -184,7 +180,7 @@ public class DrawPanel extends JPanel
     @Override
     public void mouseReleased(MouseEvent e) {
         if (shape != null) {
-            shape.insertShape(sceneGraph);
+            shape.insertShape(Window.sceneGraph);
             shape = null;
             repaint();
         } // stockage de la droite

@@ -25,11 +25,10 @@ public class TreePanel extends JPanel {
     private JPopupMenu jpm = new JPopupMenu();
     private JMenuItem suppression = new JMenuItem("Supprimer");
 
-    public TreePanel(SceneGraph sceneGraph) {
+    public TreePanel() {
         super();
 
-        this.sceneGraph = sceneGraph;
-        this.arbre = new JTree(sceneGraph);
+        this.arbre = new JTree(Window.sceneGraph);
         //arbre = buildTree();
         //arbre = new JTree(new SceneGraph(new View(Color.YELLOW, 10, Color.BLUE, null), "Essai").getNode());
         /* Pour recuperer un noeud sur lequel on clique */
@@ -122,9 +121,6 @@ public class TreePanel extends JPanel {
     return new JTree(racine);
     }
      */
-    public SceneGraph getSceneGraph() {
-        return sceneGraph;
-    }
 
     /* public void reloadJTree() {
         //arbre.setModel(arbre.getModel());
