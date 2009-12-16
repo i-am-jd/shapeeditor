@@ -8,21 +8,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.TexturePaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
 /**
  * La barre d'infos situee en bas de la fenetre pour afficher
  * differentes informations
- * @author Boris Dadachev
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class OptionPanel extends JPanel {
 
@@ -53,7 +57,7 @@ public class OptionPanel extends JPanel {
         String libelleColors[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
             "Red", "Magenta"};
         lineColorList = new JLabeledComboBox("Line Colors", libelleColors, 0,
-                new GestionnaireColors(drawZone.getSceneGraph(), colors, 0));
+                new GestionnaireColors(colors, 0));
 
         /* Mise en place de la combobox pour l'epaisseur de ligne */
         float[] widths = {1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f};
@@ -62,19 +66,42 @@ public class OptionPanel extends JPanel {
         for (int i = 0; i < widths.length; i++) {
             libelleEpaisseurs[i] = numberFormat.format(widths[i]);
         }
-        lineWidthList = new JLabeledComboBox("Width", libelleEpaisseurs, 0, new GestionnaireWidth(drawZone.getSceneGraph(), widths));
+        lineWidthList = new JLabeledComboBox("Width", libelleEpaisseurs, 0, new GestionnaireWidth(widths));
 
-        /* Mise en place de la combobox pour la couleur de ligne */
-        Color[] fill = {Color.black, Color.blue, Color.cyan, Color.green,
-            Color.yellow, Color.orange, Color.red, Color.magenta};
+        
+        /* Creation de la premiere texture (motifs de remplissage) */
+        BufferedImage pBI1 = new BufferedImage(32, 32, BufferedImage.TYPE_INT_BGR);
+        Graphics2D pG2d1 = pBI1.createGraphics();
+        //ImageIcon pImg1 = createImageIcon("../images/Stripes.gif");
+        ImageIcon pImg1 = new ImageIcon(OptionPanel.class.getResource("../images/Stripes.gif"));
+        pG2d1.drawImage(pImg1.getImage(), 0, 0, this);
+        Rectangle2D imageRect1 = new Rectangle2D.Double(0, 0, 32, 32);
+        TexturePaint texture1 = new TexturePaint(pBI1, imageRect1.getBounds2D());
+        /* Creation de la seconde texture */
+        BufferedImage pBI2 = new BufferedImage(32, 32, BufferedImage.TYPE_INT_BGR);
+        Graphics2D pG2d2 = pBI2.createGraphics();
+        ImageIcon pImg2 = new ImageIcon(OptionPanel.class.getResource("../images/Baroque.gif"));
+        pG2d2.drawImage(pImg2.getImage(), 0, 0, this);
+        Rectangle2D imageRect2 = new Rectangle2D.Double(0, 0, 32, 32);
+        TexturePaint texture2 = new TexturePaint(pBI2, imageRect2.getBounds2D());
+        /* Creation de la troisieme texture */
+        BufferedImage pBI3 = new BufferedImage(32, 32, BufferedImage.TYPE_INT_BGR);
+        Graphics2D pG2d3 = pBI3.createGraphics();
+        ImageIcon pImg3 = new ImageIcon(OptionPanel.class.getResource("../images/Stars.gif"));
+        pG2d3.drawImage(pImg3.getImage(), 0, 0, this);
+        Rectangle2D imageRect3 = new Rectangle2D.Double(0, 0, 32, 32);
+        TexturePaint texture3 = new TexturePaint(pBI3, imageRect3.getBounds2D());
+        /* Mise en place de la combobox pour le motif de remplissage */
+        Object[] patterns = {Color.black, Color.blue, Color.cyan, Color.green,
+            Color.yellow, Color.orange, Color.red, Color.magenta,
+            texture1, texture2, texture3};
         String libelleFill[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
-            "Red", "Magenta", "Pattern1", "Pattern2", "Pattern3"};
+            "Red", "Magenta", "Stripes", "Baroque", "Stars"};
         fillPatternList = new JLabeledComboBox("Fill Patterns", libelleFill, 0,
-                new GestionnaireColors(drawZone.getSceneGraph(), fill, 1));
+                new GestionnaireColors(patterns, 1));
 
         this.textField = new JTextField();
         KeyAdapter kAdapter = new KeyAdapter() {
-
             @Override
             public void keyReleased(KeyEvent event) {
                 if (!isNumeric(event.getKeyChar()) || textField.getText().length() > 2) {
@@ -87,7 +114,6 @@ public class OptionPanel extends JPanel {
                     getDrawZone().setNbSides(Integer.parseInt(textField.getText()));
                 }
             }
-
             private boolean isNumeric(char carac) {
                 try {
                     int i = Integer.parseInt(String.valueOf(carac));

@@ -1,7 +1,7 @@
 package Draw;
 
 import java.awt.Color;
-import java.awt.Image;
+import java.awt.TexturePaint;
 
 
 public class View {
@@ -13,9 +13,9 @@ public class View {
 	/** Couleur de remplissage */
 	private Color fillColor;
 	/** Motif de remplissage */
-	private Image fillPattern;
+	private TexturePaint fillPattern;
 	
-	public View (Color c, float w, Color fillC, Image fillP)
+	public View (Color c, float w, Color fillC, TexturePaint fillP)
 	{
 		setLineColor(c);
 		setLineWidth(w);
@@ -53,11 +53,11 @@ public class View {
 		return fillColor;
 	}
 	
-	public void setFillPattern(Image fillPattern) 
+	public void setFillPattern(TexturePaint fillPattern)
 	{
 		this.fillPattern = fillPattern;
 	}
-	public Image getFillPattern() 
+	public TexturePaint getFillPattern()
 	{
 		return fillPattern;
 	}

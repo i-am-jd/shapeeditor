@@ -2,7 +2,6 @@ package Gestionnaire;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 import IHM.*;
 
 /**
@@ -59,6 +58,7 @@ public class GestionnaireToolBar implements ActionListener
         /**
          * Affichage de la valeur de l'enum
          */
+        @Override
         public String toString()
         {
             switch (this) {

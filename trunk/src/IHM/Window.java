@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
 import Draw.SceneGraph;
-import Draw.View;
-import java.awt.Color;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -54,8 +52,8 @@ public class Window extends JFrame {
         /* Creation des composants de la fenetre */
         infoBar = new InfoBar();
         menuBar = new MenuBar();
-        treeZone = new TreePanel(sceneGraph);
-        drawZone = new DrawPanel(infoBar, /*treeZone,*/ sceneGraph);
+        treeZone = new TreePanel();
+        drawZone = new DrawPanel(infoBar);
         optionZone = new OptionPanel(drawZone);
         toolBar = new ToolBar(optionZone);
         
