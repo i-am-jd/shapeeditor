@@ -1,28 +1,19 @@
 package Draw;
 
-import java.util.Collection;
-
-
+import javax.swing.tree.MutableTreeNode;
 
 public class Group extends SceneGraph {
-	
-	Collection<Group> groupC = null;
-	Collection<Shape> shapeC = null;
-	
-	
+		
 	public Group()
 	{
 		super("Group");
 	}
 	
-	public void addShape(Shape s)
+	public void addToGroup (MutableTreeNode n)
 	{
-		shapeC.add(s);
+		this.add(n);
 	}
-	
-	public void addGroup(Group g)
-	{
-		groupC.add(g);
-	}
+
+        
 
 }

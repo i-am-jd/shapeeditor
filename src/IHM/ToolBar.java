@@ -15,6 +15,7 @@ public class ToolBar extends JToolBar
 	private JButton btn5 = new JButton("Others");
         
 	private JButton btn6 = new JButton("Sélection");
+        private JButton btn7 = new JButton("Group");
 	
 	public ToolBar(OptionPanel optionZone)
 	{
@@ -33,6 +34,7 @@ public class ToolBar extends JToolBar
 		this.add(btn5);
                 this.addSeparator();
 		this.add(btn6);
+                this.add(btn7);
 
                 this.setBorder(BorderFactory.createEtchedBorder());
 	}

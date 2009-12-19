@@ -23,7 +23,6 @@ public class DrawPanel extends JPanel
 
     private int x;
     private int y;
-    private int[] origin = new int[2];
     private Shape shape = null;
     private InfoBar infoBar;
     //private TreePanel treeZone;
@@ -46,8 +45,8 @@ public class DrawPanel extends JPanel
         this.currentShapeType = "Rectangle";
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 
-        this.origin[0] = this.getWidth() / 2;
-        this.origin[1] = this.getHeight() / 2;
+        Window.origin[0] = this.getWidth() / 2;
+        Window.origin[1] = this.getHeight() / 2;
 
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -91,15 +90,10 @@ public class DrawPanel extends JPanel
     }
 
     public void calculateOrigin() {
-        this.origin[0] = this.getWidth() / 2;
-        this.origin[1] = this.getHeight() / 2;
+        Window.origin[0] = this.getWidth() / 2;
+        Window.origin[1] = this.getHeight() / 2;
 
         repaint();
-    }
-
-    public int[] getOrigin() {
-        int[] tab = {this.origin[0], this.origin[1]};
-        return tab;
     }
 
     public void setNbSides(int nb) {
@@ -145,34 +139,37 @@ public class DrawPanel extends JPanel
             }
         } else if (currentShapeType.equals("Square")) {
             shape = new Shape(new View(currentView),
-                    new Square(Math.abs(e.getY() - origin[1])));
+                    new Square(Math.abs(e.getY() - Window.origin[1])));
         } else if (currentShapeType.equals("Rectangle")) {
             shape = new Shape(new View(currentView),
-                    new Rectangle(Math.abs(e.getX() - origin[0]), Math.abs(e.getY() - origin[1])));
+                    new Rectangle(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));
         } else if (currentShapeType.equals("Equilateral Triangle")) {
             shape = new Shape(new View(currentView),
-                    new RegularPolygon((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), 3));
-        } else if (currentShapeType.equals("Isoscele Triangle")) {
+                    new RegularPolygon((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)), 3));
+        } else if (currentShapeType.equals("Isosceles Triangle")) {
+            shape = new Shape(new View(currentView),
+                    new IsoscelesTriangle(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));
         } else if (currentShapeType.equals("Right-angled Triangle")) {
+            shape = new Shape(new View(currentView),
+                    new RightAngledTriangle(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));
         } else if (currentShapeType.equals("Five-pointed Star")) {
             shape = new Shape(new View(currentView),
-                    new Star((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), 5));
+                    new Star((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)), 5));
         } else if (currentShapeType.equals("Six-pointed Star")) {
             shape = new Shape(new View(currentView),
-                    new Star((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), 6));
+                    new Star((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)), 6));
         } else if (currentShapeType.equals("Other Star")) {
             shape = new Shape(new View(currentView),
-                    new Star((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), nbSides));
+                    new Star((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)), nbSides));
         } else if (currentShapeType.equals("Circle")) {
             shape = new Shape(new View(currentView),
-                    new Circle((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2))));
+                    new Circle((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2))));
         } else if (currentShapeType.equals("Ellipse")) {
             shape = new Shape(new View(currentView),
-                    new Ellipse(Math.abs(e.getX() - origin[0]), Math.abs(e.getY() - origin[1])));
+                    new Ellipse(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));
         } else if (currentShapeType.equals("Regular Polygon")) {
             shape = new Shape(new View(currentView),
-                    new RegularPolygon((int) Math.sqrt(Math.pow(e.getX() - origin[0], 2) + Math.pow(e.getY() - origin[1], 2)), nbSides));
-        } else if (currentShapeType.equals("Irregular Polygon")) {
+                    new RegularPolygon((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)), nbSides));
         }
         infoBar.printMessage("Release to draw the shape");
     }
@@ -202,9 +199,7 @@ public class DrawPanel extends JPanel
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-
+     
         // affichage des coordonn�es
         infoBar.printCoordinates(x, y);
 
@@ -214,18 +209,22 @@ public class DrawPanel extends JPanel
         // deplacement de l'extr�mit� de la droite
         if (shape.getGeometry() instanceof Square) {
             Square s = (Square) shape.getGeometry();
-            s.setSide(Math.abs(y - origin[1]));
+            s.setSide(Math.abs(e.getY() - Window.origin[1]));
         } else if (shape.getGeometry() instanceof Rectangle) {
             Rectangle r = (Rectangle) shape.getGeometry();
-            r.setWidth(Math.abs(x - origin[0]));
-            r.setHeight(Math.abs(y - origin[1]));
+            r.setWidth(Math.abs(e.getX() - Window.origin[0]));
+            r.setHeight(Math.abs(e.getY() - Window.origin[1]));
+        } else if (shape.getGeometry() instanceof Triangle) {
+            Triangle t = (Triangle) shape.getGeometry();
+            t.setWidth(Math.abs(e.getX() - Window.origin[0]));
+            t.setHeight(Math.abs(e.getY() - Window.origin[1]));
         } else if (shape.getGeometry() instanceof Circle) {
             Circle r = (Circle) shape.getGeometry();
-            r.setRadius((int) Math.sqrt(Math.pow(x - origin[0], 2) + Math.pow(y - origin[1], 2)));
+            r.setRadius((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)));
         } else if (shape.getGeometry() instanceof Ellipse) {
             Ellipse el = (Ellipse) shape.getGeometry();
-            el.setSemiMajorAxis(Math.abs(x - origin[0]));
-            el.setSemiMinorAxis(Math.abs(y - origin[1]));
+            el.setSemiMajorAxis(Math.abs(e.getX() - Window.origin[0]));
+            el.setSemiMinorAxis(Math.abs(e.getY() - Window.origin[1]));
         }
 
         // dessin du graphe de scene et de la forme en construction

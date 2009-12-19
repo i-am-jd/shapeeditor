@@ -1,33 +1,45 @@
 package Draw;
 
+import java.awt.Graphics2D;
+
 
 public abstract class Triangle extends Polygon {
 	
-	/* Coordonnees x des sommets du triangle /
-	private int[] x = new int[3];
-	/ Coordonnees y des sommets du triangle /
-	private int[] y = new int[3];
+	/*  */
+	private int width;
+	/*  */
+	private int height;
 	
-	public Triangle (int[] x, int[] y)
+	public Triangle (int width, int height)
 	{
-		for (int i=0; i<3; i++) {
-			this.x[i] = x[i];
-			this.y[i] = y[i];
-		}
+		this.width = width;
+                this.height = height;
 	}
 	
-	public void setX(int[] x) {
-		this.x = x;
+	public void setWidth(int width) {
+		this.width = width;
 	}
-	public int[] getX() {
-		return x;
+	public int getWidth() {
+		return width;
 	}
 	
-	public void setY(int[] y) {
-		this.y = y;
+	public void setHeight(int height) {
+		this.height = height;
 	}
-	public int[] getY() {
-		return y;
-	}*/
-	
+	public int getHeight() {
+		return height;
+	}
+
+    public abstract int[][] calculateCoordinates();
+
+    public void fillGeometry(Graphics2D g2d) {
+        int[][] tab = calculateCoordinates();
+        g2d.fillPolygon(tab[0], tab[1], 3);
+    }
+
+    @Override
+    public void drawGeometry(Graphics2D g2d) {
+        int[][] tab = calculateCoordinates();
+        g2d.drawPolygon(tab[0], tab[1], 3);
+    }
 }
