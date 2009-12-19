@@ -30,6 +30,8 @@ public class Window extends JFrame {
     private OptionPanel optionZone;
     /** Le graphe de scene : variable globale */
     public static SceneGraph sceneGraph;
+    /** Le graphe de scene : variable globale */
+    public static int[] origin;
     //private Shape shape;
 
     public Window() {
@@ -38,6 +40,7 @@ public class Window extends JFrame {
 
         /* */
         sceneGraph = new SceneGraph("Scene Graph");
+        origin = new int[2];
 
         /* Proprietes generales de la fenetre */
         /* Titre de la fenetre */
