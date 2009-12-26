@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
 import Draw.SceneGraph;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 

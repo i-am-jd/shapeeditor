@@ -146,12 +146,12 @@ public class DrawPanel extends JPanel
         } else if (currentShapeType.equals("Equilateral Triangle")) {
             shape = new Shape(new View(currentView),
                     new RegularPolygon((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)), 3));
-        } else if (currentShapeType.equals("Isosceles Triangle")) {
+        /*} else if (currentShapeType.equals("Isosceles Triangle")) {
             shape = new Shape(new View(currentView),
-                    new IsoscelesTriangle(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));
-        } else if (currentShapeType.equals("Right-angled Triangle")) {
+                    new IsoscelesTriangle(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));*/
+        /*} else if (currentShapeType.equals("Right-angled Triangle")) {
             shape = new Shape(new View(currentView),
-                    new RightAngledTriangle(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));
+                    new RightAngledTriangle(Math.abs(e.getX() - Window.origin[0]), Math.abs(e.getY() - Window.origin[1])));*/
         } else if (currentShapeType.equals("Five-pointed Star")) {
             shape = new Shape(new View(currentView),
                     new Star((int) Math.sqrt(Math.pow(e.getX() - Window.origin[0], 2) + Math.pow(e.getY() - Window.origin[1], 2)), 5));

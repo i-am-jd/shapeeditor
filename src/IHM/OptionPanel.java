@@ -188,4 +188,5 @@ public class OptionPanel extends JPanel {
     public DrawPanel getDrawZone() {
         return this.drawZone;
     }
+
 }

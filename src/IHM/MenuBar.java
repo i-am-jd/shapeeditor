@@ -30,7 +30,7 @@ public class MenuBar extends JMenuBar {
         optNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                Window.sceneGraph = new SceneGraph("Scene Graph");
+                Window.sceneGraph.removeAllChildren();
             }
         });
         optExit.addActionListener(new ActionListener() {
