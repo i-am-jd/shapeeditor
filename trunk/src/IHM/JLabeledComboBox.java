@@ -29,6 +29,9 @@ public class JLabeledComboBox extends JPanel
 	/** Les textes pour les items */
 	private String[] captions;
 
+        /** La combobox affichée*/
+        private JComboBox combobox;
+
 	/**
 	 * le r�pertoire des images. Attention, il s'agit du r�pertoire relatif �
 	 * cette classe et non pas au programme principal
@@ -74,7 +77,7 @@ public class JLabeledComboBox extends JPanel
 		add(label);
 
 		// Creates the Combobox
-		JComboBox combobox = new JComboBox(intArray);
+		combobox = new JComboBox(intArray);
 		combobox.setEditable(false);
 		if (selectedIndex < 0 || selectedIndex > captions.length)
 		{
@@ -190,5 +193,4 @@ public class JLabeledComboBox extends JPanel
 		}
 
 	}
-
 }
