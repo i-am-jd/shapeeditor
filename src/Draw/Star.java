@@ -1,42 +1,37 @@
 package Draw;
 
-import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import java.awt.Polygon;
 
 
-public class Star extends RegularPolygon {
+public class Star extends SceneShape {
 
-    public Star (int rad, int nbSides)
+    final Polygon polygon;
+
+    public Star (View v, double x, double y, double r, int nbSides)
     {
-        super(rad, 2*nbSides);
-    }
+        super(v);
 
-    public int[][] calculateCoordinates ()
-    {
-        int[][] tab = new int[2][nbSides];
-        int[] origin = {894/2, 613/2};
-        int r = this.getRadius();
+        int[] xpoints = new int[nbSides];
+        int[] ypoints = new int[nbSides];
         double angle = Math.PI/2;
-        for (int i=0; i<this.nbSides; i++) {
+        for (int i=0; i<nbSides; i++) {
             if (i%2==0) {
-                tab[0][i] = origin[0] - (int)((double)r*Math.cos(angle));
-                tab[1][i] = origin[1] - (int)((double)r*Math.sin(angle));
+                xpoints[i] = (int) x - (int)((double)r*Math.cos(angle));
+                ypoints[i] = (int) y - (int)((double)r*Math.sin(angle));
             } else {
-                tab[0][i] = origin[0] - (int)((double)2*r/6*Math.cos(angle));
-                tab[1][i] = origin[1] - (int)((double)2*r/6*Math.sin(angle));
+                xpoints[i] = (int) x - (int)((double)2*r/6*Math.cos(angle));
+                ypoints[i] = (int) y - (int)((double)2*r/6*Math.sin(angle));
             }
-            angle += 2*Math.PI/(this.nbSides);
+            angle += 2*Math.PI/(nbSides);
         }
-        return tab;
+
+        polygon = new Polygon(xpoints, ypoints, nbSides);
+        shape = polygon;
     }
 
-     public void fillGeometry(Graphics2D g2d)
-     {
-         int[][] tab = this.calculateCoordinates();
-        g2d.fillPolygon(tab[0], tab[1], nbSides);
-     }
-    public void drawGeometry(Graphics2D g2d)
+    public void setLocation(Point2D p)
     {
-        int[][] tab = this.calculateCoordinates();
-        g2d.drawPolygon(tab[0], tab[1], nbSides);
+        //Not implemented
     }
 }

@@ -1,41 +1,22 @@
 package Draw;
 
-import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Point2D;
 
 
-public class Rectangle extends Polygon
-{
-	/* Demi-hauteur du rectangle */
-	protected int height;
-	/* Demi-longueur du rectangle */
-	protected int width;
-	
-	public Rectangle(int width, int height)
-	{
-		this.setHeight(height);
-		this.setWidth(width);
-	}
-	
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	public int getHeight() {
-		return height;
-	}
-	
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	public int getWidth() {
-		return width;
-	}
-	
-	public void fillGeometry(Graphics2D g2d)
-     {
-         g2d.fillRect(894/2-getWidth(), 613/2-getHeight(), getWidth()*2, getHeight()*2);
-     }
-    public void drawGeometry(Graphics2D g2d)
+public class Rectangle extends SceneShape
+ {
+    private Rectangle2D.Double rect;
+
+    public Rectangle(View v, double x, double y, double width, double height) {
+        super(v);
+        rect = new Rectangle2D.Double(x ,y, width, height);
+        shape = rect;
+    }
+
+    public void setLocation(Point2D p)
     {
-        g2d.drawRect(894/2-getWidth(), 613/2-getHeight(), getWidth()*2, getHeight()*2);
+        rect.x = p.getX();
+        rect.y = p.getY();
     }
 }

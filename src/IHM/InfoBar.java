@@ -7,6 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.awt.geom.Point2D;
+
 /**
  * La barre d'infos situee en bas de la fenetre pour afficher 
  * differentes informations
@@ -46,6 +48,14 @@ public class InfoBar extends JPanel
         DecimalFormat coordFormat = new DecimalFormat(NUMBERFORMAT);
         String xs = coordFormat.format(x);
         String ys = coordFormat.format(y);
+        coordinates.setText("x : " + xs + " y : " + ys);
+    }
+
+    public void printCoordinates(Point2D p)
+    {
+        DecimalFormat coordFormat = new DecimalFormat(NUMBERFORMAT);
+        String xs = coordFormat.format(p.getX());
+        String ys = coordFormat.format(p.getY());
         coordinates.setText("x : " + xs + " y : " + ys);
     }
 
