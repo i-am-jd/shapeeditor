@@ -1,20 +1,12 @@
 package Draw;
 
-
 public class Circle extends Ellipse {
-	
-	public Circle (int rad)
-	{
-		super(rad, rad);
-	}
 
-	public int getRadius()
-	{
-		return getSemiMajorAxis();
-	}
-        public void setRadius(int r)
-        {
-		setSemiMajorAxis(r);
-                setSemiMinorAxis(r);
-	}
+    public Circle(View v, double x, double y, double r) {
+        super(v, x, y, r, r);
+    }
+
+    public double getRadius() {
+        return (int) getSemiMajorAxis();
+    }
 }

@@ -5,35 +5,27 @@
 
 package Draw;
 
-import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import java.awt.Polygon;
 
 /**
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class RegularPolygon extends Circle
+public class RegularPolygon extends SceneShape
 {
     int nbSides;
+    final Polygon polygon;
 
-    public RegularPolygon (int rad, int nbSides){
-        super(rad);
-        this.nbSides = nbSides;
-    }
+    public RegularPolygon (View v, double x, double y, double rad, int n)
+    {
+        super(v);
 
-    public int getNbSides ()
-    {
-        return nbSides;
-    }
-    public void setNbSides (int n)
-    {
-        this.nbSides = n;
-    }
+        nbSides = n;
 
-    public int[][] calculateCoordinates ()
-    {
         int[][] tab = new int[2][nbSides];
-        int[] origin = {894/2, 613/2};
-        int r = this.getRadius();
+        int[] origin = {(int) x, (int) y};
+        int r = (int) rad;
         double angle = Math.PI/2;
         for (int i=0; i<this.nbSides; i++) {
             /* Calcul des coordonnees du point : utilisation des coordonnees polaires */
@@ -41,17 +33,14 @@ public class RegularPolygon extends Circle
             tab[1][i] = origin[1] - (int)((double)r*Math.sin(angle));
             angle += 2*Math.PI/this.nbSides;
         }
-        return tab;
+
+        polygon = new Polygon(tab[0], tab[1], nbSides);
+        shape = polygon;
     }
 
-     public void fillGeometry(Graphics2D g2d)
-     {
-         int[][] tab = this.calculateCoordinates();
-        g2d.fillPolygon(tab[0], tab[1], nbSides);
-     }
-    public void drawGeometry(Graphics2D g2d)
+    public void setLocation(Point2D p)
     {
-        int[][] tab = this.calculateCoordinates();
-        g2d.drawPolygon(tab[0], tab[1], nbSides);
+        //Well, not implemented
+        //We should use the method Polygon::translate(int deltaX, int deltaY) 
     }
 }

@@ -1,44 +1,32 @@
 package Draw;
 
-import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 
-public class Ellipse extends Geometry
-{
-	/** Largeur de l'ellipse (demi grand axe) */
-	protected int a;
-	/** Hauteur de l'ellipse (demi petit axe) */
-	protected int b;
-	
-	public Ellipse (int w, int h)
-	{
-		setSemiMajorAxis(w);
-		setSemiMinorAxis(h);
-	}
+public class Ellipse extends SceneShape {
 
-	public void setSemiMajorAxis(int a) {
-		this.a = a;
-	}
+    private Ellipse2D.Double ellipse;
 
-	public int getSemiMajorAxis() {
-		return a;
-	}
-
-	public void setSemiMinorAxis(int b) {
-		this.b = b;
-	}
-
-	public int getSemiMinorAxis() {
-		return b;
-	}
-
-         public void fillGeometry(Graphics2D g2d)
-     {
-         g2d.fillOval(894/2/*origine*/-getSemiMajorAxis(), 613/2-getSemiMinorAxis(), 2*getSemiMajorAxis(), 2*getSemiMinorAxis());
-     }
-    public void drawGeometry(Graphics2D g2d)
-    {
-        g2d.drawOval(894/2/*origine*/-getSemiMajorAxis(), 613/2-getSemiMinorAxis(), 2*getSemiMajorAxis(), 2*getSemiMinorAxis());
+    public Ellipse(View v, double x, double y, double width, double height) {
+        super(v);
+        ellipse = new Ellipse2D.Double(x, y, width, height);
+        shape = ellipse;
     }
-	
+
+    public double getSemiMajorAxis()
+    {
+        return this.getWidth() / 2;
+    }
+
+    public double getSemiMinorAxis()
+    {
+        return this.getHeight() / 2;
+    }
+
+    public void setLocation(Point2D p)
+    {
+        ellipse.x = p.getX();
+        ellipse.y = p.getY();
+    }
 }
