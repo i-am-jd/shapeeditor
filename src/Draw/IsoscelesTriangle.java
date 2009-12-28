@@ -16,6 +16,9 @@ import java.awt.Polygon;
 public class IsoscelesTriangle extends SceneShape {
 
     final Polygon polygon;
+
+    int originX;
+    int originY;
     
     public IsoscelesTriangle(View v, double x, double y, double width, double height) {
         super(v);
@@ -23,8 +26,8 @@ public class IsoscelesTriangle extends SceneShape {
         int[] xpoints = new int[3];
         int[] ypoints = new int[3];
 
-        xpoints[0] = (int) (x + width/2);
-        ypoints[0] = (int) y;
+        xpoints[0] = originX = (int) (x + width/2);
+        ypoints[0] = originY = (int) y;
         xpoints[1] = (int) x;
         ypoints[1] = (int) (y+height);
         xpoints[2] = (int) (x + width);
@@ -37,10 +40,14 @@ public class IsoscelesTriangle extends SceneShape {
     @Override
     public void setLocation(Point2D p)
     {
+        polygon.translate((int) (p.getX() - originX), (int) (p.getY() - originY));
+        originX = (int) p.getX();
+        originY = (int) p.getY();
     }
 
     @Override
-       public void setOffset(Point p)
+    public void setOffset(Point p)
     {
+
     }
 }
