@@ -18,9 +18,15 @@ public class RegularPolygon extends SceneShape
     int nbSides;
     final Polygon polygon;
 
+    double originX;
+    double originY;
+
     public RegularPolygon (View v, double x, double y, double rad, int n)
     {
         super(v);
+
+        originX = x;
+        originY = y;
 
         nbSides = n;
 
@@ -41,12 +47,12 @@ public class RegularPolygon extends SceneShape
 
     public void setLocation(Point2D p)
     {
-        //Well, not implemented
-        //We should use the method Polygon::translate(int deltaX, int deltaY) 
+        polygon.translate((int) (p.getX() - originX), (int) (p.getY() - originY));
+        originX = (int) p.getX();
+        originY = (int) p.getY();
     }
 
     public void setOffset(Point p)
     {
-    
     }
 }
