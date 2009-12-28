@@ -1,7 +1,11 @@
 package Draw;
 
+import java.util.Enumeration;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import java.util.Stack;
 
 
 public class SceneGraph extends DefaultMutableTreeNode {
@@ -10,6 +14,20 @@ public class SceneGraph extends DefaultMutableTreeNode {
 	 * @uml.associationEnd  inverse="sceneGraph:View"
 	 */
 	protected View view;
+        
+        protected Stack<SceneGraph> stack = new Stack();
+
+        public void add(SceneGraph s)
+        {
+
+            super.add(s);
+            stack.push(s);
+        }
+
+        public Stack<SceneGraph> getStack()
+        {
+            return stack;
+        }
 
 	public SceneGraph(View v, String name)
 	{
@@ -21,6 +39,13 @@ public class SceneGraph extends DefaultMutableTreeNode {
             super(name);
             view = new View(Color.BLACK, 1, Color.BLACK, null);
 	}
+
+        public SceneGraph(SceneShape s)
+        {
+            super();
+            view = new View(Color.BLACK, 1, Color.BLACK, null);
+            this.add(s);
+        }
 	
 	/**
 	 * Getter of the property <tt>view</tt>
@@ -39,5 +64,11 @@ public class SceneGraph extends DefaultMutableTreeNode {
 	public void setView(View view) {
 		this.view = view;
 	}
+
+        public void draw(Graphics2D g2d) {
+            for(Enumeration<SceneGraph> en = stack.elements(); en.hasMoreElements();) {
+                en.nextElement().draw(g2d);
+            }
+        }
 
 }

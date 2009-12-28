@@ -2,6 +2,7 @@ package Draw;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.Point;
 
 
 public class Ellipse extends SceneShape {
@@ -26,7 +27,14 @@ public class Ellipse extends SceneShape {
 
     public void setLocation(Point2D p)
     {
-        ellipse.x = p.getX();
-        ellipse.y = p.getY();
+        ellipse.x = p.getX() - offset.getX();
+        ellipse.y = p.getY() - offset.getY();
+    }
+
+
+    public void setOffset(Point p)
+    {
+        offset.x = p.x - (int) ellipse.x;
+        offset.y = p.y - (int) ellipse.y;
     }
 }
