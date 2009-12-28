@@ -255,6 +255,7 @@ public class DrawPanel extends JPanel
 
     public void createShape(double x, double y, double w, double h)
     {
+        System.out.println("createShape");
         View view = Window.sceneGraph.getView();
 
         //Verification de la correction du nombre de cotes voulu (si necessaire)

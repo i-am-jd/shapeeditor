@@ -5,6 +5,7 @@
 
 package Draw;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.Polygon;
 
@@ -23,9 +24,16 @@ public class IrregularPolygon extends SceneShape {
         shape = polygon; 
     }
 
+    @Override
     public void setLocation(Point2D p)
     {
         //Not implemented
+    }
+
+    @Override
+    public void setOffset(Point p)
+    {
+        
     }
 
 }
