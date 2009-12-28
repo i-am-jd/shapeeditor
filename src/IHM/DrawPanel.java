@@ -191,12 +191,15 @@ public class DrawPanel extends JPanel
                     tab[0][i] = polygon.get(i)[0];
                     tab[1][i] = polygon.get(i)[1];
                 }
-                polygon.clear();
                 //Insertion du nouveau polygône
                 shape = new IrregularPolygon(new View(view), tab);
                 Window.sceneGraph.add(shape);
 
+                polygon.clear();
                 shape = null;
+            } else {
+            //Sinon on ajoute un nouveau sommet au polygone
+                polygon.add(new int[]{x, y});
             }
         } else {
             polygon.add(new int[]{x, y});

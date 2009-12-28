@@ -20,7 +20,7 @@ public class IrregularPolygon extends SceneShape {
     {
         super(v);
 
-        polygon = new Polygon(vertices[0], vertices[1], vertices.length);
+        polygon = new Polygon(vertices[0], vertices[1], vertices[0].length);
         shape = polygon; 
     }
 
