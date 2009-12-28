@@ -9,9 +9,15 @@ public class Star extends SceneShape {
 
     final Polygon polygon;
 
+    double originX;
+    double originY;
+
     public Star (View v, double x, double y, double r, int nbBranch)
     {
         super(v);
+
+        originX = x;
+        originY = y;
 
         int nbSides = 2*nbBranch;
         int[] xpoints = new int[nbSides];
@@ -36,12 +42,16 @@ public class Star extends SceneShape {
     @Override
     public void setLocation(Point2D p)
     {
+        polygon.translate((int) (p.getX() - originX), (int) (p.getY() - originY));
+        originX = (int) p.getX();// - offset.x;
+        originY = (int) p.getY();// - offset.y;
         //Not implemented
     }
 
     @Override
     public void setOffset(Point p)
     {
-
+        offset.x = p.x - (int) originX;
+        offset.y = p.y - (int) originY;
     }
 }
