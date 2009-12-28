@@ -2,6 +2,7 @@ package Draw;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D;
+import java.awt.Point;
 
 
 public class Rectangle extends SceneShape
@@ -16,7 +17,13 @@ public class Rectangle extends SceneShape
 
     public void setLocation(Point2D p)
     {
-        rect.x = p.getX();
-        rect.y = p.getY();
+        rect.x = p.getX() - offset.getX();
+        rect.y = p.getY() - offset.getY();
+    }
+
+       public void setOffset(Point p)
+    {
+        offset.x = p.x - (int) rect.x;
+        offset.y = p.y - (int) rect.y;
     }
 }

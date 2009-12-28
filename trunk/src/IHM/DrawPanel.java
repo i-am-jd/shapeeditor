@@ -19,8 +19,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.Point;
 import java.lang.Math;
+import java.awt.Color;
 
 public class DrawPanel extends JPanel
         implements MouseListener, MouseMotionListener {
@@ -36,13 +38,16 @@ public class DrawPanel extends JPanel
     private ArrayList<int[]> polygon;
 
     //Sélection courante
-    private Vector<? extends SceneGraph> selection;
+    private Vector<SceneGraph> selection;
 
     //Modifié au fur et à mesure des interactions avec l'utilisateur
     private Point mouseDown,  mouseHere,  mouseClicked;
 
     //Forme à déplacer
     private SceneShape shapeToDrag = null;
+
+    //État courant (sélection ou création d'une forme
+    private UserMode mode = UserMode.Drawing;
 
     public DrawPanel(InfoBar infoBar) {
         super();
@@ -67,6 +72,23 @@ public class DrawPanel extends JPanel
         //this.add(new JScrollPane()); //, BorderLayout.CENTER);
     }
 
+    public void setMode(UserMode mode)
+    {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.mode = mode;
+    }
+
+    public void switchSelectionMode()
+    {
+        if(mode == UserMode.Selecting) {
+            this.mode = UserMode.Drawing;
+            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        } else {
+            this.mode = UserMode.Selecting;
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         // caract�ristiques graphiques : mise en place de l'antialiasing
@@ -78,12 +100,11 @@ public class DrawPanel extends JPanel
         // on commence par effacer le fond
         g2d.clearRect(0, 0, d.width, d.height);
 
-        for (Enumeration en = Window.sceneGraph.children(); en.hasMoreElements();) {
-            ((SceneShape) en.nextElement()).drawShape(g2d);
-        }
+        //Appelle récursivement les opérations de dessin sur les sous-arbres
+        Window.sceneGraph.draw(g2d);
 
         if (shape != null) {
-            shape.drawShape(g2d);
+            shape.draw(g2d);
         }
 
         if (!polygon.isEmpty()) {
@@ -101,6 +122,22 @@ public class DrawPanel extends JPanel
             g2d.drawLine(polygon.get(size - 1)[0], polygon.get(size - 1)[1],
                          (int) mouseHere.getX(), (int) mouseHere.getY());
         }
+
+        //Rectangles de sélection
+        g2d.setStroke(new BasicStroke(3.0f,
+                 BasicStroke.CAP_BUTT,
+                 BasicStroke.JOIN_BEVEL,
+                 1.0f,
+                 new float[] {1.0f, 6.0f},
+                 0.0f));
+        g2d.setColor(Color.WHITE);
+        for(Enumeration en = selection.elements(); en.hasMoreElements();) {
+            Object node = en.nextElement();
+            if(node instanceof SceneShape) {
+                Rectangle2D r = ((SceneShape) node).getBounds2D();
+                g2d.draw(r);
+            }
+        }
     }
 
     public void calculateOrigin() {
@@ -117,6 +154,28 @@ public class DrawPanel extends JPanel
     @Override
     public void mouseClicked(MouseEvent e)
     {
+        if(this.mode == UserMode.Selecting) {
+
+            SceneShape s = getShapeAt(e.getPoint());
+            if(s != null) {
+                System.out.println("Shape selected");
+
+                //Mettre dans la sélection
+                if(!e.isControlDown()) {
+                    selection.clear();
+                }
+                selection.add(s);
+
+                //Garder les distances de la souris à la figure pour un éventuel déplacement
+                s.setOffset(mouseDown);
+                repaint();
+            }
+            return;
+        }
+
+        if (!currentShapeType.equals("Irregular Polygon"))
+            return;
+
         Point2D p = e.getPoint();
         int x = (int) p.getX();
         int y = (int) p.getY();
@@ -149,15 +208,36 @@ public class DrawPanel extends JPanel
     public SceneShape getShapeAt(Point2D p)
     {
         SceneShape foundShape = null;
-        for (Enumeration en = Window.sceneGraph.children(); en.hasMoreElements();) {
-            SceneShape s = (SceneShape) en.nextElement();
+        for(Enumeration shapes = Window.sceneGraph.getStack().elements(); shapes.hasMoreElements();) {
+            SceneShape s = (SceneShape) shapes.nextElement();
             if(s.contains(p)) {
                 foundShape = s;
                 break;
             }
-
         }
+        /*for(Enumeration nodes = Window.sceneGraph.breadthFirstEnumeration(); nodes.hasMoreElements();) {
+            SceneGraph node = (SceneGraph) nodes.nextElement();
+            for (Enumeration en = node.children(); en.hasMoreElements();) {
+                SceneShape s = (SceneShape) en.nextElement();
+                if(s.contains(p)) {
+                    foundShape = s;
+                    break;
+                }
+            }
+
+        }*/
         return foundShape;
+    }
+
+    public void groupCurrentSelection()
+    {
+        if(!selection.isEmpty()) {
+            Group gr = new Group();
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+                gr.add(en.nextElement());
+            }
+            Window.sceneGraph.add(gr);
+        }
     }
 
     public void createShape(double x, double y, double w, double h)
@@ -173,8 +253,9 @@ public class DrawPanel extends JPanel
                 return;
             }
         }
-        /*if (currentShapeType.equals("Irregular Polygon")) {
-            if (polygon.isEmpty() == false) {
+        if (currentShapeType.equals("Irregular Polygon")) {
+            return;
+            /*if (polygon.isEmpty() == false) {
                 int[] head = polygon.get(0);
                 if (Math.abs(head[0] - x) < 8 && Math.abs(head[1] - y) < 8) {
                     int[][] tab = new int[2][polygon.size()];
@@ -193,8 +274,8 @@ public class DrawPanel extends JPanel
                 }
             } else {
                 polygon.add(new int[]{(int) x, (int) y});
-            }
-        }*/
+            }*/
+        }
 
         if (currentShapeType.equals("Square")) {
             shape = new Square(new View(view), x, y, Math.min(w, h));
@@ -265,40 +346,39 @@ public class DrawPanel extends JPanel
 
         mouseHere = e.getPoint();
 
-        /*if (shapeToDrag != null) {
-            //Déplacement de la shape
-            shapeToDrag.setLocation(mouseHere);
-        } else {*/
-            double downX = mouseDown.getX();
-            double downY = mouseDown.getY();
-            double hereX = mouseHere.getX();
-            double hereY = mouseHere.getY();
-
-            double l = Math.min(downX, hereX);
-            double t = Math.min(downY, hereY);
-            double w = Math.abs(downX - hereX);
-            double h = Math.abs(downY - hereY);
-            //rect = new Rectangle2D.Double(l, t, w, h);
-
-            double dia = Math.min(w, h);
-            if (dia >= 5) {
-                l = downX < hereX ? downX : downX - w;
-                t = downY < hereY ? downY : downY - h;
-
-                //Création d'une forme géométrique
-                createShape(l, t, w, h);
-            } else {
-                shape = null;
+        if (selection.size() == 1 && this.mode == UserMode.Selecting) {
+            //Déplacement de la shape sélectionnée
+            if(selection.get(0) instanceof SceneShape) {
+                ((SceneShape) selection.get(0)).setLocation(mouseHere);
             }
-        
+        } else {
+            if (this.mode == UserMode.Drawing) {
+                double downX = mouseDown.getX();
+                double downY = mouseDown.getY();
+                double hereX = mouseHere.getX();
+                double hereY = mouseHere.getY();
+
+                double l = Math.min(downX, hereX);
+                double t = Math.min(downY, hereY);
+                double w = Math.abs(downX - hereX);
+                double h = Math.abs(downY - hereY);
+                //rect = new Rectangle2D.Double(l, t, w, h);
+
+                double dia = Math.min(w, h);
+                if (dia >= 5) {
+                    l = downX < hereX ? downX : downX - w;
+                    t = downY < hereY ? downY : downY - h;
+
+                    //Création d'une forme géométrique
+                    createShape(l, t, w, h);
+                } else {
+                    shape = null;
+                }
+            }
+        }
 
         // affichage des coordonn�es
         infoBar.printCoordinates(mouseHere);
-
-        if (shape == null) {
-            return;
-        }
-
         /*
         // deplacement de l'extrémité de la droite
         if (shape.getGeometry() instanceof Square) {

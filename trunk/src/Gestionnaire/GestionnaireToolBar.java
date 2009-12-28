@@ -25,7 +25,11 @@ public class GestionnaireToolBar implements ActionListener
         /** Action pour ouvrir une boite de dialogue "A propos" */
         DRAW_STAR,
         /** Action pour ouvrir une boite de dialogue "A propos" */
-        DRAW_POLYGON;
+        DRAW_POLYGON,
+
+        MODE_SELECTION,
+
+        GROUP;
 
         /**
          * Action � r�aliser en fonction de la valeur de l'enum
@@ -36,21 +40,28 @@ public class GestionnaireToolBar implements ActionListener
         public void performAction(GestionnaireToolBar g, ActionEvent e)
                 throws AssertionError
         {
+            OptionPanel p = g.getOptionZone();
             switch (this) {
                 case DRAW_RECTANGLE: // fin de l'application
-                    g.getOptionZone().changeShapeList(0);;
+                    p.changeShapeList(0);
                     return;
                 case DRAW_ELLIPSE: // effacement de la zone de dessin
-                    g.getOptionZone().changeShapeList(1);
+                    p.changeShapeList(1);
                     return;
                 case DRAW_TRIANGLE: // effacement de la derni�re ligne trac�e
-                    g.getOptionZone().changeShapeList(2);
+                    p.changeShapeList(2);
                     return;
                 case DRAW_STAR: // boite de dialogue "� propos"
-                    g.getOptionZone().changeShapeList(3);
+                    p.changeShapeList(3);
                     return;
                 case DRAW_POLYGON: // effacement de la derni�re ligne trac�e
-                    g.getOptionZone().changeShapeList(4);
+                    p.changeShapeList(4);
+                    return;
+                case MODE_SELECTION: //Passage en mode sélection
+                    p.getDrawZone().switchSelectionMode();
+                    return;
+                case GROUP: //Groupement des formes constituant la sélection courante
+                    p.getDrawZone().groupCurrentSelection();
                     return;
             } throw new AssertionError("ActionToPerform::unknown assertion : " + this);
         }
@@ -72,6 +83,10 @@ public class GestionnaireToolBar implements ActionListener
                     return new String("STAR");
                 case DRAW_POLYGON: // boite de dialogue "� propos"
                     return new String("POLYGON");
+                case MODE_SELECTION:
+                    return new String("SELECTION");
+                case GROUP:
+                    return new String("GROUP");
             } throw new AssertionError("ActionToPerform::unknown assertion : " + this);
         }
     }

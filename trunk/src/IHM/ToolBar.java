@@ -21,12 +21,14 @@ public class ToolBar extends JToolBar
 	{
 		/* Creation de la barre d'outils avec une orientation verticale */
 		super(1);
-				
+                
                 btn1.addActionListener(new GestionnaireToolBar(ButtonPressed.DRAW_RECTANGLE, optionZone));
                 btn2.addActionListener(new GestionnaireToolBar(ButtonPressed.DRAW_ELLIPSE, optionZone));
                 btn3.addActionListener(new GestionnaireToolBar(ButtonPressed.DRAW_TRIANGLE, optionZone));
                 btn4.addActionListener(new GestionnaireToolBar(ButtonPressed.DRAW_STAR, optionZone));
                 btn5.addActionListener(new GestionnaireToolBar(ButtonPressed.DRAW_POLYGON, optionZone));
+                btn6.addActionListener(new GestionnaireToolBar(ButtonPressed.MODE_SELECTION, optionZone));
+                btn7.addActionListener(new GestionnaireToolBar(ButtonPressed.GROUP, optionZone));
 		this.add(btn1);
 		this.add(btn2);
 		this.add(btn3);

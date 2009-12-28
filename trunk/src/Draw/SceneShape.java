@@ -6,7 +6,9 @@ import java.awt.Graphics2D;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.awt.Shape;
+import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
@@ -18,7 +20,10 @@ public abstract class SceneShape extends SceneGraph {
 
     protected Shape shape;
 
+    protected Point offset = new Point();
+
     public abstract void setLocation(Point2D p);
+    public abstract void setOffset(Point p);
 
     public SceneShape(View v)
     {
@@ -43,7 +48,13 @@ public abstract class SceneShape extends SceneGraph {
         return shape.contains(p);
     }
 
-    public void drawShape(Graphics2D g2d)
+    public Rectangle2D getBounds2D()
+    {
+        return shape.getBounds2D();
+    }
+
+    @Override
+    public void draw(Graphics2D g2d)
     {
         if (view.getFillPattern()==null) {
             g2d.setPaint(view.getFillColor());
