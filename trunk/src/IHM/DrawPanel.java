@@ -229,6 +229,19 @@ public class DrawPanel extends JPanel
         return foundShape;
     }
 
+    public SceneGraph getSceneGraphAt(Point2D p)
+    {
+        SceneGraph foundGraph = null;
+        for(Enumeration<SceneGraph> en = Window.sceneGraph.getStack().elements(); en.hasMoreElements();) {
+            SceneGraph g = en.nextElement();
+            if(g.contains(p)) {
+                foundGraph = g;
+                break;
+            }
+        }
+        return foundGraph;
+    }
+
     public void groupCurrentSelection()
     {
         if(!selection.isEmpty()) {

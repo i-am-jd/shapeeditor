@@ -25,6 +25,7 @@ public class Ellipse extends SceneShape {
         return this.getHeight() / 2;
     }
 
+    @Override
     public void setLocation(Point2D p)
     {
         ellipse.x = p.getX() - offset.getX();
@@ -32,6 +33,7 @@ public class Ellipse extends SceneShape {
     }
 
 
+    @Override
     public void setOffset(Point p)
     {
         offset.x = p.x - (int) ellipse.x;
