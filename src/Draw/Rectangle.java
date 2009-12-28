@@ -15,12 +15,14 @@ public class Rectangle extends SceneShape
         shape = rect;
     }
 
+    @Override
     public void setLocation(Point2D p)
     {
         rect.x = p.getX() - offset.getX();
         rect.y = p.getY() - offset.getY();
     }
 
+    @Override
        public void setOffset(Point p)
     {
         offset.x = p.x - (int) rect.x;

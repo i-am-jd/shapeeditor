@@ -22,7 +22,6 @@ public abstract class SceneShape extends SceneGraph {
 
     protected Point offset = new Point();
 
-    public abstract void setLocation(Point2D p);
     public abstract void setOffset(Point p);
 
     public SceneShape(View v)

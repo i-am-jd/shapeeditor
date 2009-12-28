@@ -3,6 +3,7 @@ package Draw;
 import java.util.Enumeration;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.util.Stack;
@@ -69,6 +70,23 @@ public class SceneGraph extends DefaultMutableTreeNode {
             for(Enumeration<SceneGraph> en = stack.elements(); en.hasMoreElements();) {
                 en.nextElement().draw(g2d);
             }
+        }
+
+        public void setLocation(Point2D p)
+        {
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                en.nextElement().setLocation(p);
+            }
+        }
+
+        public boolean contains(Point2D p)
+        {
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                if(en.nextElement().contains(p)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
 }
