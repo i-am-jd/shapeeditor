@@ -5,6 +5,7 @@
 
 package Draw;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.Polygon;
 
@@ -42,5 +43,10 @@ public class RegularPolygon extends SceneShape
     {
         //Well, not implemented
         //We should use the method Polygon::translate(int deltaX, int deltaY) 
+    }
+
+    public void setOffset(Point p)
+    {
+    
     }
 }

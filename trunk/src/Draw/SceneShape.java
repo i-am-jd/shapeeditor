@@ -42,6 +42,7 @@ public abstract class SceneShape extends SceneGraph {
         return shape.getBounds2D().getHeight() / 2;
     }
 
+    @Override
     public boolean contains(Point2D p)
     {
         return shape.contains(p);
