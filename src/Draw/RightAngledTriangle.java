@@ -17,17 +17,14 @@ public class RightAngledTriangle extends SceneShape {
     
     final Polygon polygon;
 
-    int originX;
-    int originY;
-
     public RightAngledTriangle(View v, double x, double y, double width, double height) {
         super(v);
 
         int[] xpoints = new int[3];
         int[] ypoints = new int[3];
 
-        xpoints[0] = originX = (int) x;
-        ypoints[0] = originY = (int) y;
+        xpoints[0] = (int) x;
+        ypoints[0] = (int) y;
         xpoints[1] = (int) x;
         ypoints[1] = (int) (y+height);
         xpoints[2] = (int) (x+width);
@@ -40,9 +37,7 @@ public class RightAngledTriangle extends SceneShape {
     @Override
     public void setLocation(Point2D p)
     {
-        polygon.translate((int) (p.getX() - originX), (int) (p.getY() - originY));
-        originX = (int) p.getX();
-        originY = (int) p.getY();
+        polygon.translate((int) (p.getX() - polygon.xpoints[0]), (int) (p.getY() - polygon.ypoints[0]));
     }
 
     @Override
