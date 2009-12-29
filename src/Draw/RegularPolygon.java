@@ -45,6 +45,21 @@ public class RegularPolygon extends SceneShape
         shape = polygon;
     }
 
+     public RegularPolygon (RegularPolygon p) {
+        super(p.view);
+        originX = p.originX + 5;
+        originY = p.originY + 5;
+        polygon = new Polygon(p.polygon.xpoints, p.polygon.ypoints, p.polygon.npoints);
+        polygon.translate(5, 5);
+        shape = polygon;
+    }
+
+     @Override
+    public RegularPolygon clone()
+    {
+        return new RegularPolygon(this);
+    }
+
     public void setLocation(Point2D p)
     {
         polygon.translate((int) (p.getX() - originX), (int) (p.getY() - originY));
@@ -54,5 +69,16 @@ public class RegularPolygon extends SceneShape
 
     public void setOffset(Point p)
     {
+    }
+
+    @Override
+    public double getOriginX()
+    {
+        return originX;
+    }
+    @Override
+    public double getOriginY()
+    {
+        return originY;
     }
 }

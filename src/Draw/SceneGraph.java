@@ -20,7 +20,6 @@ public class SceneGraph extends DefaultMutableTreeNode {
 
         public void add(SceneGraph s)
         {
-
             super.add(s);
             stack.push(s);
         }
@@ -47,7 +46,12 @@ public class SceneGraph extends DefaultMutableTreeNode {
             view = new View(Color.BLACK, 1, Color.BLACK, null);
             this.add(s);
         }
-	
+
+        @Override
+        public SceneGraph clone()
+        {
+            return new SceneGraph(this.view, "Scene Graph");
+        }
 	/**
 	 * Getter of the property <tt>view</tt>
 	 * @return  Returns the view.
@@ -66,9 +70,19 @@ public class SceneGraph extends DefaultMutableTreeNode {
 		this.view = view;
 	}
 
+       /*public void draw(Graphics2D g2d) {
+            for(Enumeration<SceneGraph> en = this.getStack(); en.hasMoreElements();) { //stack
+                 en.nextElement().draw(g2d, 0);
+            }
+        }*/
+        
         public void draw(Graphics2D g2d) {
-            for(Enumeration<SceneGraph> en = stack.elements(); en.hasMoreElements();) {
-                en.nextElement().draw(g2d);
+                this.draw(g2d, 0, 1, 1, 0, 0);
+        }
+
+        public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                en.nextElement().draw(g2d, rotate, scaleX, scaleY, shearX, shearY); //, scale, shear);
             }
         }
 
@@ -87,6 +101,23 @@ public class SceneGraph extends DefaultMutableTreeNode {
                 }
             }
             return false;
+        }
+
+        public void removeNode(SceneGraph s)
+        {
+            // reste a prevoir le cas ou on supprime un fils d'une operation binaire, par ex.
+            stack.remove(s);
+            s.removeFromParent();
+
+            //SceneGraph currentNode;
+            /*for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                if((currentNode = en.nextElement()).equals(s)) {
+                    currentNode.removeFromParent();
+                } else {
+                    //recherche en profondeur
+                    currentNode.removeNode(s);
+                }
+            }*/
         }
 
 }

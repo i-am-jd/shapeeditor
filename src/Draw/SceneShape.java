@@ -7,6 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.awt.Shape;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -23,6 +24,8 @@ public abstract class SceneShape extends SceneGraph {
     protected Point offset = new Point();
 
     public abstract void setOffset(Point p);
+    public abstract double getOriginX();
+    public abstract double getOriginY();
 
     public SceneShape(View v)
     {
@@ -61,17 +64,38 @@ public abstract class SceneShape extends SceneGraph {
         } else { // view.getFillPattern() != null
             g2d.setPaint(view.getFillPattern());
         }
-        //g2d.scale(0.5, 0.5);
-        //g2d.rotate(Math.PI/4);
-        //g2d.shear(0.5, 0.5);
-        //g2d.translate(100.5, 100.5);
-        //this.geometry.fillGeometry(g2d);
         g2d.fill(shape);
 
         g2d.setStroke(new BasicStroke(view.getLineWidth()));
         g2d.setColor(view.getLineColor());
         g2d.draw(shape);
     }
+
+    @Override
+     public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY)
+     {
+         AffineTransform saveAT = g2d.getTransform();
+         AffineTransform newAT = new AffineTransform();
+
+         newAT.rotate(rotate, getOriginX(), getOriginY());
+         newAT.scale(scaleX, scaleY);
+         newAT.shear(shearX, shearY);
+         //newAT.translate(a, b);
+        g2d.setTransform(newAT);
+        
+          if (view.getFillPattern()==null) {
+            g2d.setPaint(view.getFillColor());
+        } else { // view.getFillPattern() != null
+            g2d.setPaint(view.getFillPattern());
+        }
+        g2d.fill(shape);
+
+        g2d.setStroke(new BasicStroke(view.getLineWidth()));
+        g2d.setColor(view.getLineColor());
+        g2d.draw(shape);
+
+        g2d.setTransform(saveAT);
+     }
 
     /* Insere la shape sur le noeud n passe en argument */
     public void insertShape(DefaultMutableTreeNode n)

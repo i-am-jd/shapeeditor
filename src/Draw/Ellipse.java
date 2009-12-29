@@ -15,6 +15,18 @@ public class Ellipse extends SceneShape {
         shape = ellipse;
     }
 
+    public Ellipse (Ellipse e) {
+        super(e.view);
+        ellipse = new Ellipse2D.Double(e.ellipse.x+5, e.ellipse.y+5, e.ellipse.width, e.ellipse.height);
+        shape = ellipse;
+    }
+
+    @Override
+    public Ellipse clone()
+    {
+        return new Ellipse(this);
+    }
+
     public double getSemiMajorAxis()
     {
         return this.getWidth() / 2;
@@ -38,5 +50,17 @@ public class Ellipse extends SceneShape {
     {
         offset.x = p.x - (int) ellipse.x;
         offset.y = p.y - (int) ellipse.y;
+    }
+
+    @Override
+    public double getOriginX()
+    {
+        return ellipse.x+getSemiMajorAxis();
+    }
+    
+    //@Override
+    public double getOriginY()
+    {
+        return ellipse.y+getSemiMinorAxis();
     }
 }

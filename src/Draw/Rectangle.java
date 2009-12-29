@@ -16,6 +16,18 @@ public class Rectangle extends SceneShape
         shape = rect;
     }
 
+    public Rectangle(Rectangle r) {
+        super(r.view);
+        rect = new Rectangle2D.Double(r.rect.x+5, r.rect.y+5, r.rect.width, r.rect.height);
+        shape = rect;
+    }
+
+    @Override
+    public Rectangle clone()
+    {
+        return new Rectangle(this);
+    }
+
     @Override
     public void setLocation(Point2D p)
     {
@@ -28,5 +40,16 @@ public class Rectangle extends SceneShape
     {
         offset.x = p.x - (int) rect.x;
         offset.y = p.y - (int) rect.y;
+    }
+
+    @Override
+    public double getOriginX()
+    {
+        return rect.x+rect.width/2;
+    }
+    @Override
+    public double getOriginY()
+    {
+        return rect.y+rect.height/2;
     }
 }
