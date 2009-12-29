@@ -29,7 +29,17 @@ public class GestionnaireToolBar implements ActionListener
 
         MODE_SELECTION,
 
-        GROUP;
+        GROUP,
+
+        COPY,
+
+        ROTATE,
+
+        SCALE,
+
+        SHEAR,
+
+        DELETE;
 
         /**
          * Action � r�aliser en fonction de la valeur de l'enum
@@ -62,6 +72,21 @@ public class GestionnaireToolBar implements ActionListener
                     return;
                 case GROUP: //Groupement des formes constituant la sélection courante
                     p.getDrawZone().groupCurrentSelection();
+                    return;
+                case COPY: //Copie des formes constituant la sélection courante
+                    p.getDrawZone().copyCurrentSelection();
+                    return;
+                case ROTATE: //Copie des formes constituant la sélection courante
+                    p.getDrawZone().switchRotationMode();
+                    return;
+                case SCALE: //Copie des formes constituant la sélection courante
+                    p.getDrawZone().switchScaleMode();
+                    return;
+                case SHEAR: //Copie des formes constituant la sélection courante
+                    p.getDrawZone().switchShearMode();
+                    return;
+                case DELETE: //Suppression des formes constituant la sélection courante
+                    p.getDrawZone().deleteCurrentSelection();
                     return;
             } throw new AssertionError("ActionToPerform::unknown assertion : " + this);
         }

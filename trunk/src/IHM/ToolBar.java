@@ -16,6 +16,12 @@ public class ToolBar extends JToolBar
         
 	private JButton btn6 = new JButton("Sélection");
         private JButton btn7 = new JButton("Group");
+        private JButton btn8 = new JButton("Copy");
+        private JButton btn9 = new JButton("Rotate");
+        private JButton btn10 = new JButton("Scale");
+        private JButton btn11 = new JButton("Shear");
+        private JButton btn12 = new JButton("Delete");
+
 	
 	public ToolBar(OptionPanel optionZone)
 	{
@@ -29,6 +35,11 @@ public class ToolBar extends JToolBar
                 btn5.addActionListener(new GestionnaireToolBar(ButtonPressed.DRAW_POLYGON, optionZone));
                 btn6.addActionListener(new GestionnaireToolBar(ButtonPressed.MODE_SELECTION, optionZone));
                 btn7.addActionListener(new GestionnaireToolBar(ButtonPressed.GROUP, optionZone));
+                btn8.addActionListener(new GestionnaireToolBar(ButtonPressed.COPY, optionZone));
+                btn9.addActionListener(new GestionnaireToolBar(ButtonPressed.ROTATE, optionZone));
+                btn10.addActionListener(new GestionnaireToolBar(ButtonPressed.SCALE, optionZone));
+                btn11.addActionListener(new GestionnaireToolBar(ButtonPressed.SHEAR, optionZone));
+                btn12.addActionListener(new GestionnaireToolBar(ButtonPressed.DELETE, optionZone));
 		this.add(btn1);
 		this.add(btn2);
 		this.add(btn3);
@@ -37,7 +48,12 @@ public class ToolBar extends JToolBar
                 this.addSeparator();
 		this.add(btn6);
                 this.add(btn7);
-
+                this.add(btn8);
+                this.add(btn9);
+                this.add(btn10);
+                this.add(btn11);
+                this.add(btn12);
+                
                 this.setBorder(BorderFactory.createEtchedBorder());
 	}
 	

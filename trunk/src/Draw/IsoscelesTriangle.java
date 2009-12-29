@@ -34,6 +34,19 @@ public class IsoscelesTriangle extends SceneShape {
         shape = polygon;
     }
 
+     public IsoscelesTriangle(IsoscelesTriangle t) {
+        super(t.view);
+        polygon = new Polygon(t.polygon.xpoints, t.polygon.ypoints, t.polygon.npoints);
+        polygon.translate(5, 5);
+        shape = polygon;
+    }
+     
+     @Override
+    public IsoscelesTriangle clone()
+    {
+        return new IsoscelesTriangle(this);
+    }
+
     @Override
     public void setLocation(Point2D p)
     {
@@ -44,5 +57,16 @@ public class IsoscelesTriangle extends SceneShape {
     public void setOffset(Point p)
     {
 
+    }
+
+    @Override
+    public double getOriginX()
+    {
+        return polygon.xpoints[0];
+    }
+    @Override
+    public double getOriginY()
+    {
+        return polygon.xpoints[1];
     }
 }

@@ -8,4 +8,8 @@ public class Group extends SceneGraph {
         super("Group");
     }
 
+    public Group(String s) {
+        super(s);
+    }
+
 }

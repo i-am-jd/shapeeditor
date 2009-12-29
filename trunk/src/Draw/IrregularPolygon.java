@@ -24,6 +24,19 @@ public class IrregularPolygon extends SceneShape {
         shape = polygon; 
     }
 
+     public IrregularPolygon (IrregularPolygon p) {
+        super(p.view);
+        polygon = new Polygon(p.polygon.xpoints, p.polygon.ypoints, p.polygon.npoints);
+        polygon.translate(5, 5);
+        shape = polygon;
+    }
+
+     @Override
+    public IrregularPolygon clone()
+    {
+        return new IrregularPolygon(this);
+    }
+
     @Override
     public void setLocation(Point2D p)
     {
@@ -34,6 +47,17 @@ public class IrregularPolygon extends SceneShape {
     public void setOffset(Point p)
     {
         
+    }
+
+    @Override
+    public double getOriginX()
+    {
+        return polygon.xpoints[0];
+    }
+    @Override
+    public double getOriginY()
+    {
+        return polygon.xpoints[1];
     }
 
 }

@@ -1,21 +1,35 @@
 package Draw;
 
+import java.awt.Graphics2D;
+import java.util.Enumeration;
+
 
 public class Scale extends UnaryOperation {
-    private float scaleFactor;
 
-    public Scale (float scaleFactor)
+    private double factorX;
+    private double factorY;
+
+    public Scale (double scaleX, double scaleY)
     {
-        this.scaleFactor = scaleFactor;
+        super("Scale");
+        this.factorX = scaleX;
+        this.factorY = scaleY;
     }
 
-    public float getScaleFactor()
+    @Override
+    public Scale clone()
     {
-        return this.scaleFactor;
+        Scale s = new Scale(factorX, factorY);
+        for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                s.add(en.nextElement().clone());
+        }
+        return s;
     }
 
-    public void setScaleFactor(float scaleFactor)
-    {
-        this.scaleFactor = scaleFactor;
+    @Override
+    public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
+        for (Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+            en.nextElement().draw(g2d, rotate, factorX*scaleX, factorY*scaleY, shearX, shearY);
+        }
     }
 }

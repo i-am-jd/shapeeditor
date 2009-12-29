@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Point;
-import java.lang.Math;
 import java.awt.Color;
 
 public class DrawPanel extends JPanel
@@ -86,6 +85,46 @@ public class DrawPanel extends JPanel
         } else {
             this.mode = UserMode.Selecting;
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+    }
+
+    public void switchRotationMode()
+    {
+        /*if(mode == UserMode.Selecting) {
+            this.mode = UserMode.Drawing;
+            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        } else {
+            this.mode = UserMode.Selecting;
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }*/
+        if(!selection.isEmpty()) {
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+                SceneGraph currentElement = en.nextElement();
+                Rotation r = new Rotation(Math.PI/2);
+                r.add(currentElement);
+                Window.sceneGraph.add(r);
+            }
+        }
+    }
+
+    public void switchScaleMode()
+    {
+           if(!selection.isEmpty()) {
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+                Scale s = new Scale(0.5, 0.5);
+                s.add(en.nextElement());
+                Window.sceneGraph.add(s);
+            }
+        }
+    }
+    public void switchShearMode()
+    {
+        if(!selection.isEmpty()) {
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+                Shear s = new Shear(2, 2);
+                s.add(en.nextElement());
+                Window.sceneGraph.add(s);
+            }
         }
     }
 
@@ -175,6 +214,12 @@ public class DrawPanel extends JPanel
 
         if (!currentShapeType.equals("Irregular Polygon"))
             return;
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            // Si on fait un clic droit, on annule la création du polygone
+            polygon.clear();
+            repaint();
+            return;
+        }
 
         Point2D p = e.getPoint();
         int x = (int) p.getX();
@@ -211,11 +256,14 @@ public class DrawPanel extends JPanel
     public SceneShape getShapeAt(Point2D p)
     {
         SceneShape foundShape = null;
-        for(Enumeration shapes = Window.sceneGraph.getStack().elements(); shapes.hasMoreElements();) {
-            SceneShape s = (SceneShape) shapes.nextElement();
-            if(s.contains(p)) {
-                foundShape = s;
-                break;
+        for(Enumeration shapes = Window.sceneGraph.children()/*getStack().elements()*/; shapes.hasMoreElements();) {
+            SceneGraph currentElement;
+            if ((currentElement = (SceneGraph) shapes.nextElement()) instanceof SceneShape) {
+                SceneShape s = (SceneShape) currentElement;
+                if(s.contains(p)) {
+                    foundShape = s;
+                    break;
+                }
             }
         }
         /*for(Enumeration nodes = Window.sceneGraph.breadthFirstEnumeration(); nodes.hasMoreElements();) {
@@ -253,6 +301,26 @@ public class DrawPanel extends JPanel
                 gr.add(en.nextElement());
             }
             Window.sceneGraph.add(gr);
+        }
+    }
+
+    public void copyCurrentSelection()
+    { 
+        if(!selection.isEmpty()) {
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+               Window.sceneGraph.add(en.nextElement().clone());
+            }
+            selection.removeAllElements();
+        }
+    }
+
+    public void deleteCurrentSelection()
+    {
+        if(!selection.isEmpty()) {
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+                Window.sceneGraph.removeNode(en.nextElement());
+            }
+            selection.removeAllElements();
         }
     }
 

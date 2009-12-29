@@ -2,6 +2,9 @@ package Draw;
 
 
 
-public class Transformation extends Group {
+public abstract class Transformation extends Group {
+    public Transformation(String s){
+        super(s);
+    }
 
 }

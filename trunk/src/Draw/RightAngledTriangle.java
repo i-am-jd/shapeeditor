@@ -34,6 +34,19 @@ public class RightAngledTriangle extends SceneShape {
         shape = polygon;
     }
 
+    public RightAngledTriangle(RightAngledTriangle t) {
+        super(t.view);
+        polygon = new Polygon(t.polygon.xpoints, t.polygon.ypoints, t.polygon.npoints);
+        polygon.translate(5, 5);
+        shape = polygon;
+    }
+
+    @Override
+    public RightAngledTriangle clone()
+    {
+        return new RightAngledTriangle(this);
+    }
+
     @Override
     public void setLocation(Point2D p)
     {
@@ -43,5 +56,16 @@ public class RightAngledTriangle extends SceneShape {
     @Override
        public void setOffset(Point p)
     {
+    }
+
+    @Override
+    public double getOriginX()
+    {
+        return polygon.xpoints[0];
+    }
+    @Override
+    public double getOriginY()
+    {
+        return polygon.xpoints[1];
     }
 }

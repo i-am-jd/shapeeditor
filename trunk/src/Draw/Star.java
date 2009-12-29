@@ -39,6 +39,32 @@ public class Star extends SceneShape {
         shape = polygon;
     }
 
+    public Star (Star s) {
+        super(s.view);
+        originX = s.originX + 5;
+        originY = s.originY + 5;
+        polygon = new Polygon(s.polygon.xpoints, s.polygon.ypoints, s.polygon.npoints);
+        polygon.translate(5, 5);
+        shape = polygon;
+    }
+
+    @Override
+    public Star clone()
+    {
+        return new Star(this);
+    }
+
+    @Override
+    public double getOriginX()
+    {
+        return originX;
+    }
+    @Override
+    public double getOriginY()
+    {
+        return originY;
+    }
+
     @Override
     public void setLocation(Point2D p)
     {
