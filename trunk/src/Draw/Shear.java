@@ -19,17 +19,13 @@ public class Shear extends UnaryOperation {
     public Shear clone()
     {
         Shear s = new Shear(factorX, factorY);
-        for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
-                s.add(en.nextElement().clone());
-        }
+        s.add(((SceneGraph)s.getChildAt(0)).clone());
         return s;
     }
 
     @Override
     public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
-        for (Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
-            en.nextElement().draw(g2d, rotate, scaleX, scaleY, factorX+shearX, factorY+shearY);
-        }
+        ((SceneGraph) this.getChildAt(0)).draw(g2d, rotate, scaleX, scaleY, factorX + shearX, factorY + shearY);
     }
 
 }

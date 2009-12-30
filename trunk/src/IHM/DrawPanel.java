@@ -42,6 +42,9 @@ public class DrawPanel extends JPanel
     //Modifié au fur et à mesure des interactions avec l'utilisateur
     private Point mouseDown,  mouseHere,  mouseClicked;
 
+    //Noeud du graphe de scene en cours de modification
+    private SceneGraph node;
+
     //Forme à déplacer
     private SceneShape shapeToDrag = null;
 
@@ -77,55 +80,38 @@ public class DrawPanel extends JPanel
         this.mode = mode;
     }
 
-    public void switchSelectionMode()
+    public void switchDrawingMode()
     {
-        if(mode == UserMode.Selecting) {
-            this.mode = UserMode.Drawing;
-            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        } else {
-            this.mode = UserMode.Selecting;
-            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        }
+        this.mode = UserMode.Drawing;
+        setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
     }
 
-    public void switchRotationMode()
+    public void switchSelectionMode()
     {
         /*if(mode == UserMode.Selecting) {
             this.mode = UserMode.Drawing;
             setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        } else {
+        } else {*/
             this.mode = UserMode.Selecting;
-            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        }*/
-        if(!selection.isEmpty()) {
-            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                SceneGraph currentElement = en.nextElement();
-                Rotation r = new Rotation(Math.PI/2);
-                r.add(currentElement);
-                Window.sceneGraph.add(r);
-            }
-        }
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+        /*}*/
+    }
+
+    public void switchRotationMode()
+    {
+        this.mode = UserMode.Rotating;
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void switchScaleMode()
     {
-           if(!selection.isEmpty()) {
-            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                Scale s = new Scale(0.5, 0.5);
-                s.add(en.nextElement());
-                Window.sceneGraph.add(s);
-            }
-        }
+        this.mode = UserMode.Scaling;
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
     public void switchShearMode()
     {
-        if(!selection.isEmpty()) {
-            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                Shear s = new Shear(2, 2);
-                s.add(en.nextElement());
-                Window.sceneGraph.add(s);
-            }
-        }
+        this.mode = UserMode.Shearing;
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     @Override
@@ -210,7 +196,7 @@ public class DrawPanel extends JPanel
                 repaint();
             }
             return;
-        }
+        } 
 
         if (!currentShapeType.equals("Irregular Polygon"))
             return;
@@ -311,6 +297,7 @@ public class DrawPanel extends JPanel
                Window.sceneGraph.add(en.nextElement().clone());
             }
             selection.removeAllElements();
+            repaint();
         }
     }
 
@@ -321,6 +308,7 @@ public class DrawPanel extends JPanel
                 Window.sceneGraph.removeNode(en.nextElement());
             }
             selection.removeAllElements();
+            repaint();
         }
     }
 
@@ -395,22 +383,66 @@ public class DrawPanel extends JPanel
             mouseDown = e.getPoint();
             shapeToDrag = getShapeAt(mouseDown);
          }
+         if (this.mode == UserMode.Rotating) {
+            if (!selection.isEmpty()) {
+                SceneGraph parent = (SceneGraph)selection.get(0).getParent();
+                Rotation r;
+                if ( parent instanceof Rotation ) {
+                    //Si le noeud parent est deja une rotation on la modifie directement
+                    r = (Rotation)parent;
+                } else {
+                    //sinon on ajoute un nouveau noeud dans le graphe
+                    r = new Rotation(0);
+                    r.add(selection.get(0));
+                    Window.sceneGraph.add(r);
+                }
+                //Ajouter r au dessus de la feuille de selection(0)
+                node = r;
+            }
+        } else if (this.mode == UserMode.Scaling) {
+            if (!selection.isEmpty()) {
+                SceneGraph parent = (SceneGraph)selection.get(0).getParent();
+                Scale s;
+                if ( parent instanceof Scale ) {
+                    //Si le noeud parent est deja une rotation on la modifie directement
+                    s = (Scale)parent;
+                } else {
+                    //sinon on ajoute un nouveau noeud dans le graphe
+                    s = new Scale(1, 1);
+                    s.add(selection.get(0));
+                    Window.sceneGraph.add(s);
+                }
+                //Ajouter r au dessus de la feuille de selection(0)
+                node = s;
+            }
+        } else if (this.mode == UserMode.Shearing) {
+            if (!selection.isEmpty()) {
+                SceneGraph parent = (SceneGraph)selection.get(0).getParent();
+                Shear s;
+                if ( parent instanceof Shear ) {
+                    //Si le noeud parent est deja une rotation on la modifie directement
+                    s = (Shear)parent;
+                } else {
+                    //sinon on ajoute un nouveau noeud dans le graphe
+                    s = new Shear(1, 1);
+                    s.add(selection.get(0));
+                    Window.sceneGraph.add(s);
+                }
+                //Ajouter r au dessus de la feuille de selection(0)
+                node = s;
+            }
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         shapeToDrag = null;
+        node = null;
         if (shape != null) {
             Window.sceneGraph.add(shape);
             shape = null;
             repaint();
         }
-
-        // stockage de la droite
-        // liberation de la droite temporaire
-        // destruction de sa r�f�rence sachant qu'elle est
-        // sauvegardee dans la classe dessin
-
         infoBar.printMessage("Click to initiate a shape.");
     }
 
@@ -433,8 +465,15 @@ public class DrawPanel extends JPanel
             if(selection.get(0) instanceof SceneShape) {
                 ((SceneShape) selection.get(0)).setLocation(mouseHere);
             }
-        } else {
-            if (this.mode == UserMode.Drawing) {
+        } else if (this.mode == UserMode.Rotating) {
+            SceneShape son = (SceneShape) node.getChildAt(0);
+            ((Rotation) node).setAngle(calculateAngle(son, mouseHere));
+        } else if (this.mode == UserMode.Scaling) {
+            SceneShape son = (SceneShape) node.getChildAt(0);
+            ((Scale) node).setFactors(calculateScaleFactor(son, mouseHere));
+        } else if (this.mode == UserMode.Shearing) {
+            // A FAIRE
+        } else if (this.mode == UserMode.Drawing) {
                 double downX = mouseDown.getX();
                 double downY = mouseDown.getY();
                 double hereX = mouseHere.getX();
@@ -455,8 +494,7 @@ public class DrawPanel extends JPanel
                     createShape(l, t, w, h);
                 } else {
                     shape = null;
-                }
-            }
+                }  
         }
 
         // affichage des coordonn�es
@@ -497,5 +535,31 @@ public class DrawPanel extends JPanel
 
     public void setCurrentShapeType(String s) {
         this.currentShapeType = s;
+    }
+
+    public double calculateAngle(SceneShape s, Point p)
+    {
+        double xS = s.getOriginX();
+        double yS = s.getOriginY();
+        double xP = p.getX();
+        double yP = p.getY();
+
+        double angle = Math.atan((yP-yS)/(xP-xS));
+
+        return angle;
+    }
+
+    public double[] calculateScaleFactor(SceneShape s, Point p)
+    {
+        double xS = s.getOriginX();
+        double yS = s.getOriginY();
+        double rad = s.getRadius();
+        double xP = p.getX();
+        double yP = p.getY();
+
+        double factorX = (xP-xS)/(rad-xS);
+        double factorY = (yP-yS)/(rad-yS);
+
+        return new double[]{factorX, factorY};
     }
 }

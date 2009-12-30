@@ -33,13 +33,25 @@ public class GestionnaireToolBar implements ActionListener
 
         COPY,
 
+        DELETE,
+
         ROTATE,
 
         SCALE,
 
         SHEAR,
 
-        DELETE;
+        UNION,
+
+        INTERSECTION,
+
+        SUBSTRACTION,
+
+        EXCLUSION,
+
+        INCLUSION,
+
+        INTERPOLATION;
 
         /**
          * Action � r�aliser en fonction de la valeur de l'enum
@@ -53,18 +65,23 @@ public class GestionnaireToolBar implements ActionListener
             OptionPanel p = g.getOptionZone();
             switch (this) {
                 case DRAW_RECTANGLE: // fin de l'application
+                    p.getDrawZone().switchDrawingMode();
                     p.changeShapeList(0);
                     return;
                 case DRAW_ELLIPSE: // effacement de la zone de dessin
+                    p.getDrawZone().switchDrawingMode();
                     p.changeShapeList(1);
                     return;
                 case DRAW_TRIANGLE: // effacement de la derni�re ligne trac�e
+                    p.getDrawZone().switchDrawingMode();
                     p.changeShapeList(2);
                     return;
                 case DRAW_STAR: // boite de dialogue "� propos"
+                    p.getDrawZone().switchDrawingMode();
                     p.changeShapeList(3);
                     return;
                 case DRAW_POLYGON: // effacement de la derni�re ligne trac�e
+                    p.getDrawZone().switchDrawingMode();
                     p.changeShapeList(4);
                     return;
                 case MODE_SELECTION: //Passage en mode sélection
@@ -76,6 +93,9 @@ public class GestionnaireToolBar implements ActionListener
                 case COPY: //Copie des formes constituant la sélection courante
                     p.getDrawZone().copyCurrentSelection();
                     return;
+                case DELETE: //Suppression des formes constituant la sélection courante
+                    p.getDrawZone().deleteCurrentSelection();
+                    return;
                 case ROTATE: //Copie des formes constituant la sélection courante
                     p.getDrawZone().switchRotationMode();
                     return;
@@ -85,8 +105,17 @@ public class GestionnaireToolBar implements ActionListener
                 case SHEAR: //Copie des formes constituant la sélection courante
                     p.getDrawZone().switchShearMode();
                     return;
-                case DELETE: //Suppression des formes constituant la sélection courante
-                    p.getDrawZone().deleteCurrentSelection();
+                case UNION: //Suppression des formes constituant la sélection courante
+                    return;
+                case INTERSECTION: //Suppression des formes constituant la sélection courante
+                    return;
+                case SUBSTRACTION:
+                    return;
+                case EXCLUSION: //Suppression des formes constituant la sélection courante
+                    return;
+                case INCLUSION: //Suppression des formes constituant la sélection courante
+                    return;
+                case INTERPOLATION: //Suppression des formes constituant la sélection courante
                     return;
             } throw new AssertionError("ActionToPerform::unknown assertion : " + this);
         }

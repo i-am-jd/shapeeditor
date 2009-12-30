@@ -68,4 +68,9 @@ public class RightAngledTriangle extends SceneShape {
     {
         return polygon.xpoints[1];
     }
+
+    public double getRadius()
+    {
+        return 1;
+    }
 }

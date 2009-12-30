@@ -80,4 +80,9 @@ public class Star extends SceneShape {
         offset.x = p.x - (int) originX;
         offset.y = p.y - (int) originY;
     }
+
+     public double getRadius()
+    {
+        return originY-polygon.ypoints[0];
+    }
 }

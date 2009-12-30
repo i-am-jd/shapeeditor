@@ -52,4 +52,10 @@ public class Rectangle extends SceneShape
     {
         return rect.y+rect.height/2;
     }
+
+    @Override
+     public double getRadius()
+    {
+        return Math.sqrt(Math.pow(rect.height/2, 2)+Math.pow(rect.width/2, 2));
+    }
 }

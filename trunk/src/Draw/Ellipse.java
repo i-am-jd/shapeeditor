@@ -63,4 +63,10 @@ public class Ellipse extends SceneShape {
     {
         return ellipse.y+getSemiMinorAxis();
     }
+
+    @Override
+    public double getRadius()
+    {
+        return getSemiMajorAxis();
+    }
 }

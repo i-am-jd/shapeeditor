@@ -26,6 +26,7 @@ public abstract class SceneShape extends SceneGraph {
     public abstract void setOffset(Point p);
     public abstract double getOriginX();
     public abstract double getOriginY();
+    public abstract double getRadius();
 
     public SceneShape(View v)
     {
