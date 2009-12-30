@@ -81,4 +81,9 @@ public class RegularPolygon extends SceneShape
     {
         return originY;
     }
+
+     public double getRadius()
+    {
+        return 1;
+    }
 }

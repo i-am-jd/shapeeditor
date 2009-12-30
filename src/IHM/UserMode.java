@@ -9,4 +9,4 @@ package IHM;
  *
  * @author jdkoeck
  */
-public enum UserMode { Drawing, Selecting };
+public enum UserMode { Drawing, Selecting, Rotating, Scaling, Shearing };

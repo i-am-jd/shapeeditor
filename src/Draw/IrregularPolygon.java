@@ -60,4 +60,10 @@ public class IrregularPolygon extends SceneShape {
         return polygon.xpoints[1];
     }
 
+    @Override
+     public double getRadius()
+    {
+        return 1;
+    }
+
 }
