@@ -8,8 +8,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Point;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import java.util.Stack;
-
 
 public class SceneGraph extends DefaultMutableTreeNode {
 	/**
@@ -17,27 +15,6 @@ public class SceneGraph extends DefaultMutableTreeNode {
 	 * @uml.associationEnd  inverse="sceneGraph:View"
 	 */
 	protected View view;
-
-        //Enfants du noeud courant
-        //Donne un ordre de priorité pour leur affichage
-        protected Stack<SceneGraph> stack = new Stack();
-
-        public void add(SceneGraph s)
-        {
-            super.add(s);
-            stack.push(s);
-        }
-
-        public void remove(SceneGraph s)
-        {
-            super.remove(s);
-            stack.remove(s);
-        }
-
-        public Stack<SceneGraph> getStack()
-        {
-            return stack;
-        }
 
 	public SceneGraph(View v, String name)
 	{
@@ -119,23 +96,6 @@ public class SceneGraph extends DefaultMutableTreeNode {
             }
             return false;
         }
-        
-        public void removeNode(SceneGraph s)
-        {
-            // reste a prevoir le cas ou on supprime un fils d'une operation binaire, par ex.
-            stack.remove(s);
-            s.removeFromParent();
-
-            //SceneGraph currentNode;
-            /*for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
-                if((currentNode = en.nextElement()).equals(s)) {
-                    currentNode.removeFromParent();
-                } else {
-                    //recherche en profondeur
-                    currentNode.removeNode(s);
-                }
-            }*/
-        }
 
         public Rectangle2D getBounds2D()
         {
@@ -151,6 +111,13 @@ public class SceneGraph extends DefaultMutableTreeNode {
                 }
                 return r;
             }
+        }
+
+        //Monte un graphe de scène enfant un premier plan (sera dessiné en priorité)
+        public void moveToFront(SceneGraph g)
+        {
+            this.remove(g);
+            this.add(g);
         }
 
 }

@@ -2,6 +2,8 @@ package IHM;
 
 import Draw.*;
 
+import java.util.Stack;
+
 import java.awt.BasicStroke;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -238,8 +240,9 @@ public class DrawPanel extends JPanel
     public SceneGraph getSceneGraphAt(Point2D p)
     {
         SceneGraph foundGraph = null;
-        for(Enumeration<SceneGraph> en = Window.sceneGraph.getStack().elements(); en.hasMoreElements();) {
-            SceneGraph g = en.nextElement();
+        int i = Window.sceneGraph.getChildCount();
+        while(i --> 0) {
+            SceneGraph g = (SceneGraph) Window.sceneGraph.getChildAt(i);
             if(g.contains(p)) {
                 foundGraph = g;
                 break;
@@ -285,7 +288,7 @@ public class DrawPanel extends JPanel
     {
         if(!selection.isEmpty()) {
             for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                Window.sceneGraph.removeNode(en.nextElement());
+                Window.sceneGraph.remove(en.nextElement());
             }
             selection.removeAllElements();
             repaint();
@@ -451,6 +454,7 @@ public class DrawPanel extends JPanel
         if(sceneGraphToDrag != null) {
             selection.clear();
             selection.add(sceneGraphToDrag);
+            Window.sceneGraph.moveToFront(sceneGraphToDrag);
         }
 
         if (selection.size() == 1 && this.mode == UserMode.Selecting) {
