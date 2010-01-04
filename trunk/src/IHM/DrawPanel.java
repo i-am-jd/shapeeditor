@@ -561,4 +561,9 @@ public class DrawPanel extends JPanel
 
         return new double[]{factorX, factorY};
     }
+
+    public Vector<SceneGraph> getSelection()
+    {
+        return selection;
+    }
 }

@@ -62,7 +62,8 @@ public class Window extends JFrame {
         toolBar = new ToolBar(optionZone);
         
         split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeZone, drawZone);
-        
+
+        treeZone.initializeListeners(drawZone);
         
         /* Ajout de la barre de menu a la fenetre */
         this.setJMenuBar(menuBar);
@@ -82,5 +83,7 @@ public class Window extends JFrame {
                 drawZone.calculateOrigin();
             }
         });
+
     }
+   
 }
