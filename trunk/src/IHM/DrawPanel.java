@@ -46,7 +46,7 @@ public class DrawPanel extends JPanel
     private SceneGraph node;
 
     //Forme à déplacer
-    private SceneShape shapeToDrag = null;
+    private SceneGraph sceneGraphToDrag = null;
 
     //État courant (sélection ou création d'une forme
     private UserMode mode = UserMode.Drawing;
@@ -155,13 +155,11 @@ public class DrawPanel extends JPanel
                  1.0f,
                  new float[] {1.0f, 6.0f},
                  0.0f));
-        g2d.setColor(Color.WHITE);
-        for(Enumeration en = selection.elements(); en.hasMoreElements();) {
-            Object node = en.nextElement();
-            if(node instanceof SceneShape) {
-                Rectangle2D r = ((SceneShape) node).getBounds2D();
-                g2d.draw(r);
-            }
+        g2d.setColor(Color.white);
+        g2d.setXORMode(Color.black);
+        for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+            Rectangle2D r = en.nextElement().getBounds2D();
+            g2d.draw(r);
         }
     }
 
@@ -181,9 +179,9 @@ public class DrawPanel extends JPanel
     {
         if(this.mode == UserMode.Selecting) {
 
-            SceneShape s = getShapeAt(e.getPoint());
+            SceneGraph s = getSceneGraphAt(e.getPoint());
             if(s != null) {
-                System.out.println("Shape selected");
+                System.out.println(s.toString() + "selected");
 
                 //Mettre dans la sélection
                 if(!e.isControlDown()) {
@@ -191,9 +189,9 @@ public class DrawPanel extends JPanel
                 }
                 selection.add(s);
 
-                //Garder les distances de la souris à la figure pour un éventuel déplacement
-                s.setOffset(mouseDown);
                 repaint();
+            } else {
+                selection.clear();
             }
             return;
         } 
@@ -237,35 +235,6 @@ public class DrawPanel extends JPanel
         }
     }
 
-    //Récupère la shape à un endroit donné
-    //Peut retourner null
-    public SceneShape getShapeAt(Point2D p)
-    {
-        SceneShape foundShape = null;
-        for(Enumeration shapes = Window.sceneGraph.children()/*getStack().elements()*/; shapes.hasMoreElements();) {
-            SceneGraph currentElement;
-            if ((currentElement = (SceneGraph) shapes.nextElement()) instanceof SceneShape) {
-                SceneShape s = (SceneShape) currentElement;
-                if(s.contains(p)) {
-                    foundShape = s;
-                    break;
-                }
-            }
-        }
-        /*for(Enumeration nodes = Window.sceneGraph.breadthFirstEnumeration(); nodes.hasMoreElements();) {
-            SceneGraph node = (SceneGraph) nodes.nextElement();
-            for (Enumeration en = node.children(); en.hasMoreElements();) {
-                SceneShape s = (SceneShape) en.nextElement();
-                if(s.contains(p)) {
-                    foundShape = s;
-                    break;
-                }
-            }
-
-        }*/
-        return foundShape;
-    }
-
     public SceneGraph getSceneGraphAt(Point2D p)
     {
         SceneGraph foundGraph = null;
@@ -282,11 +251,22 @@ public class DrawPanel extends JPanel
     public void groupCurrentSelection()
     {
         if(!selection.isEmpty()) {
+            
             Group gr = new Group();
+            System.out.println(new Integer(selection.size()));
             for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                gr.add(en.nextElement());
+                System.out.println("Grouping");
+                SceneGraph g = en.nextElement();
+                Window.sceneGraph.remove(g);
+                gr.add(g);
             }
+
             Window.sceneGraph.add(gr);
+
+            selection.clear();
+            selection.add(gr);
+
+            repaint();
         }
     }
 
@@ -381,7 +361,15 @@ public class DrawPanel extends JPanel
     public void mousePressed(MouseEvent e) {
          if (e.getButton() == MouseEvent.BUTTON1) {
             mouseDown = e.getPoint();
-            shapeToDrag = getShapeAt(mouseDown);
+            sceneGraphToDrag = getSceneGraphAt(mouseDown);
+
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+                en.nextElement().setOffset(mouseDown);
+            }
+
+            if(sceneGraphToDrag != null) {
+                sceneGraphToDrag.setOffset(mouseDown);
+            }
          }
          if (this.mode == UserMode.Rotating) {
             if (!selection.isEmpty()) {
@@ -436,7 +424,7 @@ public class DrawPanel extends JPanel
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        shapeToDrag = null;
+        sceneGraphToDrag = null;
         node = null;
         if (shape != null) {
             Window.sceneGraph.add(shape);
@@ -460,11 +448,14 @@ public class DrawPanel extends JPanel
 
         mouseHere = e.getPoint();
 
+        if(sceneGraphToDrag != null) {
+            selection.clear();
+            selection.add(sceneGraphToDrag);
+        }
+
         if (selection.size() == 1 && this.mode == UserMode.Selecting) {
             //Déplacement de la shape sélectionnée
-            if(selection.get(0) instanceof SceneShape) {
-                ((SceneShape) selection.get(0)).setLocation(mouseHere);
-            }
+            selection.get(0).setLocation(mouseHere);
         } else if (this.mode == UserMode.Rotating) {
             SceneShape son = (SceneShape) node.getChildAt(0);
             ((Rotation) node).setAngle(calculateAngle(son, mouseHere));

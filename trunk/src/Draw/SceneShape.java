@@ -23,7 +23,6 @@ public abstract class SceneShape extends SceneGraph {
 
     protected Point offset = new Point();
 
-    public abstract void setOffset(Point p);
     public abstract double getOriginX();
     public abstract double getOriginY();
     public abstract double getRadius();
@@ -52,6 +51,7 @@ public abstract class SceneShape extends SceneGraph {
         return shape.contains(p);
     }
 
+    @Override
     public Rectangle2D getBounds2D()
     {
         return shape.getBounds2D();

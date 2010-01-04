@@ -4,6 +4,8 @@ import java.util.Enumeration;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.Point;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.util.Stack;
@@ -15,13 +17,21 @@ public class SceneGraph extends DefaultMutableTreeNode {
 	 * @uml.associationEnd  inverse="sceneGraph:View"
 	 */
 	protected View view;
-        
+
+        //Enfants du noeud courant
+        //Donne un ordre de priorité pour leur affichage
         protected Stack<SceneGraph> stack = new Stack();
 
         public void add(SceneGraph s)
         {
             super.add(s);
             stack.push(s);
+        }
+
+        public void remove(SceneGraph s)
+        {
+            super.remove(s);
+            stack.remove(s);
         }
 
         public Stack<SceneGraph> getStack()
@@ -93,6 +103,13 @@ public class SceneGraph extends DefaultMutableTreeNode {
             }
         }
 
+        public void setOffset(Point p)
+        {
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                en.nextElement().setOffset(p);
+            }
+        }
+
         public boolean contains(Point2D p)
         {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
@@ -102,7 +119,7 @@ public class SceneGraph extends DefaultMutableTreeNode {
             }
             return false;
         }
-
+        
         public void removeNode(SceneGraph s)
         {
             // reste a prevoir le cas ou on supprime un fils d'une operation binaire, par ex.
@@ -118,6 +135,22 @@ public class SceneGraph extends DefaultMutableTreeNode {
                     currentNode.removeNode(s);
                 }
             }*/
+        }
+
+        public Rectangle2D getBounds2D()
+        {
+            Rectangle2D r;
+            Enumeration<SceneGraph> en = this.children();
+
+            if(!en.hasMoreElements()) {
+                return null;
+            } else {
+                r = en.nextElement().getBounds2D();
+                while(en.hasMoreElements()) {
+                    r = r.createUnion(en.nextElement().getBounds2D());
+                }
+                return r;
+            }
         }
 
 }
