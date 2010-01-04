@@ -57,7 +57,7 @@ public class Window extends JFrame {
         infoBar = new InfoBar();
         menuBar = new MenuBar();
         treeZone = new TreePanel();
-        drawZone = new DrawPanel(infoBar);
+        drawZone = new DrawPanel(infoBar, treeZone);
         optionZone = new OptionPanel(drawZone);
         toolBar = new ToolBar(optionZone);
         

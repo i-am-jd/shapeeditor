@@ -29,6 +29,7 @@ public class DrawPanel extends JPanel
         implements MouseListener, MouseMotionListener {
 
     final private InfoBar infoBar;
+    final private TreePanel treeZone;
 
     //Shape en cours de construction
     private SceneShape shape = null;
@@ -53,7 +54,7 @@ public class DrawPanel extends JPanel
     //État courant (sélection ou création d'une forme
     private UserMode mode = UserMode.Drawing;
 
-    public DrawPanel(InfoBar infoBar) {
+    public DrawPanel(InfoBar infoBar, TreePanel treeZone) {
         super();
 
         //this.setMaximumSize(new Dimension(JWIDTH, JHEIGHT));
@@ -63,7 +64,7 @@ public class DrawPanel extends JPanel
         this.selection = new Vector();
 
         this.infoBar = infoBar;
-        /*this.treeZone = treeZone;*/
+        this.treeZone = treeZone;
         this.currentShapeType = "Rectangle";
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 
@@ -163,6 +164,9 @@ public class DrawPanel extends JPanel
             Rectangle2D r = en.nextElement().getBounds2D();
             g2d.draw(r);
         }
+
+        //Enfin, on rafraichit la vue du JTree
+        treeZone.repaintJTree();
     }
 
     public void calculateOrigin() {

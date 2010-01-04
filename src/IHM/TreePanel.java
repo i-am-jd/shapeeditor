@@ -3,7 +3,6 @@ package IHM;
 import Draw.*;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 public class TreePanel extends JPanel {
@@ -23,16 +25,21 @@ public class TreePanel extends JPanel {
     public SceneGraph sceneGraph = null;
     /* Le menu contextuel ouvert lors du clic droit sur un noeud de l'arbre */
     private JPopupMenu jpm = new JPopupMenu();
-    private JMenuItem suppression = new JMenuItem("Supprimer");
+    private JMenuItem delItem = new JMenuItem("Delete");
+    private JMenuItem copyItem = new JMenuItem("Copy");
+    private JMenuItem pasteItem = new JMenuItem("Paste");
 
     public TreePanel() {
         super();
 
         this.arbre = new JTree(Window.sceneGraph);
-        //arbre = buildTree();
-        //arbre = new JTree(new SceneGraph(new View(Color.YELLOW, 10, Color.BLUE, null), "Essai").getNode());
+        //On ne peut modifier le nom des noeuds
+        //this.arbre.setEditable(false);
+        //this.arbre.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        //this.arbre.setShowsRootHandles(true);
+
         /* Pour recuperer un noeud sur lequel on clique */
-        /*arbre.addTreeSelectionListener(new TreeSelectionListener(){
+        arbre.addTreeSelectionListener(new TreeSelectionListener(){
         public void valueChanged(TreeSelectionEvent event) {
         if(arbre.getLastSelectedPathComponent() != null){
         //La méthode getPath retourne un objet TreePath
@@ -51,18 +58,45 @@ public class TreePanel extends JPanel {
         }
         return str;
         }
-        });*/
+        });
 
-        /* Preparation du menu contextuel declenche lors d'un clic droit */
-        jpm.add(suppression);
-        suppression.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                //JOptionPane jop = new JOptionPane();
-                JOptionPane.showMessageDialog(null, "Suppression demandee", "Supp", JOptionPane.INFORMATION_MESSAGE);
+
+        //Ajout du menu contextuel ouvert par un clic droit
+        //Suppression
+        jpm.add(delItem);
+        delItem.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent arg0) {
+                        JOptionPane.showMessageDialog(null, "Suppression demandee", "Supp", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+        });
+        //Copie
+        jpm.add(copyItem);
+        copyItem.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent arg0) {
+                        JOptionPane.showMessageDialog(null, "Copie demandee", "Copie", JOptionPane.INFORMATION_MESSAGE);
+                //nodeCopied = ((SceneGraphTree) tree.getLastSelectedPathComponent());
+                //paste.setEnabled(true);
+                }
+        });
+        //Collage
+        jpm.add(pasteItem);
+        //pasteItem.setEnabled(false);
+        pasteItem.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent arg0) {
+                        /*if(nodeCopied != null){
+                                if(JOptionPane.showConfirmDialog(null, "Paste it here ?", "Paste ?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            Window.root.addAllNode(nodeCopied.clone());
+                            optionsPanel.getDrawZone().repaintAll();
+                        }
+                        }*/
+                    JOptionPane.showMessageDialog(null, "Collage demande", "Collage", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        arbre.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
+        // Ajout du MouseListener a l'arbre
+        arbre.addMouseListener(new MouseAdapter()
+        {
+            public void mouseReleased(MouseEvent e) {
                 // Detection du clic droit
                 if (e.isPopupTrigger()) {
                     int selRow = arbre.getRowForLocation(e.getX(), e.getY());
@@ -70,19 +104,29 @@ public class TreePanel extends JPanel {
                     if (selRow != -1) {
                         arbre.clearSelection();
                         arbre.setSelectionPath(selPath);
-                        //DefaultMutableTreeNode node = (DefaultMutableTreeNode) arbre.getLastSelectedPathComponent();
+                        SceneGraph node = ((SceneGraph) arbre.getLastSelectedPathComponent());
                         // Affichage du menu contextuel
                         jpm.show(arbre, e.getX(), e.getY());
                         // Informations recuperees sur le noeud
                         //System.out.println("clic droit sur : "+node.getUserObject());
+                        //cf Michel
+                        /*selection.clear();
+                         if (node.getLevel() == 1)
+                                 selection.add(node);
+
+                         optionsPanel.getDrawZone().setSelection(selection);*/
                     }
                 }
             }
         });
-
+        
         /* Pour que l'arbre prenne toute la place disponible par defaut */
         this.setLayout(new BorderLayout());
         this.add(new JScrollPane(arbre), BorderLayout.CENTER);
+    }
+
+    public void repaintJTree() {
+        ((DefaultTreeModel)arbre.getModel()).reload();
     }
 
     /*
