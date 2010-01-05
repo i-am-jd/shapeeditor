@@ -34,6 +34,12 @@ public abstract class SceneShape extends SceneGraph {
         //System.out.println("Creation de shape");
     }
 
+    public SceneShape(View v, String s)
+    {
+        super(v, s);
+        view = v;
+    }
+
     public double getWidth()
     {
         return shape.getBounds2D().getWidth() / 2;
@@ -85,33 +91,6 @@ public abstract class SceneShape extends SceneGraph {
         g2d.draw(shape);
     }
 
-    /*
-    @Override
-     public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY)
-     {
-         AffineTransform saveAT = g2d.getTransform();
-         AffineTransform newAT = new AffineTransform();
-
-         newAT.rotate(rotate, getOriginX(), getOriginY());
-         newAT.scale(scaleX, scaleY);
-         newAT.shear(shearX, shearY);
-         //newAT.translate(a, b);
-        g2d.setTransform(newAT);
-        
-          if (view.getFillPattern()==null) {
-            g2d.setPaint(view.getFillColor());
-        } else { // view.getFillPattern() != null
-            g2d.setPaint(view.getFillPattern());
-        }
-        g2d.fill(shape);
-
-        g2d.setStroke(new BasicStroke(view.getLineWidth()));
-        g2d.setColor(view.getLineColor());
-        g2d.draw(shape);
-
-        g2d.setTransform(saveAT);
-     }*/
-
     @Override
     public double getBarycenterX()
     {
@@ -124,6 +103,7 @@ public abstract class SceneShape extends SceneGraph {
         return shape.getBounds2D().getCenterY();
     }
 
+    @Override
     public Shape getShape()
     {
         return shape;

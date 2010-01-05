@@ -31,6 +31,8 @@ public class GestionnaireToolBar implements ActionListener
 
         GROUP,
 
+        DEGROUP,
+
         COPY,
 
         DELETE,
@@ -90,6 +92,9 @@ public class GestionnaireToolBar implements ActionListener
                 case GROUP: //Groupement des formes constituant la sélection courante
                     p.getDrawZone().groupCurrentSelection();
                     return;
+                case DEGROUP:
+                    p.getDrawZone().degroupCurrentSelection();
+                    return;
                 case COPY: //Copie des formes constituant la sélection courante
                     p.getDrawZone().copyCurrentSelection();
                     return;
@@ -111,6 +116,7 @@ public class GestionnaireToolBar implements ActionListener
                     p.getDrawZone().intersectCurrentSelection();
                     return;
                 case SUBSTRACTION:
+                    p.getDrawZone().substractCurrentSelection();
                     return;
                 case EXCLUSION: //Suppression des formes constituant la sélection courante
                     return;

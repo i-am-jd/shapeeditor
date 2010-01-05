@@ -1,6 +1,5 @@
 package Draw;
 
-import java.awt.Shape;
 import java.awt.geom.Area;
 
 
@@ -10,7 +9,7 @@ public class Intersection extends SceneShape
     
     public Intersection(View v, SceneGraph sg1, SceneGraph sg2)
     {
-        super(v);
+        super(v, "Intersection");
         this.area = new Area(sg1.getShape());
         area.intersect(new Area(sg2.getShape()));
 
