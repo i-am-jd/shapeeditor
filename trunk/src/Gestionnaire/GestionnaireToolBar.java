@@ -37,6 +37,8 @@ public class GestionnaireToolBar implements ActionListener
 
         DELETE,
 
+        UNDO,
+
         ROTATE,
 
         SCALE,
@@ -100,6 +102,8 @@ public class GestionnaireToolBar implements ActionListener
                     return;
                 case DELETE: //Suppression des formes constituant la sélection courante
                     p.getDrawZone().deleteCurrentSelection();
+                    return;
+                case UNDO:
                     return;
                 case ROTATE: //Copie des formes constituant la sélection courante
                     p.getDrawZone().switchRotationMode();

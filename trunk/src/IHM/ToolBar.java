@@ -27,6 +27,7 @@ public class ToolBar extends JToolBar {
     private JButton btn16;
     private JButton btn17;
     private JButton btn18;
+    private JButton btn19;
 
     public ToolBar(OptionPanel optionZone) {
         /* Creation de la barre d'outils avec une orientation verticale */
@@ -42,6 +43,7 @@ public class ToolBar extends JToolBar {
         btn7 = new JButton(new ImageIcon(getClass().getResource("../images/group.png")));
         btn8 = new JButton(new ImageIcon(getClass().getResource("../images/copy.png")));
         btn9 = new JButton(new ImageIcon(getClass().getResource("../images/delete.png")));
+        btn19 = new JButton("Defaire");
 
         btn10 = new JButton(new ImageIcon(getClass().getResource("../images/rotate.png")));
         btn11 = new JButton(new ImageIcon(getClass().getResource("../images/scale.png")));
@@ -64,6 +66,7 @@ public class ToolBar extends JToolBar {
         btn7.setToolTipText("Group");
         btn8.setToolTipText("Copy");
         btn9.setToolTipText("Delete");
+        btn19.setToolTipText("Undo operation");
 
         btn10.setToolTipText("Rotation");
         btn11.setToolTipText("Scale Factor");
@@ -86,6 +89,7 @@ public class ToolBar extends JToolBar {
         btn7.addActionListener(new GestionnaireToolBar(ButtonPressed.GROUP, optionZone));
         btn8.addActionListener(new GestionnaireToolBar(ButtonPressed.COPY, optionZone));
         btn9.addActionListener(new GestionnaireToolBar(ButtonPressed.DELETE, optionZone));
+        btn19.addActionListener(new GestionnaireToolBar(ButtonPressed.UNDO, optionZone));
         btn10.addActionListener(new GestionnaireToolBar(ButtonPressed.ROTATE, optionZone));
         btn11.addActionListener(new GestionnaireToolBar(ButtonPressed.SCALE, optionZone));
         btn12.addActionListener(new GestionnaireToolBar(ButtonPressed.SHEAR, optionZone));
@@ -105,6 +109,7 @@ public class ToolBar extends JToolBar {
         this.add(btn7);
         this.add(btn8);
         this.add(btn9);
+        this.add(btn19);
         this.addSeparator();
         this.add(btn10);
         this.add(btn11);
