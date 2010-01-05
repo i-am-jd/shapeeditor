@@ -23,6 +23,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Point;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 public class DrawPanel extends JPanel
         implements MouseListener, MouseMotionListener {
@@ -102,18 +104,23 @@ public class DrawPanel extends JPanel
     public void switchRotationMode()
     {
         this.mode = UserMode.Rotating;
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        setCursor(new Cursor(Cursor.MOVE_CURSOR));
+        //Toolkit toolkit = Toolkit.getDefaultToolkit();
+        //Image image = toolkit.getImage("../images/cursor-rotate.png");
+        //Point hotSpot = new Point(8, 8);
+        //Cursor cursor = toolkit.createCustomCursor(image, hotSpot, "Rotate");
+        //setCursor(cursor);
     }
 
     public void switchScaleMode()
     {
         this.mode = UserMode.Scaling;
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
     }
     public void switchShearMode()
     {
         this.mode = UserMode.Shearing;
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
     }
 
     @Override

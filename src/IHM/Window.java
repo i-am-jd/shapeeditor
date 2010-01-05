@@ -55,15 +55,16 @@ public class Window extends JFrame {
 
         /* Creation des composants de la fenetre */
         infoBar = new InfoBar();
-        menuBar = new MenuBar();
         treeZone = new TreePanel();
         drawZone = new DrawPanel(infoBar, treeZone);
         optionZone = new OptionPanel(drawZone);
+        menuBar = new MenuBar();
         toolBar = new ToolBar(optionZone);
         
         split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeZone, drawZone);
 
         treeZone.initializeListeners(drawZone);
+        menuBar.initializeListeners(drawZone);
         
         /* Ajout de la barre de menu a la fenetre */
         this.setJMenuBar(menuBar);
