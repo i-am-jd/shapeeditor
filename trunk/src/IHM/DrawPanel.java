@@ -23,6 +23,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Point;
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -303,6 +304,19 @@ public class DrawPanel extends JPanel
         repaint();
     }
 
+    public void substractCurrentSelection()
+    {
+        if(selection.size() == 2) {
+            View view = Window.sceneGraph.getView();
+            Substraction subst = new Substraction(selection.get(0), selection.get(1));
+            Window.sceneGraph.add(subst);
+
+            selection.clear();
+            selection.add(subst);
+        }
+
+        repaint();
+    }
     
     public void copyCurrentSelection()
     { 
@@ -323,6 +337,23 @@ public class DrawPanel extends JPanel
             }
             selection.removeAllElements();
             repaint();
+        }
+    }
+
+    public void degroupCurrentSelection()
+    {
+        if(selection.size() == 1) {
+            SceneGraph sg = selection.get(0);
+            if(sg instanceof Group) {
+                selection.clear();
+                for(Enumeration<SceneGraph> en = sg.children(); en.hasMoreElements();) {
+                    selection.add(en.nextElement());
+                }
+                ((Group) sg).ungroup();
+                Window.sceneGraph.applyTransform(new AffineTransform());
+                repaint();
+                this.switchSelectionMode();
+            }
         }
     }
 

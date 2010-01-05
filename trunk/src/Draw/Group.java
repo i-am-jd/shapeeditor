@@ -1,9 +1,6 @@
 package Draw;
 
-import java.awt.Shape;
-import java.awt.geom.Area;
-import java.util.Enumeration;
-import javax.swing.tree.MutableTreeNode;
+import java.util.Vector;
 
 public class Group extends SceneGraph {
 		
@@ -13,6 +10,18 @@ public class Group extends SceneGraph {
 
     public Group(String s) {
         super(s);
+    }
+
+    public void ungroup()
+    {
+        Vector<SceneGraph> currentChildren = (Vector) this.children.clone();
+
+        for(SceneGraph child : currentChildren) {
+            System.out.println(child.toString());
+            ((SceneGraph) this.getParent()).add(child);
+        }
+
+        this.removeFromParent();
     }
 
 }
