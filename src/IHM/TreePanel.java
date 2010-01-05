@@ -3,14 +3,9 @@ package IHM;
 import Draw.*;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
@@ -25,10 +20,8 @@ public class TreePanel extends JPanel {
     public JTree arbre;
     public SceneGraph sceneGraph = null;
     /* Le menu contextuel ouvert lors du clic droit sur un noeud de l'arbre */
-    private JPopupMenu jpm = new JPopupMenu();
-    private JMenuItem copyItem = new JMenuItem("Copy");
-    private JMenuItem delItem = new JMenuItem("Delete");
-
+    public SelectionContextMenu popupMenu;
+    
     public TreePanel() {
         super();
 
@@ -72,28 +65,9 @@ public class TreePanel extends JPanel {
              */
         });
 
-
         //Ajout du menu contextuel ouvert par clic droit sur un noeud
-        //Copie
-        jpm.add(copyItem);
-        copyItem.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                drawZone.copyCurrentSelection();
-                drawZone.repaint();
-            }
-        });
-        //Suppression
-        jpm.add(delItem);
-        delItem.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                drawZone.deleteCurrentSelection();
-                drawZone.repaint();
-            }
-        });
+        popupMenu = new SelectionContextMenu(drawZone);
+        
         // Ajout du MouseListener a l'arbre
         arbre.addMouseListener(new MouseAdapter() {
 
@@ -109,7 +83,7 @@ public class TreePanel extends JPanel {
                         arbre.clearSelection();
                         arbre.setSelectionPath(selPath);
                         // Affichage du menu contextuel
-                        jpm.show(arbre, e.getX(), e.getY());
+                        popupMenu.show(arbre, e.getX(), e.getY());
                     }
                 }
             }

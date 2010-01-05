@@ -56,6 +56,8 @@ public class DrawPanel extends JPanel
     //État courant (sélection ou création d'une forme
     private UserMode mode = UserMode.Drawing;
 
+    private SelectionContextMenu popupMenu;
+
     public DrawPanel(InfoBar infoBar, TreePanel treeZone) {
         super();
 
@@ -69,6 +71,8 @@ public class DrawPanel extends JPanel
         this.treeZone = treeZone;
         this.currentShapeType = "Rectangle";
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+
+        this.popupMenu = new SelectionContextMenu(this);
 
         //Window.origin[0] = this.getWidth() / 2;
         //Window.origin[1] = this.getHeight() / 2;
@@ -89,6 +93,7 @@ public class DrawPanel extends JPanel
     {
         this.mode = UserMode.Drawing;
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        selection.clear();
     }
 
     public void switchSelectionMode()
@@ -426,6 +431,7 @@ public class DrawPanel extends JPanel
         mouseDown = e.getPoint();
         mouseLastDrag = e.getPoint();
 
+        displayPopupMenu(e);
          if (e.getButton() == MouseEvent.BUTTON1 && this.mode == UserMode.Selecting) {
             sceneGraphToDrag = getSceneGraphAt(mouseDown);
          }
@@ -489,6 +495,7 @@ public class DrawPanel extends JPanel
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        displayPopupMenu(e);
         sceneGraphToDrag = null;
         node = null;
         if (shape != null) {
@@ -622,6 +629,13 @@ public class DrawPanel extends JPanel
         System.out.println(factorX);
         System.out.println(factorY);
         return new double[]{Math.abs(factorX), Math.abs(factorY)};
+    }
+
+    public void displayPopupMenu(MouseEvent e)
+    {
+        if (e.isPopupTrigger() && this.mode == UserMode.Selecting) {
+            if (selection.size() > 0) popupMenu.show(this, e.getX(), e.getY());
+         }
     }
 
     public Vector<SceneGraph> getSelection()
