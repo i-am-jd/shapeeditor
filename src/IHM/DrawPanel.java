@@ -160,8 +160,15 @@ public class DrawPanel extends JPanel
         g2d.setColor(Color.white);
         g2d.setXORMode(Color.black);
         for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-            Rectangle2D r = en.nextElement().getBounds2D();
+            SceneGraph sg = en.nextElement();
+            Rectangle2D r = sg.getBounds2D();
             g2d.draw(r);
+
+            //Affichage d'une croix à la position du barycentre
+            int middleX = (int) sg.getBarycenterX();
+            int middleY = (int) sg.getBarycenterY();
+            g2d.drawLine(middleX, (int) r.getMinY(), middleX, (int) r.getMaxY());
+            g2d.drawLine((int) r.getMinX(), middleY, (int) r.getMaxX(), middleY);
         }
 
         //Enfin, on rafraichit la vue du JTree
@@ -275,6 +282,21 @@ public class DrawPanel extends JPanel
         }
     }
 
+    public void intersectCurrentSelection()
+    {
+        if(selection.size() == 2) {
+            View view = Window.sceneGraph.getView();
+            Intersection inters = new Intersection(new View(view), selection.get(0), selection.get(1));
+            Window.sceneGraph.add(inters);
+
+            selection.clear();
+            selection.add(inters);
+        }
+
+        repaint();
+    }
+
+    
     public void copyCurrentSelection()
     { 
         if(!selection.isEmpty()) {
@@ -546,10 +568,10 @@ public class DrawPanel extends JPanel
         double xS = s.getBarycenterX();
         double yS = s.getBarycenterY();
 
-        double angleLast = Math.atan((last.getY()-yS)/(last.getX()-xS));
-        double angleHere = Math.atan((here.getY()-yS)/(here.getX()-xS));
+        double angleLast = Math.atan2(last.getX()-xS, last.getY()-yS);
+        double angleHere = Math.atan2(here.getX()-xS, here.getY()-yS);
 
-        return angleHere - angleLast;
+        return angleLast - angleHere;
     }
 
     public double[] calculateScaleFactor(SceneGraph s, Point p)

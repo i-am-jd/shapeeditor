@@ -123,4 +123,9 @@ public abstract class SceneShape extends SceneGraph {
     {
         return shape.getBounds2D().getCenterY();
     }
+
+    public Shape getShape()
+    {
+        return shape;
+    }
 }
