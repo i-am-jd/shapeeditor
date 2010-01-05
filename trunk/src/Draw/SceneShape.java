@@ -3,7 +3,6 @@ package Draw;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.awt.Shape;
 import java.awt.Point;
