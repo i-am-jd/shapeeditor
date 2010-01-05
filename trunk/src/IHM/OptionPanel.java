@@ -60,11 +60,11 @@ public class OptionPanel extends JPanel {
         String libelleColors[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
             "Red", "Magenta"};
         lineColorList = new JLabeledComboBox("Line Colors", libelleColors, 0,
-              new GestionnaireColors(colors, 0));
+              new GestionnaireColors(colors, 0, drawZone));
 
         // Mise en place du slider pour l'epaisseur de ligne
         lineWidthSlider = new JLabeledSlider("Line Width", JSlider.HORIZONTAL,
-              LW_MIN, LW_MAX, LW_INIT, new GestionnaireWidth(LW_INIT));
+              LW_MIN, LW_MAX, LW_INIT, new GestionnaireWidth(LW_INIT, drawZone));
              
         /* Creation de la premiere texture (motifs de remplissage) */
         BufferedImage pBI1 = new BufferedImage(32, 32, BufferedImage.TYPE_INT_BGR);
@@ -95,7 +95,7 @@ public class OptionPanel extends JPanel {
         String libelleFill[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
             "Red", "Magenta", "Stripes", "Baroque", "Stars"};
         fillPatternList = new JLabeledComboBox("Fill Patterns", libelleFill, 0,
-              new GestionnaireColors(patterns, 1));
+              new GestionnaireColors(patterns, 1, drawZone));
 
         // Mise en place du textField pour le nombre de cotes
         this.textField = new JLabeledTextField("Number of sides", 2);
