@@ -55,6 +55,7 @@ public class TreePanel extends JPanel {
                         drawZone.getSelection().add(node);
                     }
                     //System.out.println("Selection " + node.toString());
+                    drawZone.repaint();
                 }
             }
             /*

@@ -171,7 +171,7 @@ public class DrawPanel extends JPanel
     public void calculateOrigin() {
         Window.origin[0] = this.getWidth() / 2;
         Window.origin[1] = this.getHeight() / 2;
-
+     
         repaint();
     }
 

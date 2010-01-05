@@ -1,7 +1,7 @@
 package IHM;
 
-import gestionnaire.GestionnaireWidth;
 import gestionnaire.GestionnaireColors;
+import gestionnaire.GestionnaireWidth;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -17,11 +17,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * La barre d'infos situee en bas de la fenetre pour afficher
@@ -30,12 +32,16 @@ import javax.swing.JTextField;
  */
 public class OptionPanel extends JPanel {
 
+    static final int LW_MIN = 1;
+    static final int LW_MAX = 10;
+    static final int LW_INIT = 1;
+
     /** Le premier label */
     private JComboBox shapeList;
     /** Le premier label */
     private JLabeledComboBox lineColorList;
-    /** Le premier label */
-    private JLabeledComboBox lineWidthList;
+    private JLabeledSlider lineWidthSlider;
+
     /** Le premier label */
     private JLabeledComboBox fillPatternList;
     /** Le second label */
@@ -57,18 +63,12 @@ public class OptionPanel extends JPanel {
         String libelleColors[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
             "Red", "Magenta"};
         lineColorList = new JLabeledComboBox("Line Colors", libelleColors, 0,
-                new GestionnaireColors(colors, 0));
+              new GestionnaireColors(colors, 0));
 
-        /* Mise en place de la combobox pour l'epaisseur de ligne */
-        float[] widths = {1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f};
-        String[] libelleEpaisseurs = new String[10];
-        DecimalFormat numberFormat = new DecimalFormat("00");
-        for (int i = 0; i < widths.length; i++) {
-            libelleEpaisseurs[i] = numberFormat.format(widths[i]);
-        }
-        lineWidthList = new JLabeledComboBox("Width", libelleEpaisseurs, 0, new GestionnaireWidth(widths));
-
-        
+        // Mise en place du slider pour l'epaisseur de ligne
+        lineWidthSlider = new JLabeledSlider("Line Width", JSlider.HORIZONTAL,
+              LW_MIN, LW_MAX, LW_INIT, new GestionnaireWidth(LW_INIT));
+             
         /* Creation de la premiere texture (motifs de remplissage) */
         BufferedImage pBI1 = new BufferedImage(32, 32, BufferedImage.TYPE_INT_BGR);
         Graphics2D pG2d1 = pBI1.createGraphics();
@@ -98,7 +98,7 @@ public class OptionPanel extends JPanel {
         String libelleFill[] = {"Black", "Blue", "Cyan", "Green", "Yellow", "Orange",
             "Red", "Magenta", "Stripes", "Baroque", "Stars"};
         fillPatternList = new JLabeledComboBox("Fill Patterns", libelleFill, 0,
-                new GestionnaireColors(patterns, 1));
+              new GestionnaireColors(patterns, 1));
 
         this.textField = new JTextField();
         KeyAdapter kAdapter = new KeyAdapter() {
@@ -152,7 +152,7 @@ public class OptionPanel extends JPanel {
         this.add(info2 = new JLabel("Number of sides : "));
         this.add(textField);
         this.add(lineColorList);
-        this.add(lineWidthList);
+        this.add(lineWidthSlider);
         this.add(fillPatternList);
         this.setBorder(BorderFactory.createEtchedBorder());
     }
