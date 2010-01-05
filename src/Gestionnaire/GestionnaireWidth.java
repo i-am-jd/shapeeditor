@@ -1,6 +1,10 @@
 package gestionnaire;
 
+import Draw.SceneGraph;
+import IHM.DrawPanel;
 import IHM.Window;
+import java.util.Enumeration;
+import java.util.Vector;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -13,13 +17,15 @@ import javax.swing.event.ChangeListener;
  */
 public class GestionnaireWidth implements ChangeListener {
 
+    private DrawPanel drawZone;
     /**
      * Constructeur du gestionnaire de couleurs
      * @param colors la liste des couleurs
      * @param zone la zone de dessin
      */
-    public GestionnaireWidth(int init) {
+    public GestionnaireWidth(int init, DrawPanel drawZone) {
         Window.sceneGraph.getView().setLineWidth(init);
+        this.drawZone = drawZone;
     }
 
     /**
@@ -34,6 +40,12 @@ public class GestionnaireWidth implements ChangeListener {
         if (!source.getValueIsAdjusting()) {
             int newWidth = (int) source.getValue();
             Window.sceneGraph.getView().setLineWidth(newWidth);
+            Vector<SceneGraph> selection = drawZone.getSelection();
+            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
+                SceneGraph sg = en.nextElement();
+                sg.getView().setLineWidth(newWidth);
+                drawZone.repaint();
+            }
         }
     }
 }
