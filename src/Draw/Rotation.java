@@ -36,7 +36,7 @@ public class Rotation extends UnaryOperation {
 
     public void rotate(double angleDiff)
     {
-        this.angle += angleDiff;
+        this.setAngle(this.angle + angleDiff);
     }
 
     @Override
