@@ -5,8 +5,6 @@
 
 package Draw;
 
-import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.awt.Polygon;
 
 /**
@@ -43,6 +41,7 @@ public class RegularPolygon extends SceneShape
 
         polygon = new Polygon(tab[0], tab[1], nbSides);
         shape = polygon;
+        baseShape = polygon;
     }
 
      public RegularPolygon (RegularPolygon p) {
@@ -52,38 +51,12 @@ public class RegularPolygon extends SceneShape
         polygon = new Polygon(p.polygon.xpoints, p.polygon.ypoints, p.polygon.npoints);
         polygon.translate(5, 5);
         shape = polygon;
+        baseShape = polygon;
     }
 
      @Override
     public RegularPolygon clone()
     {
         return new RegularPolygon(this);
-    }
-
-    public void setLocation(Point2D p)
-    {
-        polygon.translate((int) (p.getX() - originX), (int) (p.getY() - originY));
-        originX = (int) p.getX();
-        originY = (int) p.getY();
-    }
-
-    public void setOffset(Point p)
-    {
-    }
-
-    @Override
-    public double getOriginX()
-    {
-        return originX;
-    }
-    @Override
-    public double getOriginY()
-    {
-        return originY;
-    }
-
-     public double getRadius()
-    {
-        return 1;
     }
 }

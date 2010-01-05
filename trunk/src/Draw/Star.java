@@ -1,7 +1,5 @@
 package Draw;
 
-import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.awt.Polygon;
 
 
@@ -37,6 +35,7 @@ public class Star extends SceneShape {
 
         polygon = new Polygon(xpoints, ypoints, nbSides);
         shape = polygon;
+        baseShape = polygon;
     }
 
     public Star (Star s) {
@@ -54,35 +53,4 @@ public class Star extends SceneShape {
         return new Star(this);
     }
 
-    @Override
-    public double getOriginX()
-    {
-        return originX;
-    }
-    @Override
-    public double getOriginY()
-    {
-        return originY;
-    }
-
-    @Override
-    public void setLocation(Point2D p)
-    {
-        polygon.translate((int) (p.getX() - originX), (int) (p.getY() - originY));
-        originX = (int) p.getX();// - offset.x;
-        originY = (int) p.getY();// - offset.y;
-        //Not implemented
-    }
-
-    @Override
-    public void setOffset(Point p)
-    {
-        offset.x = p.x - (int) originX;
-        offset.y = p.y - (int) originY;
-    }
-
-     public double getRadius()
-    {
-        return originY-polygon.ypoints[0];
-    }
 }

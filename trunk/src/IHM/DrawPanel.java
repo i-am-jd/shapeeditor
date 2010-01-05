@@ -2,7 +2,6 @@ package IHM;
 
 import Draw.*;
 
-import java.util.Stack;
 
 import java.awt.BasicStroke;
 import java.awt.Cursor;
@@ -43,7 +42,7 @@ public class DrawPanel extends JPanel
     private Vector<SceneGraph> selection;
 
     //Modifié au fur et à mesure des interactions avec l'utilisateur
-    private Point mouseDown,  mouseHere,  mouseClicked;
+    private Point mouseDown,  mouseHere,  mouseLastDrag;
 
     //Noeud du graphe de scene en cours de modification
     private SceneGraph node;
@@ -152,11 +151,11 @@ public class DrawPanel extends JPanel
         }
 
         //Rectangles de sélection
-        g2d.setStroke(new BasicStroke(3.0f,
+        g2d.setStroke(new BasicStroke(1.0f,
                  BasicStroke.CAP_BUTT,
                  BasicStroke.JOIN_BEVEL,
                  1.0f,
-                 new float[] {1.0f, 6.0f},
+                 new float[] {2.0f, 6.0f},
                  0.0f));
         g2d.setColor(Color.white);
         g2d.setXORMode(Color.black);
@@ -307,8 +306,7 @@ public class DrawPanel extends JPanel
         //Verification de la correction du nombre de cotes voulu (si necessaire)
         if (currentShapeType.equals("Regular Polygon") || currentShapeType.equals("Other Star")) {
             if (this.nbSides < 3) {
-                JOptionPane jop = new JOptionPane();
-                jop.showMessageDialog(null, "Please enter a valid number of sides in the appropriate text field.",
+                JOptionPane.showMessageDialog(this, "Please enter a valid number of sides in the appropriate text field.",
                         "Error", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
@@ -366,37 +364,35 @@ public class DrawPanel extends JPanel
 
     @Override
     public void mousePressed(MouseEvent e) {
-         if (e.getButton() == MouseEvent.BUTTON1) {
-            mouseDown = e.getPoint();
+        mouseDown = e.getPoint();
+        mouseLastDrag = e.getPoint();
+
+         if (e.getButton() == MouseEvent.BUTTON1 && this.mode == UserMode.Selecting) {
             sceneGraphToDrag = getSceneGraphAt(mouseDown);
-
-            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                en.nextElement().setOffset(mouseDown);
-            }
-
-            if(sceneGraphToDrag != null) {
-                sceneGraphToDrag.setOffset(mouseDown);
-            }
          }
          if (this.mode == UserMode.Rotating) {
             if (!selection.isEmpty()) {
-                SceneGraph parent = (SceneGraph)selection.get(0).getParent();
+                SceneGraph child = selection.get(0);
+                SceneGraph parent = (SceneGraph)child.getParent();
                 Rotation r;
                 if ( parent instanceof Rotation ) {
                     //Si le noeud parent est deja une rotation on la modifie directement
                     r = (Rotation)parent;
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
-                    r = new Rotation(0);
-                    r.add(selection.get(0));
+                    r = new Rotation(selection.get(0), 0);
+                    selection.remove(child);
+                    selection.add(r);
                     Window.sceneGraph.add(r);
                 }
                 //Ajouter r au dessus de la feuille de selection(0)
                 node = r;
             }
         } else if (this.mode == UserMode.Scaling) {
+            System.out.println("Beginning scaling");
             if (!selection.isEmpty()) {
-                SceneGraph parent = (SceneGraph)selection.get(0).getParent();
+                SceneGraph child = selection.get(0);
+                SceneGraph parent = (SceneGraph)child.getParent();
                 Scale s;
                 if ( parent instanceof Scale ) {
                     //Si le noeud parent est deja une rotation on la modifie directement
@@ -404,7 +400,9 @@ public class DrawPanel extends JPanel
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
                     s = new Scale(1, 1);
-                    s.add(selection.get(0));
+                    s.add(child);
+                    selection.remove(child);
+                    selection.add(s);
                     Window.sceneGraph.add(s);
                 }
                 //Ajouter r au dessus de la feuille de selection(0)
@@ -456,6 +454,8 @@ public class DrawPanel extends JPanel
         mouseHere = e.getPoint();
 
         if(sceneGraphToDrag != null) {
+            //L'utilisateur avait pressé le curseur sur un élément du graphe
+            //Celui-ci remplace la sélection courante
             selection.clear();
             selection.add(sceneGraphToDrag);
             Window.sceneGraph.moveToFront(sceneGraphToDrag);
@@ -463,12 +463,17 @@ public class DrawPanel extends JPanel
 
         if (selection.size() == 1 && this.mode == UserMode.Selecting) {
             //Déplacement de la shape sélectionnée
-            selection.get(0).setLocation(mouseHere);
+            System.out.println("Déplacement");
+            double dx = mouseHere.getX() - mouseLastDrag.getX();
+            double dy = mouseHere.getY() - mouseLastDrag.getY();
+            selection.get(0).translate(dx, dy);
+            mouseLastDrag = mouseHere;
         } else if (this.mode == UserMode.Rotating) {
-            SceneShape son = (SceneShape) node.getChildAt(0);
+            SceneGraph son = (SceneGraph) node.getChildAt(0);
             ((Rotation) node).setAngle(calculateAngle(son, mouseHere));
         } else if (this.mode == UserMode.Scaling) {
-            SceneShape son = (SceneShape) node.getChildAt(0);
+            System.out.println("Scaling");
+            SceneGraph son = (SceneGraph) node.getChildAt(0);
             ((Scale) node).setFactors(calculateScaleFactor(son, mouseHere));
         } else if (this.mode == UserMode.Shearing) {
             // A FAIRE
@@ -536,30 +541,29 @@ public class DrawPanel extends JPanel
         this.currentShapeType = s;
     }
 
-    public double calculateAngle(SceneShape s, Point p)
+    public double calculateAngle(SceneGraph s, Point p)
     {
-        double xS = s.getOriginX();
-        double yS = s.getOriginY();
+        double xS = s.getBarycenterX();
+        double yS = s.getBarycenterY();
         double xP = p.getX();
         double yP = p.getY();
 
         double angle = Math.atan((yP-yS)/(xP-xS));
+        System.out.println(angle);
 
         return angle;
     }
 
-    public double[] calculateScaleFactor(SceneShape s, Point p)
+    public double[] calculateScaleFactor(SceneGraph s, Point p)
     {
-        double xS = s.getOriginX();
-        double yS = s.getOriginY();
-        double rad = s.getRadius();
-        double xP = p.getX();
-        double yP = p.getY();
+        double width  = s.getBounds2D().getWidth();
+        double height = s.getBounds2D().getHeight();
 
-        double factorX = (xP-xS)/(rad-xS);
-        double factorY = (yP-yS)/(rad-yS);
-
-        return new double[]{factorX, factorY};
+        double factorX = (p.getX() - s.getBarycenterX())/(width / 2);
+        double factorY = (p.getY() - s.getBarycenterY())/(height / 2);
+        System.out.println(factorX);
+        System.out.println(factorY);
+        return new double[]{Math.abs(factorX), Math.abs(factorY)};
     }
 
     public Vector<SceneGraph> getSelection()
