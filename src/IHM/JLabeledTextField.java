@@ -39,6 +39,11 @@ public class JLabeledTextField extends JPanel {
 
         add(textField);
     }
+
+    @Override
+    public void setEnabled(boolean b) {
+        textField.setEnabled(b);
+    }
 }
 
 
