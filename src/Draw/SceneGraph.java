@@ -1,11 +1,13 @@
 package Draw;
 
 import java.util.Enumeration;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
@@ -56,34 +58,17 @@ public class SceneGraph extends DefaultMutableTreeNode {
 	public void setView(View view) {
 		this.view = view;
 	}
-
-       /*public void draw(Graphics2D g2d) {
-            for(Enumeration<SceneGraph> en = this.getStack(); en.hasMoreElements();) { //stack
-                 en.nextElement().draw(g2d, 0);
-            }
-        }*/
         
         public void draw(Graphics2D g2d) {
-                this.draw(g2d, 0, 1, 1, 0, 0);
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                en.nextElement().draw(g2d); //, scale, shear);
+            }
+                //this.draw(g2d, 0, 1, 1, 0, 0);
         }
 
         public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
                 en.nextElement().draw(g2d, rotate, scaleX, scaleY, shearX, shearY); //, scale, shear);
-            }
-        }
-
-        public void setLocation(Point2D p)
-        {
-            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
-                en.nextElement().setLocation(p);
-            }
-        }
-
-        public void setOffset(Point p)
-        {
-            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
-                en.nextElement().setOffset(p);
             }
         }
 
@@ -116,8 +101,41 @@ public class SceneGraph extends DefaultMutableTreeNode {
         //Monte un graphe de scène enfant un premier plan (sera dessiné en priorité)
         public void moveToFront(SceneGraph g)
         {
-            this.remove(g);
-            this.add(g);
+            //this.remove(g);
+            //this.add(g);
+        }
+
+        public void applyTransform(AffineTransform trans)
+        {
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                en.nextElement().applyTransform(trans);
+            }
+        }
+
+        public double getBarycenterX()
+        {
+            double x = 0;
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                x += en.nextElement().getBarycenterX();
+            }
+            return x / this.getChildCount();
+        }
+
+        public double getBarycenterY()
+        {
+            double y = 0;
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                y += en.nextElement().getBarycenterY();
+            }
+            return y / this.getChildCount();
+        }
+
+        public void translate(double x, double y)
+        {
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                en.nextElement().translate(x, y);
+            }
+
         }
 
 }

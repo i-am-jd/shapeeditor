@@ -19,13 +19,13 @@ public abstract class SceneShape extends SceneGraph {
 
     final View view;
 
+    //Forme de base, aucune transformation appliquée
+    protected Shape baseShape;
+
+    //Forme affichée à l'écran, à laquelle on a appliquée les transformations nécessaires
     protected Shape shape;
 
     protected Point offset = new Point();
-
-    public abstract double getOriginX();
-    public abstract double getOriginY();
-    public abstract double getRadius();
 
     public SceneShape(View v)
     {
@@ -58,6 +58,20 @@ public abstract class SceneShape extends SceneGraph {
     }
 
     @Override
+    public void applyTransform(AffineTransform trans)
+    {
+        shape = trans.createTransformedShape(baseShape);
+    }
+
+    @Override
+    public void translate(double x, double y)
+    {
+        AffineTransform t = AffineTransform.getTranslateInstance(x, y);
+        shape = t.createTransformedShape(shape);
+        baseShape = t.createTransformedShape(baseShape);
+    }
+
+    @Override
     public void draw(Graphics2D g2d)
     {
         if (view.getFillPattern()==null) {
@@ -72,6 +86,7 @@ public abstract class SceneShape extends SceneGraph {
         g2d.draw(shape);
     }
 
+    /*
     @Override
      public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY)
      {
@@ -96,12 +111,17 @@ public abstract class SceneShape extends SceneGraph {
         g2d.draw(shape);
 
         g2d.setTransform(saveAT);
-     }
+     }*/
 
-    /* Insere la shape sur le noeud n passe en argument */
-    public void insertShape(DefaultMutableTreeNode n)
+    @Override
+    public double getBarycenterX()
     {
-        // if (n isInstanceOf Shape) => error
-        n.add(this);
+        return shape.getBounds2D().getCenterX();
+    }
+
+    @Override
+    public double getBarycenterY()
+    {
+        return shape.getBounds2D().getCenterY();
     }
 }
