@@ -3,9 +3,11 @@ package Draw;
 import java.util.Enumeration;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
@@ -136,4 +138,13 @@ public class SceneGraph extends DefaultMutableTreeNode {
 
         }
 
+        public Shape getShape()
+        {
+            Area area = new Area();
+            for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+                SceneGraph sg = en.nextElement();
+                area.add(new Area(sg.getShape()));
+            }
+            return area;
+        }
 }

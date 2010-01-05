@@ -108,6 +108,7 @@ public class GestionnaireToolBar implements ActionListener
                 case UNION: //Suppression des formes constituant la sélection courante
                     return;
                 case INTERSECTION: //Suppression des formes constituant la sélection courante
+                    p.getDrawZone().intersectCurrentSelection();
                     return;
                 case SUBSTRACTION:
                     return;
@@ -190,6 +191,7 @@ public class GestionnaireToolBar implements ActionListener
      * @param e action courante
      * @see ActionToPerform#performAction(GestionnaireActions, ActionEvent)
      */
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         action.performAction(this, e);
