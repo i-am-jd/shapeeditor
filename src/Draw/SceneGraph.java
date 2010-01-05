@@ -1,12 +1,10 @@
 package Draw;
 
 import java.util.Enumeration;
-import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -101,8 +99,8 @@ public class SceneGraph extends DefaultMutableTreeNode {
         //Monte un graphe de scène enfant un premier plan (sera dessiné en priorité)
         public void moveToFront(SceneGraph g)
         {
-            //this.remove(g);
-            //this.add(g);
+            this.remove(g);
+            this.add(g);
         }
 
         public void applyTransform(AffineTransform trans)

@@ -1,17 +1,18 @@
 package Draw;
 
-import java.awt.Graphics2D;
 import java.util.Enumeration;
 import java.awt.Shape;
-import java.awt.geom.Point2D;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 
 public class Rotation extends UnaryOperation {
 
     public double angle;
     //protected AffineTransform rotation;
     protected Shape shape;
+
+    //Coordonnées du point par rapport auquel on effectue la rotation
+    double anchorX;
+    double anchorY;
 
     public Rotation(SceneGraph child, double angle) {
         super("Rotation");
@@ -20,6 +21,8 @@ public class Rotation extends UnaryOperation {
         child.removeFromParent();
         this.add(child);
 
+        this.anchorX = child.getBarycenterX();
+        this.anchorY = child.getBarycenterY();
         this.angle = angle;
     }
 
@@ -31,15 +34,27 @@ public class Rotation extends UnaryOperation {
         ((SceneGraph) this.getRoot()).applyTransform(new AffineTransform());
     }
 
+    public void rotate(double angleDiff)
+    {
+        this.angle += angleDiff;
+    }
+
     @Override
     public void applyTransform(AffineTransform trans)
     {
         SceneGraph child = (SceneGraph) this.getChildAt(0);
         AffineTransform trans2 = (AffineTransform) trans.clone();
-        trans2.rotate(angle, child.getBarycenterX(), child.getBarycenterY());
+        trans2.rotate(angle, anchorX, anchorY);
         for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
             en.nextElement().applyTransform(trans2);
         }
+    }
+
+    public void resetAnchor()
+    {
+        SceneGraph child = (SceneGraph) this.getChildAt(0);
+        this.anchorX = child.getBarycenterX();
+        this.anchorY = child.getBarycenterY();
     }
 
     /*

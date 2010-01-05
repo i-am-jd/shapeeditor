@@ -244,6 +244,7 @@ public class DrawPanel extends JPanel
     {
         SceneGraph foundGraph = null;
         int i = Window.sceneGraph.getChildCount();
+        //Utilisation de l'opérateur flèche
         while(i --> 0) {
             SceneGraph g = (SceneGraph) Window.sceneGraph.getChildAt(i);
             if(g.contains(p)) {
@@ -259,9 +260,7 @@ public class DrawPanel extends JPanel
         if(!selection.isEmpty()) {
             
             Group gr = new Group();
-            System.out.println(new Integer(selection.size()));
             for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                System.out.println("Grouping");
                 SceneGraph g = en.nextElement();
                 Window.sceneGraph.remove(g);
                 gr.add(g);
@@ -378,6 +377,7 @@ public class DrawPanel extends JPanel
                 if ( parent instanceof Rotation ) {
                     //Si le noeud parent est deja une rotation on la modifie directement
                     r = (Rotation)parent;
+                    r.resetAnchor();
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
                     r = new Rotation(selection.get(0), 0);
@@ -463,14 +463,14 @@ public class DrawPanel extends JPanel
 
         if (selection.size() == 1 && this.mode == UserMode.Selecting) {
             //Déplacement de la shape sélectionnée
-            System.out.println("Déplacement");
             double dx = mouseHere.getX() - mouseLastDrag.getX();
             double dy = mouseHere.getY() - mouseLastDrag.getY();
             selection.get(0).translate(dx, dy);
             mouseLastDrag = mouseHere;
         } else if (this.mode == UserMode.Rotating) {
             SceneGraph son = (SceneGraph) node.getChildAt(0);
-            ((Rotation) node).setAngle(calculateAngle(son, mouseHere));
+            ((Rotation) node).rotate(calculateAngle(son, mouseLastDrag, mouseHere));
+            mouseLastDrag = mouseHere;
         } else if (this.mode == UserMode.Scaling) {
             System.out.println("Scaling");
             SceneGraph son = (SceneGraph) node.getChildAt(0);
@@ -541,17 +541,15 @@ public class DrawPanel extends JPanel
         this.currentShapeType = s;
     }
 
-    public double calculateAngle(SceneGraph s, Point p)
+    public double calculateAngle(SceneGraph s, Point last, Point here)
     {
         double xS = s.getBarycenterX();
         double yS = s.getBarycenterY();
-        double xP = p.getX();
-        double yP = p.getY();
 
-        double angle = Math.atan((yP-yS)/(xP-xS));
-        System.out.println(angle);
+        double angleLast = Math.atan((last.getY()-yS)/(last.getX()-xS));
+        double angleHere = Math.atan((here.getY()-yS)/(here.getX()-xS));
 
-        return angle;
+        return angleHere - angleLast;
     }
 
     public double[] calculateScaleFactor(SceneGraph s, Point p)
