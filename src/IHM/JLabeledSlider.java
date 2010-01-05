@@ -1,5 +1,6 @@
 package IHM;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -35,9 +36,9 @@ public class JLabeledSlider extends JPanel
 		this.title = title;
 
 		// Creates the title
-		JLabel label = new JLabel(this.title);
-		add(label);
-
+		JLabel label = new JLabel(this.title, JLabel.CENTER);
+		add(label, JLabel.CENTER);
+                
 		// Creates the Combobox
 		this.slider = new JSlider(orient, min, max, init);
                 this.slider.setMajorTickSpacing(min);

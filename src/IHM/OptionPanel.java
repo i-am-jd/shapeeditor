@@ -4,7 +4,6 @@ import gestionnaire.GestionnaireColors;
 import gestionnaire.GestionnaireWidth;
 
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -13,17 +12,13 @@ import java.awt.GridLayout;
 import java.awt.TexturePaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * La barre d'infos situee en bas de la fenetre pour afficher
@@ -37,16 +32,18 @@ public class OptionPanel extends JPanel {
     static final int LW_INIT = 1;
 
     /** Le premier label */
+    private JPanel shapePanel;
+    private JLabel shapeLabel;
     private JComboBox shapeList;
+
+    private JLabeledTextField textField;
     /** Le premier label */
     private JLabeledComboBox lineColorList;
     private JLabeledSlider lineWidthSlider;
 
     /** Le premier label */
     private JLabeledComboBox fillPatternList;
-    /** Le second label */
-    private JLabel info2;
-    private JTextField textField;
+    
     private DrawPanel drawZone;
 
     /**
@@ -100,33 +97,10 @@ public class OptionPanel extends JPanel {
         fillPatternList = new JLabeledComboBox("Fill Patterns", libelleFill, 0,
               new GestionnaireColors(patterns, 1));
 
-        this.textField = new JTextField();
-        KeyAdapter kAdapter = new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent event) {
-                if (!isNumeric(event.getKeyChar()) || textField.getText().length() > 2) {
-                    //a modifier : enleve toutes les occurences d'un meme caractere
-                    textField.setText(textField.getText().replace(String.valueOf(event.getKeyChar()), ""));
-                }
-                if (textField.getText().equals("")) {
-                    getDrawZone().setNbSides(0);
-                } else {
-                    getDrawZone().setNbSides(Integer.parseInt(textField.getText()));
-                }
-            }
-            private boolean isNumeric(char carac) {
-                try {
-                    int i = Integer.parseInt(String.valueOf(carac));
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-                return true;
-            }
-        };
-        this.textField.addKeyListener(kAdapter);
-        this.textField.setColumns(2);
-        //this.textField.setPreferredSize(new Dimension(50, 20));
+        // Mise en place du textField pour le nombre de cotes
+        this.textField = new JLabeledTextField("Number of sides", 2);
 
+        // Mise en place du textField pour le type de forme
         shapeList = new JComboBox();
         //shapeList.setPreferredSize(new Dimension(100,20));
         shapeList.addActionListener(new ActionListener() {
@@ -146,13 +120,17 @@ public class OptionPanel extends JPanel {
             }
         });
         changeShapeList(0);
-
-        this.setLayout(new GridLayout(1, 6));
-        this.add(shapeList);
-        this.add(info2 = new JLabel("Number of sides : "));
+        shapePanel = new JPanel(new GridLayout(2, 1), true);
+        shapeLabel = new JLabel("Type of shape", JLabel.CENTER);
+        shapePanel.add(shapeLabel);
+        shapePanel.add(shapeList);
+     
+        this.setLayout(new GridLayout(1, 5));
+        this.add(shapePanel);
         this.add(textField);
         this.add(lineColorList);
         this.add(lineWidthSlider);
+
         this.add(fillPatternList);
         this.setBorder(BorderFactory.createEtchedBorder());
     }
