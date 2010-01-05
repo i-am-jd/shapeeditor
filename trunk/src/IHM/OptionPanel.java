@@ -110,7 +110,6 @@ public class OptionPanel extends JPanel {
                 getDrawZone().setCurrentShapeType((String) shapeList.getSelectedItem());
                 if (shapeList.getSelectedItem() != null) {
                     if (((String) shapeList.getSelectedItem()).equals(new String("Regular Polygon")) ||
-                            //((String) shapeList.getSelectedItem()).equals(new String("Irregular Polygon")) ||
                             ((String) shapeList.getSelectedItem()).equals(new String("Other Star"))) {
                         textField.setEnabled(true);
                     } else {
