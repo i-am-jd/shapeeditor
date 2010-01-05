@@ -73,7 +73,7 @@ public class JLabeledComboBox extends JPanel
 		}
 
 		// Creates the title
-		JLabel label = new JLabel(this.title);
+		JLabel label = new JLabel(this.title, JLabel.CENTER);
 		add(label);
 
 		// Creates the Combobox
