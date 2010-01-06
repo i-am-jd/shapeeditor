@@ -385,6 +385,25 @@ public class DrawPanel extends JPanel
 
         repaint();
     }
+
+    public void interpolateCurrentSelection()
+    {
+        if(selection.size() == 2) {
+            SceneGraph sg1 = selection.get(0);
+            SceneGraph sg2 = selection.get(1);
+            
+            if(sg1 instanceof PolygonShape && sg2 instanceof PolygonShape) {
+                if(((PolygonShape) sg1).getPointsNb() == ((PolygonShape) sg2).getPointsNb()) {
+                    Interpolation interp = new Interpolation(sg1, sg2);
+                    Window.sceneGraph.add(interp);
+
+                    selection.clear();
+                    selection.add(interp);
+                }
+            }
+        }
+        repaint();
+    }
     
     public void copyCurrentSelection()
     { 

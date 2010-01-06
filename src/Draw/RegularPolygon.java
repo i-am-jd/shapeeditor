@@ -11,13 +11,15 @@ import java.awt.Polygon;
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class RegularPolygon extends SceneShape
+public class RegularPolygon extends SceneShape implements PolygonShape
 {
     int nbSides;
     final Polygon polygon;
 
     double originX;
     double originY;
+
+    int[][] tab;
 
     public RegularPolygon (View v, double x, double y, double rad, int n)
     {
@@ -28,7 +30,7 @@ public class RegularPolygon extends SceneShape
 
         nbSides = n;
 
-        int[][] tab = new int[2][nbSides];
+        tab = new int[2][nbSides];
         int[] origin = {(int) x, (int) y};
         int r = (int) rad;
         double angle = Math.PI/2;
@@ -60,5 +62,20 @@ public class RegularPolygon extends SceneShape
     public RegularPolygon clone()
     {
         return new RegularPolygon(this);
+    }
+
+    @Override
+    public int getPointsNb() {
+        return nbSides;
+    }
+
+    @Override
+    public int getX(int i) {
+        return tab[0][i];
+    }
+
+    @Override
+    public int getY(int i) {
+        return tab[1][i];
     }
 }

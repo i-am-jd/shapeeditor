@@ -130,6 +130,7 @@ public class GestionnaireToolBar implements ActionListener
                     p.getDrawZone().inclusionCurrentSelection();
                     return;
                 case INTERPOLATION: //Suppression des formes constituant la sélection courante
+                    p.getDrawZone().interpolateCurrentSelection();
                     return;
             } throw new AssertionError("ActionToPerform::unknown assertion : " + this);
         }

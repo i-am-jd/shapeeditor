@@ -14,7 +14,6 @@ import java.util.Stack;
 
 public class BinaryOperation extends Transformation
 {
-    Area area;
     Shape shape;
     Shape baseShape;
 
