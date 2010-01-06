@@ -506,12 +506,10 @@ public class DrawPanel extends JPanel
             System.out.println("Beginning scaling");
             if (!selection.isEmpty()) {
                 SceneGraph sg = selection.get(0);
-                //SceneGraph parent = (SceneGraph)child.getParent();
                 Scale s;
                 if ( sg instanceof Scale ) {
                     s = (Scale) sg;
                 } else {
-                    System.out.println("Empty selection");
                     //sinon on ajoute un nouveau noeud dans le graphe
                     s = new Scale(sg);
                     selection.remove(sg);
@@ -524,15 +522,15 @@ public class DrawPanel extends JPanel
         } else if (this.mode == UserMode.Shearing) {
             if (!selection.isEmpty()) {
                 SceneGraph sg = selection.get(0);
-                //SceneGraph parent = (SceneGraph)selection.get(0).getParent();
                 Shear s;
                 if ( sg instanceof Shear ) {
                     //Si le noeud parent est deja une rotation on la modifie directement
                     s = (Shear) sg;
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
-                    s = new Shear(1, 1);
-                    s.add(selection.get(0));
+                    s = new Shear(sg);
+                    selection.remove(sg);
+                    selection.add(s);
                     Window.sceneGraph.add(s);
                 }
                 //Ajouter r au dessus de la feuille de selection(0)
@@ -588,13 +586,16 @@ public class DrawPanel extends JPanel
             mouseLastDrag = mouseHere;
         } else if (this.mode == UserMode.Scaling) {
             System.out.println("Scaling");
-            SceneGraph son = (SceneGraph) node.getChildAt(0);
             ((Scale) node).scaleTo(mouseHere);
             //calculateScaleFactor(son, mouseHere);
             //((Scale) node).setScaleFactors(1,1);
             Window.sceneGraph.update();
         } else if (this.mode == UserMode.Shearing) {
-            // A FAIRE
+            System.out.println("Scaling");
+            ((Shear) node).shearTo(mouseHere);
+            //calculateScaleFactor(son, mouseHere);
+            //((Scale) node).setScaleFactors(1,1);
+            Window.sceneGraph.update();
         } else if (this.mode == UserMode.Drawing) {
                 double downX = mouseDown.getX();
                 double downY = mouseDown.getY();
