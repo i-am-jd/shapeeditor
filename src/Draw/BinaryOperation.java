@@ -7,6 +7,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Stack;
 
 
 public class BinaryOperation extends Transformation
@@ -44,12 +47,6 @@ public class BinaryOperation extends Transformation
     public Rectangle2D getBounds2D()
     {
         return shape.getBounds2D();
-    }
-
-    @Override
-    public void applyTransform(AffineTransform trans)
-    {
-        shape = trans.createTransformedShape(baseShape);
     }
 
     @Override
@@ -91,5 +88,18 @@ public class BinaryOperation extends Transformation
     public Shape getShape()
     {
         return shape;
+    }
+
+    //Applique une pile de transformations à la shape
+    @Override
+    public void applyUnaryOperations(Stack<UnaryOperation> ops)
+    {
+        shape = baseShape;
+        for(Enumeration<UnaryOperation> en = ops.elements(); en.hasMoreElements();) {
+            ArrayList<AffineTransform> afl = en.nextElement().toAffineTransforms(shape);
+            for(AffineTransform af : afl) {
+                shape = af.createTransformedShape(shape);
+            }
+        }
     }
 }
