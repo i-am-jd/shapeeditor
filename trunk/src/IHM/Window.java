@@ -62,6 +62,7 @@ public class Window extends JFrame {
         toolBar = new ToolBar(optionZone);
         
         split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeZone, drawZone);
+        split.setDividerLocation(200);
 
         treeZone.initializeListeners(drawZone);
         menuBar.initializeListeners(drawZone);
