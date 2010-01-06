@@ -101,8 +101,8 @@ public class TreePanel extends JPanel {
         });
 
         //Pour le DragNDrop
-        //TreeDragSource ds = new TreeDragSource(arbre, DnDConstants.ACTION_MOVE);
-        //TreeDropTarget dt = new TreeDropTarget(arbre, drawZone);
+        TreeDragSource ds = new TreeDragSource(arbre, DnDConstants.ACTION_MOVE);
+        TreeDropTarget dt = new TreeDropTarget(arbre, drawZone);
 
     }
 

@@ -36,11 +36,21 @@ public class SceneGraph extends DefaultMutableTreeNode {
             this.add(s);
         }
 
+        /*
         @Override
         public SceneGraph clone()
         {
             return new SceneGraph(this.view, "Scene Graph");
+        }*/
+       @Override
+    public SceneGraph clone() {
+        SceneGraph node = (SceneGraph) super.clone();
+        for (Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
+            node.add((en.nextElement()).clone());
         }
+
+        return node;
+    }
 	/**
 	 * Getter of the property <tt>view</tt>
 	 * @return  Returns the view.
