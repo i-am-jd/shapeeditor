@@ -44,7 +44,7 @@ public class GestionnaireWidth implements ChangeListener {
             for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
                 SceneGraph sg = en.nextElement();
                 sg.getView().setLineWidth(newWidth);
-                drawZone.repaint();
+                drawZone.repaintPanel();
             }
         }
     }

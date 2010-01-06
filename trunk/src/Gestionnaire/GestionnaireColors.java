@@ -60,7 +60,7 @@ public class GestionnaireColors implements ItemListener {
             for (Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
                     SceneGraph sg = en.nextElement();
                     sg.getView().setLineColor((Color) patterns[liste.getSelectedIndex()]);
-                    drawZone.repaint();
+                    drawZone.repaintPanel();
                 }
         } else if (type == 1) {
             if (patterns[liste.getSelectedIndex()] instanceof Color) {

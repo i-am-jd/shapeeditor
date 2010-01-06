@@ -24,8 +24,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Point;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.awt.Image;
-import java.awt.Toolkit;
+//import java.awt.Image;
+//import java.awt.Toolkit;
 
 public class DrawPanel extends JPanel
         implements MouseListener, MouseMotionListener {
@@ -183,16 +183,21 @@ public class DrawPanel extends JPanel
             g2d.drawLine(middleX, (int) r.getMinY(), middleX, (int) r.getMaxY());
             g2d.drawLine((int) r.getMinX(), middleY, (int) r.getMaxX(), middleY);
         }
+    }
 
+    //On redessine la drawZone et le JTree
+    public void repaintPanel()
+    {
+        repaint();
         //Enfin, on rafraichit la vue du JTree
         treeZone.repaintJTree();
     }
-
+    
     public void calculateOrigin() {
         Window.origin[0] = this.getWidth() / 2;
         Window.origin[1] = this.getHeight() / 2;
      
-        repaint();
+        repaintPanel();
     }
 
     public void setNbSides(int nb) {
@@ -214,7 +219,7 @@ public class DrawPanel extends JPanel
                 }
                 selection.add(s);
 
-                repaint();
+                repaintPanel();
             } else {
                 selection.clear();
             }
@@ -226,7 +231,7 @@ public class DrawPanel extends JPanel
         if (e.getButton() == MouseEvent.BUTTON3) {
             // Si on fait un clic droit, on annule la création du polygone
             polygon.clear();
-            repaint();
+            repaintPanel();
             return;
         }
 
@@ -291,7 +296,7 @@ public class DrawPanel extends JPanel
             selection.clear();
             selection.add(gr);
 
-            repaint();
+            repaintPanel();
         }
     }
 
@@ -306,7 +311,7 @@ public class DrawPanel extends JPanel
             selection.add(inters);
         }
 
-        repaint();
+        repaintPanel();
     }
 
     public void substractCurrentSelection()
@@ -320,7 +325,7 @@ public class DrawPanel extends JPanel
             selection.add(subst);
         }
 
-        repaint();
+        repaintPanel();
     }
     
     public void copyCurrentSelection()
@@ -330,7 +335,7 @@ public class DrawPanel extends JPanel
                Window.sceneGraph.add(en.nextElement().clone());
             }
             selection.removeAllElements();
-            repaint();
+            repaintPanel();
         }
     }
 
@@ -341,7 +346,7 @@ public class DrawPanel extends JPanel
                 Window.sceneGraph.remove(en.nextElement());
             }
             selection.removeAllElements();
-            repaint();
+            repaintPanel();
         }
     }
 
@@ -356,7 +361,7 @@ public class DrawPanel extends JPanel
                 }
                 ((Group) sg).ungroup();
                 Window.sceneGraph.applyTransform(new AffineTransform());
-                repaint();
+                repaintPanel();
                 this.switchSelectionMode();
             }
         }
@@ -501,7 +506,7 @@ public class DrawPanel extends JPanel
         if (shape != null) {
             Window.sceneGraph.add(shape);
             shape = null;
-            repaint();
+            repaintPanel();
         }
         infoBar.printMessage("Click to initiate a shape.");
     }
@@ -594,14 +599,14 @@ public class DrawPanel extends JPanel
         */
         
         // dessin du graphe de scene et de la forme en construction
-        repaint();
+        repaintPanel();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         infoBar.printCoordinates(e.getX(), e.getY());
         mouseHere = e.getPoint();
-        repaint();
+        repaintPanel();
     }
 
     public void setCurrentShapeType(String s) {

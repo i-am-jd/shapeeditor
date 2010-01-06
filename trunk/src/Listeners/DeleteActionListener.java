@@ -24,6 +24,6 @@ public class DeleteActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent arg0) {
         drawZone.deleteCurrentSelection();
-        drawZone.repaint();
+        drawZone.repaintPanel();
     }
 }
