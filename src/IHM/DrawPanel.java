@@ -23,7 +23,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Point;
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
 //import java.awt.Image;
 //import java.awt.Toolkit;
 
@@ -357,7 +356,7 @@ public class DrawPanel extends JPanel
             selection.add(excl);
         }
 
-        repaint();
+        repaintPanel();
     }
 
     public void unionCurrentSelection()
@@ -370,7 +369,7 @@ public class DrawPanel extends JPanel
             selection.add(union);
         }
 
-        repaint();
+        repaintPanel();
     }
 
     public void inclusionCurrentSelection()
@@ -383,7 +382,7 @@ public class DrawPanel extends JPanel
             selection.add(incl);
         }
 
-        repaint();
+        repaintPanel();
     }
 
     public void interpolateCurrentSelection()
@@ -402,7 +401,7 @@ public class DrawPanel extends JPanel
                 }
             }
         }
-        repaint();
+        repaintPanel();
     }
     
     public void copyCurrentSelection()
