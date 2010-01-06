@@ -43,7 +43,7 @@ public class ToolBar extends JToolBar {
         btn7 = new JButton(new ImageIcon(getClass().getResource("../images/group.png")));
         btn8 = new JButton(new ImageIcon(getClass().getResource("../images/copy.png")));
         btn9 = new JButton(new ImageIcon(getClass().getResource("../images/delete.png")));
-        btn19 = new JButton("Defaire");
+        btn19 = new JButton(new ImageIcon(getClass().getResource("../images/undo.png")));
 
         btn10 = new JButton(new ImageIcon(getClass().getResource("../images/rotate.png")));
         btn11 = new JButton(new ImageIcon(getClass().getResource("../images/scale.png")));
