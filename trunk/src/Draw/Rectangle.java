@@ -12,5 +12,7 @@ public class Rectangle extends SceneShape
         rect = new Rectangle2D.Double(x ,y, width, height);
         baseShape = rect;
         shape = rect;
+
+        setUserObject("Rectangle");
     }
 }

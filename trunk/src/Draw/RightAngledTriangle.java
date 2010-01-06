@@ -33,6 +33,8 @@ public class RightAngledTriangle extends SceneShape {
         polygon = new Polygon(xpoints, ypoints, 3);
         shape = polygon;
         baseShape = polygon;
+
+        setUserObject("RightAngledTriangle");
     }
 
     public RightAngledTriangle(RightAngledTriangle t) {

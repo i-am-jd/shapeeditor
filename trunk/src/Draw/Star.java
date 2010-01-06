@@ -36,6 +36,8 @@ public class Star extends SceneShape {
         polygon = new Polygon(xpoints, ypoints, nbSides);
         shape = polygon;
         baseShape = polygon;
+
+        setUserObject("Star");
     }
 
     public Star (Star s) {

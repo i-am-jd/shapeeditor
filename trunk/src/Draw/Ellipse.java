@@ -12,6 +12,8 @@ public class Ellipse extends SceneShape {
         ellipse = new Ellipse2D.Double(x, y, width, height);
         shape = ellipse;
         baseShape = ellipse;
+
+        setUserObject("Ellipse");
     }
 
     public Ellipse (Ellipse e) {
