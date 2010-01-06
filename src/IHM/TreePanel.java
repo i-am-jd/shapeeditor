@@ -2,7 +2,10 @@ package IHM;
 
 import Draw.*;
 
+import jTree.TreeDragSource;
+import jTree.TreeDropTarget;
 import java.awt.BorderLayout;
+import java.awt.dnd.DnDConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
@@ -33,6 +36,7 @@ public class TreePanel extends JPanel {
         /* Pour que l'arbre prenne toute la place disponible par defaut */
         this.setLayout(new BorderLayout());
         this.add(new JScrollPane(arbre), BorderLayout.CENTER);
+
     }
 
     public void initializeListeners(final DrawPanel drawZone) {
@@ -48,6 +52,7 @@ public class TreePanel extends JPanel {
                         drawZone.getSelection().add(node);
                     }
                     //System.out.println("Selection " + node.toString());
+                    drawZone.repaint();
                 }
             }
             /*
@@ -94,6 +99,10 @@ public class TreePanel extends JPanel {
                 mousePressed(e);
             }
         });
+
+        //Pour le DragNDrop
+        //TreeDragSource ds = new TreeDragSource(arbre, DnDConstants.ACTION_MOVE);
+        //TreeDropTarget dt = new TreeDropTarget(arbre, drawZone);
 
     }
 

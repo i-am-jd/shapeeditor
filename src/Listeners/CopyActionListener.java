@@ -24,6 +24,6 @@ public class CopyActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent arg0) {
         drawZone.copyCurrentSelection();
-        drawZone.repaint();
+        drawZone.repaintPanel();
     }
 }

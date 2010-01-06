@@ -51,7 +51,7 @@ public class MenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 Window.sceneGraph.removeAllChildren();
-                drawZone.repaint();
+                drawZone.repaintPanel();
             }
         });
         optExit.addActionListener(new ActionListener() {
