@@ -303,7 +303,7 @@ public class DrawPanel extends JPanel
     {
         if(!selection.isEmpty()) {
             
-            Group gr = new Group();
+            Group gr = new Group(new View(Window.sceneGraph.getView()));
 
             int i = selection.size();
             while(i --> 0) {

@@ -19,9 +19,7 @@ public class BinaryOperation extends Transformation
 
     public BinaryOperation(String s, SceneGraph sg1, SceneGraph sg2)
     {
-        super(s);
-
-        view = new View(sg1.getView());
+        super(sg1.getView(), s);
 
         this.add(sg1);
         this.add(sg2);
