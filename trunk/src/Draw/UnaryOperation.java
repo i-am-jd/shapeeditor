@@ -90,6 +90,8 @@ public class UnaryOperation extends Transformation {
         //Ajouter l'enfant
         child.removeFromParent();
         this.add(child);
+
+        this.view = new View(child.getView());
     }
 
     /*
