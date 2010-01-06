@@ -37,7 +37,8 @@ public class Interpolation extends BinaryOperation implements PolygonShape
             ys[i] = (p1.getY(i) + p2.getY(i))/2;
         }
         shape = new Polygon(xs, ys, p1.getPointsNb());
-        }
+        baseShape = new Polygon(xs, ys, p1.getPointsNb());
+    }
 
     @Override
     public int getPointsNb() {
