@@ -73,7 +73,7 @@ public class UnaryOperation extends Transformation {
 
     protected UnaryOperation(String s, TransFlag f, SceneGraph child)
     {
-        super(s);
+        super(child.getView(), s);
         flag = f;
         factorX = 1;
         factorY = 1;
@@ -90,8 +90,6 @@ public class UnaryOperation extends Transformation {
         //Ajouter l'enfant
         child.removeFromParent();
         this.add(child);
-
-        this.view = new View(child.getView());
     }
 
     /*

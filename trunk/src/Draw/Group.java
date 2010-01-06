@@ -4,12 +4,12 @@ import java.util.Vector;
 
 public class Group extends SceneGraph {
 		
-    public Group() {
-        super("Group");
+    public Group(View v) {
+        super(v, "Group");
     }
 
-    public Group(String s) {
-        super(s);
+    public Group(View v, String s) {
+        super(v, s);
     }
 
     public void ungroup()
