@@ -1,6 +1,5 @@
 package IHM;
 
-import Draw.SceneGraph;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -20,8 +19,8 @@ public class MenuBar extends JMenuBar {
     private JMenuItem optNew = new JMenuItem("New");
     private JMenuItem optExit = new JMenuItem("Exit");
     /* menu Dessin */
-    private JMenu menuDessin = new JMenu("Dessin");
-    private JMenuItem optLancer = new JMenuItem("Lancer");
+    //private JMenu menuDessin = new JMenu("Dessin");
+    //private JMenuItem optLancer = new JMenuItem("Lancer");
     /* menu A propos */
     private JMenu menuAbout = new JMenu("About");
     private JMenuItem optAbout = new JMenuItem("About");
@@ -34,13 +33,14 @@ public class MenuBar extends JMenuBar {
 
         /* Ajout des sous-categories aux categories de la barre de menu */
         this.menuFile.add(optNew);
+        this.menuFile.addSeparator();
         this.menuFile.add(optExit);
-        this.menuDessin.add(optLancer);
+        //this.menuDessin.add(optLancer);
         this.menuAbout.add(optAbout);
 
         /* Ajout des différents elements de la barre de menu */
         this.add(menuFile);
-        this.add(menuDessin);
+        //this.add(menuDessin);
         this.add(menuAbout);
     }
 
@@ -60,12 +60,12 @@ public class MenuBar extends JMenuBar {
                 System.exit(0);
             }
         });
-        optLancer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                //...
-            }
-        });
+        //optLancer.addActionListener(new ActionListener() {
+        //    @Override
+        //    public void actionPerformed(ActionEvent arg0) {
+        //        //...
+        //    }
+        //});
         optAbout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
