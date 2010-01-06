@@ -110,10 +110,11 @@ public class SceneGraph extends DefaultMutableTreeNode {
         }
 
         //Monte un graphe de scène enfant un premier plan (sera dessiné en priorité)
-        public void moveToFront(SceneGraph g)
+        public void moveToFront()
         {
-            this.remove(g);
-            this.add(g);
+            SceneGraph parent = (SceneGraph) this.getParent();
+            parent.remove(this);
+            parent.add(this);
         }
 
         public void applyUnaryOperations(Stack<UnaryOperation> unaryOps)

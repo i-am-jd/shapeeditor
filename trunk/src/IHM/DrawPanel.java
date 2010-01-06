@@ -601,13 +601,20 @@ public class DrawPanel extends JPanel
 
         mouseHere = e.getPoint();
 
-        /*if(sceneGraphToDrag != null && mode == UserMode.Selecting) {
+        if(sceneGraphToDrag != null && mode == UserMode.Selecting) {
             //L'utilisateur avait pressé le curseur sur un élément du graphe
             //Celui-ci remplace la sélection courante
+            if(selection.isEmpty()) {
+                selection.clear();
+                selection.add(sceneGraphToDrag);
+                sceneGraphToDrag.moveToFront();
+                Window.sceneGraph.update();
+            }
+        }
+
+        if(sceneGraphToDrag == null && mode == UserMode.Selecting) {
             selection.clear();
-            selection.add(sceneGraphToDrag);
-            Window.sceneGraph.moveToFront(sceneGraphToDrag);
-        }*/
+        }
 
         if (selection.size() == 1 && this.mode == UserMode.Selecting) {
             //Déplacement de la shape sélectionnée
