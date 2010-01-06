@@ -1,25 +1,20 @@
 package Draw;
 
-import java.awt.Graphics2D;
+import java.awt.geom.Area;
 
 
-public class Inclusion extends BinaryOperation {
-    public Inclusion()
+public class Inclusion extends BinaryOperation
+{
+
+    public Inclusion(SceneGraph sg1, SceneGraph sg2)
     {
-        super("Inclusion");
+        super("Inclusion", sg1, sg2);
+        this.area = new Area(sg1.getShape());
+        Area area2 = new Area(sg2.getShape());
+        area2.intersect(area);
+        area.add(area2);
+        shape = area;
+        baseShape = area;
     }
 
-    @Override
-    public Inclusion clone()
-    {
-        Inclusion i = new Inclusion();
-        i.add(((SceneGraph)i.getChildAt(0)).clone());
-        i.add(((SceneGraph)i.getChildAt(1)).clone());
-        return i;
-    }
-
-    @Override
-    public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
-
-    }
 }

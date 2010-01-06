@@ -89,7 +89,7 @@ public class ToolBar extends JToolBar {
         btn7.addActionListener(new GestionnaireToolBar(ButtonPressed.GROUP, optionZone));
         btn8.addActionListener(new GestionnaireToolBar(ButtonPressed.COPY, optionZone));
         btn9.addActionListener(new GestionnaireToolBar(ButtonPressed.DELETE, optionZone));
-        btn19.addActionListener(new GestionnaireToolBar(ButtonPressed.UNDO, optionZone));
+        btn19.addActionListener(new GestionnaireToolBar(ButtonPressed.DEGROUP, optionZone));
         btn10.addActionListener(new GestionnaireToolBar(ButtonPressed.ROTATE, optionZone));
         btn11.addActionListener(new GestionnaireToolBar(ButtonPressed.SCALE, optionZone));
         btn12.addActionListener(new GestionnaireToolBar(ButtonPressed.SHEAR, optionZone));

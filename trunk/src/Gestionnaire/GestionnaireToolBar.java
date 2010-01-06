@@ -115,6 +115,7 @@ public class GestionnaireToolBar implements ActionListener
                     p.getDrawZone().switchShearMode();
                     return;
                 case UNION: //Suppression des formes constituant la sélection courante
+                    p.getDrawZone().unionCurrentSelection();
                     return;
                 case INTERSECTION: //Suppression des formes constituant la sélection courante
                     p.getDrawZone().intersectCurrentSelection();
@@ -122,9 +123,11 @@ public class GestionnaireToolBar implements ActionListener
                 case SUBSTRACTION:
                     p.getDrawZone().substractCurrentSelection();
                     return;
-                case EXCLUSION: //Suppression des formes constituant la sélection courante
+                case EXCLUSION:
+                    p.getDrawZone().exclusionCurrentSelection();
                     return;
                 case INCLUSION: //Suppression des formes constituant la sélection courante
+                    p.getDrawZone().inclusionCurrentSelection();
                     return;
                 case INTERPOLATION: //Suppression des formes constituant la sélection courante
                     return;

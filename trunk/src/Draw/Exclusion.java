@@ -1,27 +1,18 @@
 package Draw;
 
-import java.awt.Graphics2D;
+import java.awt.geom.Area;
 
 
-public class Exclusion extends BinaryOperation {
+public class Exclusion extends BinaryOperation
+{
 
-    public Exclusion()
+    public Exclusion(SceneGraph sg1, SceneGraph sg2)
     {
-        super("Exclusion");
+        super("Exclusion", sg1, sg2);
+        this.area = new Area(sg1.getShape());
+        area.exclusiveOr(new Area(sg2.getShape()));
+        shape = area;
+        baseShape = area;
     }
-
-    @Override
-    public Exclusion clone()
-    {
-        Exclusion e = new Exclusion();
-        e.add(((SceneGraph)e.getChildAt(0)).clone());
-        e.add(((SceneGraph)e.getChildAt(1)).clone());
-        return e;
-    }
-
-    @Override
-    public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
-
-    }
-
+    
 }

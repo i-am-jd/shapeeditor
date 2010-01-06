@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.util.Stack;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
@@ -115,11 +116,16 @@ public class SceneGraph extends DefaultMutableTreeNode {
             this.add(g);
         }
 
-        public void applyTransform(AffineTransform trans)
+        public void applyUnaryOperations(Stack<UnaryOperation> unaryOps)
         {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
-                en.nextElement().applyTransform(trans);
+                en.nextElement().applyUnaryOperations(unaryOps);
             }
+        }
+
+        public void update()
+        {
+            ((SceneGraph) this.getRoot()).applyUnaryOperations(new Stack());
         }
 
         public double getBarycenterX()
