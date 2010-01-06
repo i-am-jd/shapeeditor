@@ -1,9 +1,8 @@
 package IHM;
 
 import Draw.*;
+import DragNDrop_JTree.*;
 
-import jTree.TreeDragSource;
-import jTree.TreeDropTarget;
 import java.awt.BorderLayout;
 import java.awt.dnd.DnDConstants;
 import java.awt.event.MouseAdapter;

@@ -1,5 +1,8 @@
-package jTree;
+package DragNDrop_JTree;
 
+import Draw.BinaryOperation;
+import Draw.SceneGraph;
+import Draw.UnaryOperation;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragGestureRecognizer;
@@ -14,8 +17,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import Draw.SceneGraph;
-import java.awt.Cursor;
 
 public class TreeDragSource implements DragSourceListener, DragGestureListener
 {
@@ -40,6 +41,7 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener
 	/*
 	 * Drag Gesture Handler
 	 */
+        @Override
 	public void dragGestureRecognized(DragGestureEvent dge)
 	{
 		TreePath path = sourceTree.getSelectionPath();
@@ -50,19 +52,21 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener
 		}
 		oldNode = (MutableTreeNode) path.getLastPathComponent();
 		transferable = new TransferableTreeNode(path);
-		source.startDrag(dge, DragSource.DefaultMoveNoDrop, transferable, this);
+		source.startDrag(dge, DragSource.DefaultMoveDrop, transferable, this);
 
 	}
 
 	/*
 	 * Drag Event Handlers
 	 */
+        @Override
 	public void dragEnter(DragSourceDragEvent dsde)
 	{
         //System.out.println("dragEnter");
 	// nothing yet
 	}
 
+        @Override
 	public void dragExit(DragSourceEvent dse)
 	{
         //System.out.println("dragExit");
@@ -70,11 +74,13 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener
 		// Nothing yet
 	}
 
+        @Override
 	public void dragOver(DragSourceDragEvent dsde)
 	{
         // Nothing yet
 	}
 
+        @Override
 	public void dropActionChanged(DragSourceDragEvent dsde)
 	{
 		System.out.println("Action: " + dsde.getDropAction());
@@ -82,6 +88,7 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener
 		System.out.println("User Action: " + dsde.getUserAction());
 	}
 
+        @Override
 	public void dragDropEnd(DragSourceDropEvent dsde)
 	{
 		/*
@@ -92,23 +99,36 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener
 
 		if ( dsde.getDropSuccess() )
 		{
-			DefaultTreeModel tm = (DefaultTreeModel) sourceTree.getModel();
-			
-			if( dsde.getDropAction() == 2 )
+			((DefaultTreeModel)sourceTree.getModel()).removeNodeFromParent(oldNode);
+                        System.out.println(((DefaultTreeModel)sourceTree.getModel()).getClass().toString());
+                        /*if( dsde.getDropAction() == 2 )
 			{
 				((SceneGraph) oldNode).removeFromParent();
-			}
-			
-			tm.reload();
+			}*/
 			//tm.removeFromParentFromParent(oldNode);
 			//TreeNode root = (TreeNode) tm.getRoot();
 			//System.out.println("TreeDragSource after drop : \n" + MyTree.toStringNode(root, 0));
 		}
-
-		/*
-		 * to support move only... if (dsde.getDropSuccess()) {
-		 * ((DefaultTreeModel
-		 * )sourceTree.getModel()).removeFromParentFromParent(oldNode); }
-		 */
 	}
+
+        /*
+        public void dragDropEnd(DragSourceDropEvent dsde)
+	{
+		// to support move or copy, we have to check which occurred:
+		 
+		System.out.println("Drop Action: " + dsde.getDropAction());
+		if (dsde.getDropSuccess()
+		        && (dsde.getDropAction() == DnDConstants.ACTION_MOVE))
+		{
+			DefaultTreeModel tm = (DefaultTreeModel) sourceTree.getModel();
+			tm.removeNodeFromParent(oldNode);
+			TreeNode root = (TreeNode) tm.getRoot();
+			System.out.println("TreeDragSource after drop : \n" + MyTree.toStringNode(root, 0));
+		}
+
+		// to support move only... if (dsde.getDropSuccess()) {
+		// ((DefaultTreeModel
+		// )sourceTree.getModel()).removeNodeFromParent(oldNode); }
+		//
+	}*/
 }

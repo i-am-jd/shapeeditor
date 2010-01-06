@@ -1,7 +1,9 @@
-package jTree;
+package DragNDrop_JTree;
 
+import Draw.BinaryOperation;
 import Draw.Group;
 import Draw.SceneGraph;
+import Draw.UnaryOperation;
 import IHM.DrawPanel;
 import java.awt.Component;
 import java.awt.Point;
@@ -83,6 +85,11 @@ public class TreeDropTarget implements DropTargetListener {
         JTree tree = (JTree) dtc.getComponent();
         TreePath parentpath = tree.getClosestPathForLocation(pt.x, pt.y);
         MutableTreeNode parent = (MutableTreeNode) parentpath.getLastPathComponent();
+
+        if (parent instanceof UnaryOperation || parent instanceof BinaryOperation){
+                System.out.println("Drop impossible à cause de l'arité");
+                return;
+            }
 
         MutableTreeNode selectedNode = (MutableTreeNode) targetTree.getSelectionPath().getLastPathComponent();
         MutableTreeNode clonedNode = ((SceneGraph) selectedNode).clone();
