@@ -93,7 +93,8 @@ public class DrawPanel extends JPanel
     {
         this.mode = UserMode.Drawing;
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        //selection.clear();
+        selection.clear();
+        infoBar.printMessage("Click to initiate a shape.");
     }
 
     public void switchSelectionMode()
@@ -104,6 +105,7 @@ public class DrawPanel extends JPanel
         } else {*/
             this.mode = UserMode.Selecting;
             setCursor(new Cursor(Cursor.HAND_CURSOR));
+            infoBar.printMessage("Click on a shape to select it.");
         /*}*/
     }
 
@@ -111,6 +113,11 @@ public class DrawPanel extends JPanel
     {
         this.mode = UserMode.Rotating;
         setCursor(new Cursor(Cursor.MOVE_CURSOR));
+        if (selection.isEmpty()) {
+            infoBar.printMessage("Please select a shape or a transformation first.");
+        } else {
+            infoBar.printMessage("Click to rotate the selection.");
+        }
         //Toolkit toolkit = Toolkit.getDefaultToolkit();
         //Image image = toolkit.getImage("../images/cursor-rotate.png");
         //Point hotSpot = new Point(8, 8);
@@ -124,11 +131,21 @@ public class DrawPanel extends JPanel
                 System.out.println("Taille de la sélection" + (new Integer(selection.size())).toString());
 
         setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+        if (selection.isEmpty()) {
+            infoBar.printMessage("Please select a shape or a transformation first.");
+        } else {
+            infoBar.printMessage("Click to scale the selection.");
+        }
     }
     public void switchShearMode()
     {
         this.mode = UserMode.Shearing;
         setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
+        if (selection.isEmpty()) {
+            infoBar.printMessage("Please select a shape or a transformation first.");
+        } else {
+            infoBar.printMessage("Click to shear the selection.");
+        }
     }
 
     @Override
@@ -549,7 +566,9 @@ public class DrawPanel extends JPanel
             shape = null;
             repaintPanel();
         }
-        infoBar.printMessage("Click to initiate a shape.");
+        if (this.mode == UserMode.Drawing) {
+            infoBar.printMessage("Click to initiate a shape.");
+        }
     }
 
     @Override
