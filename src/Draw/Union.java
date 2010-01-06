@@ -1,26 +1,18 @@
 package Draw;
 
-import java.awt.Graphics2D;
+import java.awt.geom.Area;
 
 
 
 public class Union extends BinaryOperation {
 
-    public Union()
+    public Union(SceneGraph sg1, SceneGraph sg2)
     {
-        super("Union");
-    }
-    
-    public Union clone()
-    {
-        Union u = new Union();
-        u.add(((SceneGraph)u.getChildAt(0)).clone());
-        u.add(((SceneGraph)u.getChildAt(1)).clone());
-        return u;
-    }
-
-    @Override
-    public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
+        super("Union", sg1, sg2);
+        this.area = new Area(sg1.getShape());
+        area.add(new Area(sg2.getShape()));
+        shape = area;
+        baseShape = area;
     }
 
 }

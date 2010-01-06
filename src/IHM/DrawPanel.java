@@ -93,7 +93,7 @@ public class DrawPanel extends JPanel
     {
         this.mode = UserMode.Drawing;
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        selection.clear();
+        //selection.clear();
     }
 
     public void switchSelectionMode()
@@ -121,6 +121,8 @@ public class DrawPanel extends JPanel
     public void switchScaleMode()
     {
         this.mode = UserMode.Scaling;
+                System.out.println("Taille de la sélection" + (new Integer(selection.size())).toString());
+
         setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
     }
     public void switchShearMode()
@@ -240,7 +242,7 @@ public class DrawPanel extends JPanel
         int y = (int) p.getY();
         View view = Window.sceneGraph.getView();
 
-        if (!polygon.isEmpty()) {
+        if (!polygon.isEmpty() && mode == UserMode.Drawing) {
             int[] head = polygon.get(0);
             //Si le curseur est suffisamment proche du premier point du polygone, la construction
             //de ce dernier est terminée
@@ -274,6 +276,7 @@ public class DrawPanel extends JPanel
             SceneGraph g = (SceneGraph) Window.sceneGraph.getChildAt(i);
             if(g.contains(p)) {
                 foundGraph = g;
+                System.out.println("Graphe trouvé: " + g.toString());
                 break;
             }
         }
@@ -285,10 +288,11 @@ public class DrawPanel extends JPanel
         if(!selection.isEmpty()) {
             
             Group gr = new Group();
-            for(Enumeration<SceneGraph> en = selection.elements(); en.hasMoreElements();) {
-                SceneGraph g = en.nextElement();
-                Window.sceneGraph.remove(g);
-                gr.add(g);
+
+            int i = selection.size();
+            while(i --> 0) {
+                SceneGraph sg = selection.get(i);
+                gr.add(sg);
             }
 
             Window.sceneGraph.add(gr);
@@ -303,8 +307,7 @@ public class DrawPanel extends JPanel
     public void intersectCurrentSelection()
     {
         if(selection.size() == 2) {
-            View view = Window.sceneGraph.getView();
-            Intersection inters = new Intersection(new View(view), selection.get(0), selection.get(1));
+            Intersection inters = new Intersection(selection.get(0), selection.get(1));
             Window.sceneGraph.add(inters);
 
             selection.clear();
@@ -317,7 +320,6 @@ public class DrawPanel extends JPanel
     public void substractCurrentSelection()
     {
         if(selection.size() == 2) {
-            View view = Window.sceneGraph.getView();
             Substraction subst = new Substraction(selection.get(0), selection.get(1));
             Window.sceneGraph.add(subst);
 
@@ -326,6 +328,45 @@ public class DrawPanel extends JPanel
         }
 
         repaintPanel();
+    }
+
+    public void exclusionCurrentSelection()
+    {
+        if(selection.size() == 2) {
+            Exclusion excl = new Exclusion(selection.get(0), selection.get(1));
+            Window.sceneGraph.add(excl);
+
+            selection.clear();
+            selection.add(excl);
+        }
+
+        repaint();
+    }
+
+    public void unionCurrentSelection()
+    {
+        if(selection.size() == 2) {
+            Union union = new Union(selection.get(0), selection.get(1));
+            Window.sceneGraph.add(union);
+
+            selection.clear();
+            selection.add(union);
+        }
+
+        repaint();
+    }
+
+    public void inclusionCurrentSelection()
+    {
+        if(selection.size() == 2) {
+            Inclusion incl = new Inclusion(selection.get(0), selection.get(1));
+            Window.sceneGraph.add(incl);
+
+            selection.clear();
+            selection.add(incl);
+        }
+
+        repaint();
     }
     
     public void copyCurrentSelection()
@@ -360,7 +401,7 @@ public class DrawPanel extends JPanel
                     selection.add(en.nextElement());
                 }
                 ((Group) sg).ungroup();
-                Window.sceneGraph.applyTransform(new AffineTransform());
+                Window.sceneGraph.update();
                 repaintPanel();
                 this.switchSelectionMode();
             }
@@ -436,23 +477,25 @@ public class DrawPanel extends JPanel
         mouseDown = e.getPoint();
         mouseLastDrag = e.getPoint();
 
+        System.out.println("Taille de la sélection" + (new Integer(selection.size())).toString());
+
         displayPopupMenu(e);
          if (e.getButton() == MouseEvent.BUTTON1 && this.mode == UserMode.Selecting) {
             sceneGraphToDrag = getSceneGraphAt(mouseDown);
          }
          if (this.mode == UserMode.Rotating) {
             if (!selection.isEmpty()) {
-                SceneGraph child = selection.get(0);
-                SceneGraph parent = (SceneGraph)child.getParent();
+                SceneGraph sg = selection.get(0);
+                //SceneGraph parent = (SceneGraph)child.getParent();
                 Rotation r;
-                if ( parent instanceof Rotation ) {
+                if ( sg instanceof Rotation ) {
                     //Si le noeud parent est deja une rotation on la modifie directement
-                    r = (Rotation)parent;
+                    r = (Rotation) sg;
                     r.resetAnchor();
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
                     r = new Rotation(selection.get(0), 0);
-                    selection.remove(child);
+                    selection.remove(sg);
                     selection.add(r);
                     Window.sceneGraph.add(r);
                 }
@@ -462,17 +505,16 @@ public class DrawPanel extends JPanel
         } else if (this.mode == UserMode.Scaling) {
             System.out.println("Beginning scaling");
             if (!selection.isEmpty()) {
-                SceneGraph child = selection.get(0);
-                SceneGraph parent = (SceneGraph)child.getParent();
+                SceneGraph sg = selection.get(0);
+                //SceneGraph parent = (SceneGraph)child.getParent();
                 Scale s;
-                if ( parent instanceof Scale ) {
-                    //Si le noeud parent est deja une rotation on la modifie directement
-                    s = (Scale)parent;
+                if ( sg instanceof Scale ) {
+                    s = (Scale) sg;
                 } else {
+                    System.out.println("Empty selection");
                     //sinon on ajoute un nouveau noeud dans le graphe
-                    s = new Scale(1, 1);
-                    s.add(child);
-                    selection.remove(child);
+                    s = new Scale(sg);
+                    selection.remove(sg);
                     selection.add(s);
                     Window.sceneGraph.add(s);
                 }
@@ -481,11 +523,12 @@ public class DrawPanel extends JPanel
             }
         } else if (this.mode == UserMode.Shearing) {
             if (!selection.isEmpty()) {
-                SceneGraph parent = (SceneGraph)selection.get(0).getParent();
+                SceneGraph sg = selection.get(0);
+                //SceneGraph parent = (SceneGraph)selection.get(0).getParent();
                 Shear s;
-                if ( parent instanceof Shear ) {
+                if ( sg instanceof Shear ) {
                     //Si le noeud parent est deja une rotation on la modifie directement
-                    s = (Shear)parent;
+                    s = (Shear) sg;
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
                     s = new Shear(1, 1);
@@ -525,13 +568,13 @@ public class DrawPanel extends JPanel
 
         mouseHere = e.getPoint();
 
-        if(sceneGraphToDrag != null) {
+        /*if(sceneGraphToDrag != null && mode == UserMode.Selecting) {
             //L'utilisateur avait pressé le curseur sur un élément du graphe
             //Celui-ci remplace la sélection courante
             selection.clear();
             selection.add(sceneGraphToDrag);
             Window.sceneGraph.moveToFront(sceneGraphToDrag);
-        }
+        }*/
 
         if (selection.size() == 1 && this.mode == UserMode.Selecting) {
             //Déplacement de la shape sélectionnée
@@ -546,7 +589,10 @@ public class DrawPanel extends JPanel
         } else if (this.mode == UserMode.Scaling) {
             System.out.println("Scaling");
             SceneGraph son = (SceneGraph) node.getChildAt(0);
-            ((Scale) node).setFactors(calculateScaleFactor(son, mouseHere));
+            ((Scale) node).scaleTo(mouseHere);
+            //calculateScaleFactor(son, mouseHere);
+            //((Scale) node).setScaleFactors(1,1);
+            Window.sceneGraph.update();
         } else if (this.mode == UserMode.Shearing) {
             // A FAIRE
         } else if (this.mode == UserMode.Drawing) {
@@ -622,18 +668,6 @@ public class DrawPanel extends JPanel
         double angleHere = Math.atan2(here.getX()-xS, here.getY()-yS);
 
         return angleLast - angleHere;
-    }
-
-    public double[] calculateScaleFactor(SceneGraph s, Point p)
-    {
-        double width  = s.getBounds2D().getWidth();
-        double height = s.getBounds2D().getHeight();
-
-        double factorX = (p.getX() - s.getBarycenterX())/(width / 2);
-        double factorY = (p.getY() - s.getBarycenterY())/(height / 2);
-        System.out.println(factorX);
-        System.out.println(factorY);
-        return new double[]{Math.abs(factorX), Math.abs(factorY)};
     }
 
     public void displayPopupMenu(MouseEvent e)

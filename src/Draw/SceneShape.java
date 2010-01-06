@@ -9,6 +9,9 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Stack;
 
 /**
  *
@@ -62,10 +65,17 @@ public abstract class SceneShape extends SceneGraph {
         return shape.getBounds2D();
     }
 
+    //Applique une pile de transformations à la shape
     @Override
-    public void applyTransform(AffineTransform trans)
+    public void applyUnaryOperations(Stack<UnaryOperation> ops)
     {
-        shape = trans.createTransformedShape(baseShape);
+        shape = baseShape;
+        for(Enumeration<UnaryOperation> en = ops.elements(); en.hasMoreElements();) {
+            ArrayList<AffineTransform> afl = en.nextElement().toAffineTransforms(shape);
+            for(AffineTransform af : afl) {
+                shape = af.createTransformedShape(shape);
+            }
+        }
     }
 
     @Override
