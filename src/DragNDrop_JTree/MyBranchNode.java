@@ -1,4 +1,4 @@
-package jTree;
+package DragNDrop_JTree;
 
 import java.util.Enumeration;
 import java.util.Vector;
@@ -6,6 +6,10 @@ import java.util.Vector;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+/**
+ * Noeud du graphe contenant d'autres noeuds
+ * @author David Roussel
+ */
 class MyBranchNode extends MyNode
 {
 	/**
@@ -196,11 +200,9 @@ class MyBranchNode extends MyNode
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException
+	protected Object clone() throws CloneNotSupportedException
 	{
 		return new MyBranchNode(parent, children, branchNodeNumber);
 	}
-	
-	
 
 }

@@ -1,13 +1,15 @@
-/**
- * 
- */
-package jTree;
+package DragNDrop_JTree;
 
 import java.util.Enumeration;
 
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+
+/**
+ * @author David Roussel
+ *
+ */
 public class MyTree
 {
 	protected MutableTreeNode root;

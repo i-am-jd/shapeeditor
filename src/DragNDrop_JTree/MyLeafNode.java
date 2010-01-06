@@ -1,10 +1,17 @@
-package jTree;
+/**
+ * 
+ */
+package DragNDrop_JTree;
 
 import java.util.Enumeration;
 
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+/**
+ * @author David Roussel
+ * 
+ */
 class MyLeafNode extends MyNode
 {
 	protected static int LeafNodeCount = 0;

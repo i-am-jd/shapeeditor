@@ -1,4 +1,4 @@
-package jTree;
+package DragNDrop_JTree;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,6 +18,7 @@ import javax.swing.tree.TreeNode;
  * utilis� dans les JTree pour d�placer les noeuds avec le DragNDrop. Cela suppose
  * implicitement que la classe doit impl�menter les m�thodes writeObject et
  * readObject
+ * @author David Roussel
  *
  */
 abstract class MyNode implements MutableTreeNode, Cloneable, Serializable
