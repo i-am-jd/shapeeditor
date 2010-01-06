@@ -18,13 +18,13 @@ import java.util.Stack;
  * @author jdkoeck
  */
 public class UnaryOperation extends Transformation {
-    public enum TransFlag { Translate, Rotate, Scale };
+    public enum TransFlag { Translate, Rotate, Scale, Shear };
 
     TransFlag flag;
 
     //SCALE
-    private double factorX;
-    private double factorY;
+    protected double factorX;
+    protected double factorY;
     protected double initWidth;
     protected double initHeight;
     protected double centerX;
@@ -43,6 +43,7 @@ public class UnaryOperation extends Transformation {
     protected ArrayList<AffineTransform> toAffineTransforms(Shape s)
     {
         ArrayList<AffineTransform> al = new ArrayList();
+        Rectangle2D r;
         switch(flag) {
             case Translate:
                 al.add(AffineTransform.getTranslateInstance(dx, dy));
@@ -51,7 +52,7 @@ public class UnaryOperation extends Transformation {
                 al.add(AffineTransform.getRotateInstance(angle, anchorX, anchorY));
                 break;
             case Scale:
-                Rectangle2D r = s.getBounds2D();
+                r = s.getBounds2D();
                 al.add(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
                 al.add(AffineTransform.getScaleInstance(factorX,factorY));
                 al.add(AffineTransform.getTranslateInstance(r.getCenterX(), r.getCenterY()));
@@ -61,6 +62,11 @@ public class UnaryOperation extends Transformation {
                 //at.scale(factorX, factorY);
                 //at.translate((2 - factorX) * r.getCenterX() , (2 - factorY) * r.getCenterY() );
                 break;
+            case Shear:
+                r = s.getBounds2D();
+                al.add(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
+                al.add(AffineTransform.getShearInstance(factorX,factorY));
+                al.add(AffineTransform.getTranslateInstance(r.getCenterX(), r.getCenterY()));
         }
         return al;
     }
@@ -163,4 +169,8 @@ public class UnaryOperation extends Transformation {
         System.out.println(factorY);
     }
 
+    public void shearTo(Point to)
+    {
+        scaleTo(to);
+    }
 }
