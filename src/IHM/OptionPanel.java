@@ -98,7 +98,7 @@ public class OptionPanel extends JPanel {
               new GestionnaireColors(patterns, 1, drawZone));
 
         // Mise en place du textField pour le nombre de cotes
-        this.textField = new JLabeledTextField("Number of sides", 2);
+        this.textField = new JLabeledTextField("Number of sides", 2, drawZone);
 
         // Mise en place du textField pour le type de forme
         shapeList = new JComboBox();

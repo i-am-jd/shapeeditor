@@ -479,7 +479,7 @@ public class DrawPanel extends JPanel
         } else if (currentShapeType.equals("Other Star")) {
             shape = new Star(new View(view), x, y, Math.min(w, h), nbSides);
         } else if (currentShapeType.equals("Circle")) {
-            shape = new Ellipse(new View(view), x, y, Math.min(w,h), Math.min(w,h));
+            shape = new Circle(new View(view), x, y, Math.min(w,h));
         } else if (currentShapeType.equals("Ellipse")) {
             shape = new Ellipse(new View(view), x, y, w, h);
         } else if (currentShapeType.equals("Regular Polygon")) {

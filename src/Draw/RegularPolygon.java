@@ -42,6 +42,8 @@ public class RegularPolygon extends SceneShape
         polygon = new Polygon(tab[0], tab[1], nbSides);
         shape = polygon;
         baseShape = polygon;
+
+        setUserObject("RegularPolygon");
     }
 
      public RegularPolygon (RegularPolygon p) {

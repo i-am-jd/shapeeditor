@@ -33,6 +33,8 @@ public class IsoscelesTriangle extends SceneShape {
         polygon = new Polygon(xpoints, ypoints, 3);
         shape = polygon;
         baseShape = polygon;
+
+        setUserObject("IsoscelesTriangle");
     }
 
      public IsoscelesTriangle(IsoscelesTriangle t) {

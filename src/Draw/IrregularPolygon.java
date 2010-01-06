@@ -23,5 +23,7 @@ public class IrregularPolygon extends SceneShape {
         polygon = new Polygon(vertices[0], vertices[1], vertices[0].length);
         shape = polygon;
         baseShape = polygon;
+
+        setUserObject("IrregularPolygon");
     }
 }
