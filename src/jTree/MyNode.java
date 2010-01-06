@@ -9,16 +9,15 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 /**
- * Classe représentant un noeud d'un graphe
- * Cette classe implémente {@link MutableTreeNode} de manière à ce que le noeud
+ * Classe reprï¿½sentant un noeud d'un graphe
+ * Cette classe implï¿½mente {@link MutableTreeNode} de maniï¿½re ï¿½ ce que le noeud
  * soit modifiable dans un JTree.
- * Cette Classe implémente l'interface {@link Cloneable} de manière à ce qu'une 
- * copie de noeud possède exactement les mêmes caractéristiques (Non utilisé ici)
- * Cette classe implémente l'interface {@link Serializable} car c'est le mécanisme
- * utilisé dans les JTree pour déplacer les noeuds avec le DragNDrop. Cela suppose
- * implicitement que la classe doit implémenter les méthodes writeObject et
+ * Cette Classe implï¿½mente l'interface {@link Cloneable} de maniï¿½re ï¿½ ce qu'une 
+ * copie de noeud possï¿½de exactement les mï¿½mes caractï¿½ristiques (Non utilisï¿½ ici)
+ * Cette classe implï¿½mente l'interface {@link Serializable} car c'est le mï¿½canisme
+ * utilisï¿½ dans les JTree pour dï¿½placer les noeuds avec le DragNDrop. Cela suppose
+ * implicitement que la classe doit implï¿½menter les mï¿½thodes writeObject et
  * readObject
- * @author Depoyant Guillaume & Ludmann Michaël
  *
  */
 abstract class MyNode implements MutableTreeNode, Cloneable, Serializable
@@ -26,7 +25,7 @@ abstract class MyNode implements MutableTreeNode, Cloneable, Serializable
 
 	/**
 	 * Le parent du noeud courant 
-	 * (peut être null si on est à la racine du graphe)
+	 * (peut ï¿½tre null si on est ï¿½ la racine du graphe)
 	 */
 	protected MutableTreeNode parent;
 	
@@ -36,7 +35,7 @@ abstract class MyNode implements MutableTreeNode, Cloneable, Serializable
 	protected String name;
 	
 	/**
-	 * Constructeur par défaut protégé d'un noeud (utilisé uniquement dans les 
+	 * Constructeur par dï¿½faut protï¿½gï¿½ d'un noeud (utilisï¿½ uniquement dans les 
 	 * classes filles).
 	 */
 	protected MyNode()
@@ -45,7 +44,7 @@ abstract class MyNode implements MutableTreeNode, Cloneable, Serializable
 	}
 	
 	/**
-	 * Constructeur protégé d'un noeud avec un parent (utilisé uniquement dans 
+	 * Constructeur protï¿½gï¿½ d'un noeud avec un parent (utilisï¿½ uniquement dans 
 	 * les classes filles).
 	 * @param parent le parent de ce noeud.
 	 */

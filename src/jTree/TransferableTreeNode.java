@@ -6,10 +6,6 @@ import java.io.IOException;
 
 import javax.swing.tree.TreePath;
 
-/**
- * @author Depoyant Guillaume & Ludmann Michaël
- *
- */
 class TransferableTreeNode implements Transferable
 {
 

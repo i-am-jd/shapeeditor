@@ -17,15 +17,6 @@ import javax.swing.tree.TreePath;
 import Draw.SceneGraph;
 import java.awt.Cursor;
 
-
-//TreeDragSource.java
-//A drag source wrapper for a JTree. This class can be used to make
-//a rearrangeable DnD tree with the TransferableTreeNode class as the
-//transfer data type.
-/**
- * @author
- *
- */
 public class TreeDragSource implements DragSourceListener, DragGestureListener
 {
 
