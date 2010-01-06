@@ -21,6 +21,8 @@ public class BinaryOperation extends Transformation
     {
         super(s);
 
+        view = new View(sg1.getView());
+
         this.add(sg1);
         this.add(sg2);
 
