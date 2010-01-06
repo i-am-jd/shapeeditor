@@ -86,10 +86,10 @@ public class TreeDropTarget implements DropTargetListener {
         TreePath parentpath = tree.getClosestPathForLocation(pt.x, pt.y);
         MutableTreeNode parent = (MutableTreeNode) parentpath.getLastPathComponent();
 
-        if (parent instanceof UnaryOperation || parent instanceof BinaryOperation){
+        /*if (parent instanceof UnaryOperation || parent instanceof BinaryOperation){
                 System.out.println("Drop impossible à cause de l'arité");
                 return;
-            }
+            }*/
 
         MutableTreeNode selectedNode = (MutableTreeNode) targetTree.getSelectionPath().getLastPathComponent();
         MutableTreeNode clonedNode = ((SceneGraph) selectedNode).clone();
@@ -108,7 +108,7 @@ public class TreeDropTarget implements DropTargetListener {
 
         dtde.acceptDrop(dtde.getDropAction());
 
-        if (parent.isLeaf()) {
+        if (parent.isLeaf() || parent instanceof UnaryOperation || parent instanceof BinaryOperation) {
             System.out.println(parent);
             System.out.println(clonedNode);
             Vector<SceneGraph> sel = new Vector<SceneGraph>();

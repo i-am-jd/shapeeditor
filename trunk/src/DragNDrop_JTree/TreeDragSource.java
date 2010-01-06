@@ -1,8 +1,5 @@
 package DragNDrop_JTree;
 
-import Draw.BinaryOperation;
-import Draw.SceneGraph;
-import Draw.UnaryOperation;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragGestureRecognizer;
