@@ -513,8 +513,6 @@ public class DrawPanel extends JPanel
         mouseDown = e.getPoint();
         mouseLastDrag = e.getPoint();
 
-        System.out.println("Taille de la sélection" + (new Integer(selection.size())).toString());
-
         displayPopupMenu(e);
          if (e.getButton() == MouseEvent.BUTTON1 && this.mode == UserMode.Selecting) {
             sceneGraphToDrag = getSceneGraphAt(mouseDown);
@@ -616,7 +614,18 @@ public class DrawPanel extends JPanel
             //Déplacement de la shape sélectionnée
             double dx = mouseHere.getX() - mouseLastDrag.getX();
             double dy = mouseHere.getY() - mouseLastDrag.getY();
-            selection.get(0).translate(dx, dy);
+
+            SceneGraph sg = selection.get(0);
+            if(sg instanceof Translation) {
+                ((Translation) sg).translate(dx, dy);
+            } else {
+                //sinon on ajoute un nouveau noeud dans le graphe
+                Translation t = new Translation(sg);
+                selection.remove(sg);
+                selection.add(t);
+                Window.sceneGraph.add(t);
+            }
+            
             mouseLastDrag = mouseHere;
         } else if (this.mode == UserMode.Rotating) {
             SceneGraph son = (SceneGraph) node.getChildAt(0);
