@@ -4,7 +4,9 @@ import Draw.BinaryOperation;
 import Draw.Group;
 import Draw.SceneGraph;
 import Draw.UnaryOperation;
+import Draw.View;
 import IHM.DrawPanel;
+import IHM.Window;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.dnd.DropTarget;
@@ -121,7 +123,7 @@ public class TreeDropTarget implements DropTargetListener {
             ((SceneGraph)clonedNode).removeFromParent();
             ((SceneGraph)parent).removeFromParent();
 
-            Group gr = new Group();
+            Group gr = new Group(new View(Window.sceneGraph.getView()));
             for(Enumeration<SceneGraph> en = sel.elements(); en.hasMoreElements();) {
                 SceneGraph g = en.nextElement();
                 gr.add(g);
