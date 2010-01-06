@@ -19,11 +19,6 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-
-/**
- * @author
- *
- */
 public class TreeDropTarget implements DropTargetListener {
 
     DropTarget target;

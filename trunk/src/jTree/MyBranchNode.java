@@ -1,6 +1,3 @@
-/**
- * 
- */
 package jTree;
 
 import java.util.Enumeration;
@@ -9,10 +6,6 @@ import java.util.Vector;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-/**
- * Noeud du graphe contenant d'autres noeuds
- * @author Depoyant Guillaume & Ludmann Michaël
- */
 class MyBranchNode extends MyNode
 {
 	/**
@@ -30,13 +23,13 @@ class MyBranchNode extends MyNode
 	protected static int BranchNodeCount = 0;
 
 	/**
-	 * Le numéro courant de banche à attribuer à la prochaine branche
+	 * Le numï¿½ro courant de banche ï¿½ attribuer ï¿½ la prochaine branche
 	 */
 	protected int branchNodeNumber;
 
 	/**
-	 * Constructeur par défaut d'un noeud de branche avec un parent null
-	 * (utilisé pour la racine du graphe)
+	 * Constructeur par dï¿½faut d'un noeud de branche avec un parent null
+	 * (utilisï¿½ pour la racine du graphe)
 	 */
 	public MyBranchNode()
 	{
@@ -44,7 +37,7 @@ class MyBranchNode extends MyNode
 	}
 
 	/**
-	 * Constructeur valué d'un noeud de branche
+	 * Constructeur valuï¿½ d'un noeud de branche
 	 * @param parent le parent de ce noeud de branche
 	 */
 	public MyBranchNode(MutableTreeNode parent)
@@ -56,11 +49,11 @@ class MyBranchNode extends MyNode
 	}
 
 	/**
-	 * Constructeur protégé utilisé dans la méthode clone
+	 * Constructeur protï¿½gï¿½ utilisï¿½ dans la mï¿½thode clone
 	 * @param parent le parent
 	 * @param children les enfants
-	 * @param number le n° de noeud (qui doit être identique contrairement à une
-	 *            création normale de noeud).
+	 * @param number le nï¿½ de noeud (qui doit ï¿½tre identique contrairement ï¿½ une
+	 *            crï¿½ation normale de noeud).
 	 */
 	protected MyBranchNode(MutableTreeNode parent,
 	        Vector<MutableTreeNode> children, int number)

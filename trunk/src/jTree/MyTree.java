@@ -8,11 +8,6 @@ import java.util.Enumeration;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-
-/**
- * @author Depoyant Guillaume & Ludmann Michaël
- *
- */
 public class MyTree
 {
 	protected MutableTreeNode root;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package jTree;
 
 import java.util.Enumeration;
@@ -8,10 +5,6 @@ import java.util.Enumeration;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-/**
- * @author Depoyant Guillaume & Ludmann Michaël
- * 
- */
 class MyLeafNode extends MyNode
 {
 	protected static int LeafNodeCount = 0;
@@ -31,10 +24,10 @@ class MyLeafNode extends MyNode
 	}
 
 	/**
-	 * Constructeur protégé utilisé dans la méthode clone
+	 * Constructeur protï¿½gï¿½ utilisï¿½ dans la mï¿½thode clone
 	 * @param parent le parent
-	 * @param number le numéro (qui doit être identique contrairement à une
-	 *            création normale de noeud)
+	 * @param number le numï¿½ro (qui doit ï¿½tre identique contrairement ï¿½ une
+	 *            crï¿½ation normale de noeud)
 	 */
 	protected MyLeafNode(MutableTreeNode parent, int number)
 	{
