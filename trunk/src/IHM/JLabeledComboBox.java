@@ -20,35 +20,30 @@ import javax.swing.ListCellRenderer;
  */
 public class JLabeledComboBox extends JPanel
 {
-	/** Le titre de cette liste */
+	/** Title of the combobox */
 	private String title;
 
-	/** Icons pour les labels */
+	/** ImageIcon array with the icons for each entry of the combobox */
 	private ImageIcon[] icons;
 
-	/** Les textes pour les items */
+	/** String array with the labels for each entry of the combobox */
 	private String[] captions;
 
-        /** La combobox affichée*/
+        /** Combobox */
         private JComboBox combobox;
 
-	/**
-	 * le r�pertoire des images. Attention, il s'agit du r�pertoire relatif �
-	 * cette classe et non pas au programme principal
-	 */
+	/** Directory containing the images */
 	private final static String ImageBase = "../images/";
 
-	/** l'extension des images */
+	/** Extension of the images */
 	private final static String ImageType = ".gif";
 
 	/**
-	 * Constructeur
-	 * @param title le titre du panel
-	 * @param captions les l�gendes des �l�ments de la liste
-	 * @param selectedIndex l'�l�ment s�lectionn� initialement
-	 * @param listener le listener � appeller quand l'�lement s�lectionn� de la
-	 *            liste change
-	 * @see #createImageIcon(String)
+	 * Returns a JLabeledCombobox
+	 * @param title The title of the panel
+	 * @param captions The captions of the list entries
+	 * @param selectedIndex The initial selected index
+	 * @param listener The combobox associated listener
 	 */
 	public JLabeledComboBox(String title, String[] captions, int selectedIndex,
 	        ItemListener listener)
@@ -95,10 +90,9 @@ public class JLabeledComboBox extends JPanel
 	}
 
 	/**
-	 * Cr�ation d'une ic�ne � partir d'un fichier
-	 * @param path le chemin du fichier
-	 * @return une nouvelle ic�ne si le fichier existe ou bien null
-	 * si le fichier n'a pas �t� trouv�
+	 * Creates an image icon from the path of an image
+	 * @param path The path of the image
+	 * @return The ImageIcon if the file exists, null otherwise
 	 */
 	protected ImageIcon createImageIcon(String path)
 	{
@@ -115,7 +109,7 @@ public class JLabeledComboBox extends JPanel
 	}
 
 	/**
-	 * Renderer pour les Labels du combobox
+	 * Class : renderer for the captions of the combobox
 	 */
 	protected class JLabelRenderer extends JLabel implements ListCellRenderer
 	{
@@ -123,7 +117,7 @@ public class JLabeledComboBox extends JPanel
 		private Font pbFont;
 
 		/**
-		 * Constructeur
+		 * Returns a renderer
 		 */
 		public JLabelRenderer()
 		{
@@ -178,9 +172,9 @@ public class JLabeledComboBox extends JPanel
 		}
 
 		/**
-		 * Mise en place du texte s'il y a un pb pour cet item
-		 * @param pbText le texte � afficher
-		 * @param normalFont la fonte � utiliser (italique)
+		 * Sets the text if a problem happends for this item
+		 * @param pbText The text to display
+		 * @param normalFont The font to use
 		 */
 		protected void setPbText(String pbText, Font normalFont)
 		{

@@ -13,19 +13,18 @@ import javax.swing.JPanel;
  */
 public class JLabeledTextField extends JPanel {
 
-    /** Le titre */
+    /** Title of the panel */
     private String title;
-    /** Le slider affichée*/
+    /** Text field */
     private JNumTextField textField;
-
+    /** Reference to the draw panel of the window */
     private DrawPanel drawZone;
 
     /**
-     * Constructeur
-     * @param title le titre du panel
-     * @param max
-     * @param drawZone
-     * @see #createImageIcon(String)
+     * Returns a labeled text field
+     * @param title The title of the panel
+     * @param max The maximum number of characters that a user can type
+     * @param drawZone The reference of the draw panel of the window
      */
     public JLabeledTextField(String title, int max, final DrawPanel drawZone) {
         super(new GridLayout(2, 1), true); // double buffered

@@ -22,23 +22,13 @@ import javax.swing.tree.TreeSelectionModel;
  */
 public class TreePanel extends JPanel {
 
-    /* La vue associee au graphe de scene */
-    /**
-     *
-     */
+    /** JTree used to display the scene graph elements */
     public JTree arbre;
-    /**
-     *
-     */
-    public SceneGraph sceneGraph = null;
-    /* Le menu contextuel ouvert lors du clic droit sur un noeud de l'arbre */
-    /**
-     *
-     */
+    /** Context menu displayed when the user performs a right click on a node */
     public SelectionContextMenu popupMenu;
     
     /**
-     *
+     * Returns a JTree panel
      */
     public TreePanel() {
         super();
@@ -55,8 +45,8 @@ public class TreePanel extends JPanel {
     }
 
     /**
-     *
-     * @param drawZone
+     * Initializes the listener of the tree panel
+     * @param drawZone The draw panel of the window
      */
     public void initializeListeners(final DrawPanel drawZone) {
         // Selection du noeud sur lequel on clique
@@ -74,19 +64,6 @@ public class TreePanel extends JPanel {
                     drawZone.repaint();
                 }
             }
-            /*
-            // Recupere les parents
-            private String getAbsolutePath(TreePath treePath){
-            String str = "";
-            //On balaie le contenu de notre TreePath
-            for(Object name : treePath.getPath()){
-            //Si l'objet à un nom, on l'ajoute au chemin
-            if(name.toString() != null)
-            str += name.toString();
-            }
-            return str;
-            }
-             */
         });
 
         //Ajout du menu contextuel ouvert par clic droit sur un noeud
@@ -126,7 +103,7 @@ public class TreePanel extends JPanel {
     }
 
     /**
-     *
+     * Refreshes the view of the JTree
      */
     public void repaintJTree() {
         ((DefaultTreeModel) arbre.getModel()).reload();

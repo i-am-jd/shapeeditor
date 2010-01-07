@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package IHM;
 
 import Listeners.CopyActionListener;
@@ -21,7 +16,7 @@ public class SelectionContextMenu extends JPopupMenu {
     private JMenuItem delItem;
 
     /**
-     *
+     * Returns a context menu with two elements : copy & delete
      * @param drawZone
      */
     public SelectionContextMenu(DrawPanel drawZone) {

@@ -13,22 +13,20 @@ import javax.swing.event.ChangeListener;
  */
 public class JLabeledSlider extends JPanel
 {
-	/** Le titre */
+	/** The title of the slider */
 	private String title;
 
-        /** Le slider affichée*/
+        /** The slider */
         private JSlider slider;
 
 	/**
-	 * Constructeur
-	 * @param title le titre du panel
-         * @param orient
-         * @param min
-	 * @param listener le listener � appeller quand l'�lement s�lectionn� de la
-	 *            liste change
-         * @param max
-         * @param init
-         * @see #createImageIcon(String)
+	 * Returns a labeled slider
+	 * @param title The title of the slider
+         * @param orient The orientation of the slider
+         * @param min The minimum value of the slider
+	 * @param listener The listener of the slider
+         * @param max The maximum value of the slider
+         * @param init The initial value of the slider
 	 */
 	public JLabeledSlider(String title, int orient, int min, int max, int init, ChangeListener listener)
 	{
