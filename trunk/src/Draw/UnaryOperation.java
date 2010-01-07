@@ -34,7 +34,7 @@ public abstract class UnaryOperation extends Transformation {
     /**
      * Calcule les transformations affine à effectuer sur une forme géométrique donnée
      * @param   shape forme à modifier
-     * @returns une liste de transformations affine à effectuer dans l'ordre donné
+     * @return une liste de transformations affine à effectuer dans l'ordre donné
      */
     abstract protected ArrayList<AffineTransform> toAffineTransforms(Shape s);
 

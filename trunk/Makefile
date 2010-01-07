@@ -57,9 +57,9 @@ $(SRC)/Draw/BinaryOperation.java \
 $(SRC)/Draw/Circle.java \
 $(SRC)/Draw/Ellipse.java \
 $(SRC)/Draw/Exclusion.java \
-$(SRC)/Draw/Geometry.java \
 $(SRC)/Draw/Group.java \
 $(SRC)/Draw/Inclusion.java \
+$(SRC)/Draw/Interpolatable.java \
 $(SRC)/Draw/Interpolation.java \
 $(SRC)/Draw/Intersection.java \
 $(SRC)/Draw/IrregularPolygon.java \
