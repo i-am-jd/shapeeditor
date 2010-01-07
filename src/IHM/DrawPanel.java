@@ -418,8 +418,8 @@ public class DrawPanel extends JPanel
             SceneGraph sg1 = selection.get(0);
             SceneGraph sg2 = selection.get(1);
 
-            if (sg1 instanceof PolygonShape && sg2 instanceof PolygonShape) {
-                if (((PolygonShape) sg1).getPointsNb() == ((PolygonShape) sg2).getPointsNb()) {
+            if (sg1 instanceof Interpolatable && sg2 instanceof Interpolatable) {
+                if (((Interpolatable) sg1).getPointsNb() == ((Interpolatable) sg2).getPointsNb()) {
                     Interpolation interp = new Interpolation(sg1, sg2);
                     Window.sceneGraph.add(interp);
 
@@ -663,12 +663,15 @@ public class DrawPanel extends JPanel
             SceneGraph sg = selection.get(0);
             if (sg instanceof Translation) {
                 ((Translation) sg).translate(dx, dy);
+                Window.sceneGraph.update();
             } else {
                 //sinon on ajoute un nouveau noeud dans le graphe
                 Translation t = new Translation(sg);
                 selection.remove(sg);
                 selection.add(t);
+                System.out.println("Translate");
                 Window.sceneGraph.add(t);
+                Window.sceneGraph.update();
             }
 
             mouseLastDrag = mouseHere;

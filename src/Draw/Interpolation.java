@@ -7,7 +7,7 @@ import java.awt.Polygon;
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class Interpolation extends BinaryOperation implements PolygonShape
+public class Interpolation extends BinaryOperation implements Interpolatable
 {
     int[] xs;
     int[] ys;
@@ -35,8 +35,8 @@ public class Interpolation extends BinaryOperation implements PolygonShape
             baseShape = rect;
         }*/
 
-        PolygonShape p1 = (PolygonShape) sg1;
-        PolygonShape p2 = (PolygonShape) sg2;
+        Interpolatable p1 = (Interpolatable) sg1;
+        Interpolatable p2 = (Interpolatable) sg2;
         assert(p1.getPointsNb() == p2.getPointsNb());
         n = p1.getPointsNb();
         xs = new int[n];

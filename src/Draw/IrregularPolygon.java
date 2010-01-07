@@ -13,7 +13,7 @@ import java.awt.Polygon;
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class IrregularPolygon extends SceneShape implements PolygonShape {
+public class IrregularPolygon extends SceneShape implements Interpolatable {
     /**
      *
      */

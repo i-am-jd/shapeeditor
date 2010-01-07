@@ -2,12 +2,11 @@ package Draw;
 
 import java.awt.geom.Rectangle2D;
 
-
 /**
- *
+ * Feuille du graphe de scène représentant un rectangle.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class Rectangle extends SceneShape implements PolygonShape
+public class Rectangle extends SceneShape implements Interpolatable
 {
     private Rectangle2D.Double rect;
 
@@ -15,18 +14,21 @@ public class Rectangle extends SceneShape implements PolygonShape
     int[] ys = new int[4];
 
     /**
-     *
-     * @param v
-     * @param x
-     * @param y
-     * @param width
-     * @param height
+     * Constructeur d'un rectangle
+     * @param v      vue
+     * @param x      coordonnée horizontale du point haut-gauche
+     * @param y      coordonnée verticale du point haut-gauche
+     * @param width  largeur
+     * @param height hauteur
      */
     public Rectangle(View v, double x, double y, double width, double height) {
         super(v, "Rectangle");
         rect = new Rectangle2D.Double(x ,y, width, height);
         baseShape = rect;
         shape = rect;
+
+	//Calcul des coordonées des sommets du rectangle
+	//Nécessaire à l'interpolation
 
         double minx = x;
         double maxx = rect.getMaxX();
@@ -41,34 +43,20 @@ public class Rectangle extends SceneShape implements PolygonShape
         ys[2] = (int) maxy;
         xs[3] = (int) minx;
         ys[3] = (int) maxy;
-
-        setUserObject("Rectangle");
     }
 
-    /**
-     *
-     * @return
-     */
+    //Méthodes de l'interface Interpolatable
+
     @Override
     public int getPointsNb() {
         return 4;
     }
 
-    /**
-     *
-     * @param i
-     * @return
-     */
     @Override
     public int getX(int i) {
         return xs[i];
     }
 
-    /**
-     *
-     * @param i
-     * @return
-     */
     @Override
     public int getY(int i) {
         return ys[i];
