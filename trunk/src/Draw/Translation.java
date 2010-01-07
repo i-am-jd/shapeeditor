@@ -5,15 +5,21 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 /**
+ * Noeud représentant une translation.
+ * Contient nécessairement un seul sous-graphe
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Translation extends UnaryOperation {
 
-    //TRANSLATE
+    /** Déplacements selon les axes hozirontal et vertical */
     private double dx;
     private double dy;
 
+    /** 
+     * Constructeur
+     * @param child sous-graphe à modifier
+     */
     public Translation(SceneGraph child)
     {
         super("Translation", child);
@@ -21,6 +27,7 @@ public class Translation extends UnaryOperation {
         dy = 0;
     }
 
+    /** Modifie la translation */
     public void translate(double dx, double dy)
     {
         this.dx += dx;

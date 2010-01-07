@@ -679,7 +679,7 @@ public class DrawPanel extends JPanel
             mouseLastDrag = mouseHere;
         } else if (this.mode == UserMode.Rotating) {
             SceneGraph son = (SceneGraph) node.getChildAt(0);
-            ((Rotation) node).rotate(calculateAngle(son, mouseLastDrag, mouseHere));
+            ((Rotation) node).rotateFromTo(mouseLastDrag, mouseHere);
             mouseLastDrag = mouseHere;
         } else if (this.mode == UserMode.Scaling) {
             System.out.println("Scaling");
@@ -759,23 +759,6 @@ public class DrawPanel extends JPanel
      */
     public void setCurrentShapeType(String s) {
         this.currentShapeType = s;
-    }
-
-    /**
-     * Calculates the angle
-     * @param s
-     * @param last
-     * @param here
-     * @return
-     */
-    public double calculateAngle(SceneGraph s, Point last, Point here) {
-        double xS = s.getBarycenterX();
-        double yS = s.getBarycenterY();
-
-        double angleLast = Math.atan2(last.getX() - xS, last.getY() - yS);
-        double angleHere = Math.atan2(here.getX() - xS, here.getY() - yS);
-
-        return angleLast - angleHere;
     }
 
     /**
