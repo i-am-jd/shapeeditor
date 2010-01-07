@@ -129,7 +129,7 @@ preview : ps
 
 # générer la doc avec javadoc
 doc : $(SOURCES)
-	$(DOCP) -private -d $(DOC) -author -link $(WEBLINK) $(SOURCES)
+	$(DOCP) -encoding utf8 -docencoding utf8 -charset utf8 -private -d $(DOC) -author -link $(WEBLINK) $(SOURCES)
 
 # générer une archive de sauvegarde
 archive : pdf

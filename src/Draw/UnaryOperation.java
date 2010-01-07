@@ -36,7 +36,7 @@ public abstract class UnaryOperation extends Transformation {
      * @param   shape forme à modifier
      * @return une liste de transformations affine à effectuer dans l'ordre donné
      */
-    abstract protected ArrayList<AffineTransform> toAffineTransforms(Shape s);
+    abstract protected ArrayList<AffineTransform> toAffineTransforms(Shape shape);
 
     /**
      * Lors du parcours du graphe afin d'appliquer les transformations,
