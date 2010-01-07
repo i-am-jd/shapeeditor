@@ -25,8 +25,9 @@ public class GestionnaireColors implements ItemListener {
     private DrawPanel drawZone;
     /**
      * Constructeur du gestionnaire de couleurs
-     * @param colors la liste des couleurs
-     * @param zone la zone de dessin
+     * @param patterns
+     * @param type
+     * @param drawZone
      */
     public GestionnaireColors(Object[] patterns, int type, DrawPanel drawZone) {
         this.patterns = patterns;
@@ -49,6 +50,7 @@ public class GestionnaireColors implements ItemListener {
      * Action d�clench�e lorsque l'on change de couleur.
      * on r�cup�re l'indice de la couleur s�lectionn�e pour l'appliquer �
      * la zone de dessin.
+     * @param e 
      * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
      */
     @Override

@@ -20,8 +20,8 @@ public class GestionnaireWidth implements ChangeListener {
     private DrawPanel drawZone;
     /**
      * Constructeur du gestionnaire de couleurs
-     * @param colors la liste des couleurs
-     * @param zone la zone de dessin
+     * @param init 
+     * @param drawZone
      */
     public GestionnaireWidth(int init, DrawPanel drawZone) {
         Window.sceneGraph.getView().setLineWidth(init);

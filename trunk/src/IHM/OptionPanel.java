@@ -21,8 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 
 /**
- * La barre d'infos situee en bas de la fenetre pour afficher
- * differentes informations
+ * Class instantiating the options panel
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class OptionPanel extends JPanel {
@@ -48,6 +47,7 @@ public class OptionPanel extends JPanel {
 
     /**
      * Constructeur de la barre d'infos
+     * @param drawZone 
      */
     public OptionPanel(DrawPanel drawZone) {
         super();
@@ -134,6 +134,10 @@ public class OptionPanel extends JPanel {
         this.setBorder(BorderFactory.createEtchedBorder());
     }
 
+    /**
+     *
+     * @param id
+     */
     public void changeShapeList(int id) {
         shapeList.removeAllItems();
         switch (id) {
@@ -162,6 +166,10 @@ public class OptionPanel extends JPanel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public DrawPanel getDrawZone() {
         return this.drawZone;
     }

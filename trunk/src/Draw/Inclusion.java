@@ -2,12 +2,18 @@ package Draw;
 
 import java.awt.geom.Area;
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
+public class Inclusion extends BinaryOperation {
 
-public class Inclusion extends BinaryOperation
-{
-
-    public Inclusion(SceneGraph sg1, SceneGraph sg2)
-    {
+    /**
+     *
+     * @param sg1
+     * @param sg2
+     */
+    public Inclusion(SceneGraph sg1, SceneGraph sg2) {
         super("Inclusion", sg1, sg2);
         Area area = new Area(sg1.getShape());
         Area area2 = new Area(sg2.getShape());
@@ -16,5 +22,4 @@ public class Inclusion extends BinaryOperation
         shape = area;
         baseShape = area;
     }
-
 }

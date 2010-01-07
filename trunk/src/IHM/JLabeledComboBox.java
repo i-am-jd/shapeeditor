@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 /**
- * Classe contenant un titre et une liste d�roulante utilisant des JLabel avec
- * des icones
+ * Control containing a title and a combobox using labels and icons
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class JLabeledComboBox extends JPanel
 {

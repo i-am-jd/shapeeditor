@@ -9,7 +9,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 /**
- * @author David Roussel
+ * @author Boris Dadachev & Jean-Denis Koeck
  * 
  */
 class MyLeafNode extends MyNode

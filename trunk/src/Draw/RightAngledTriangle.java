@@ -1,22 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Draw;
 
-import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.awt.Polygon;
 
 /**
  *
- * @author Boris
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class RightAngledTriangle extends SceneShape {
-    
+
     final Polygon polygon;
 
+    /**
+     *
+     * @param v
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
     public RightAngledTriangle(View v, double x, double y, double width, double height) {
         super(v);
 
@@ -26,9 +27,9 @@ public class RightAngledTriangle extends SceneShape {
         xpoints[0] = (int) x;
         ypoints[0] = (int) y;
         xpoints[1] = (int) x;
-        ypoints[1] = (int) (y+height);
-        xpoints[2] = (int) (x+width);
-        ypoints[2] = (int) (y+height);
+        ypoints[1] = (int) (y + height);
+        xpoints[2] = (int) (x + width);
+        ypoints[2] = (int) (y + height);
 
         polygon = new Polygon(xpoints, ypoints, 3);
         shape = polygon;
@@ -37,6 +38,10 @@ public class RightAngledTriangle extends SceneShape {
         setUserObject("RightAngledTriangle");
     }
 
+    /**
+     *
+     * @param t
+     */
     public RightAngledTriangle(RightAngledTriangle t) {
         super(t.view);
         polygon = new Polygon(t.polygon.xpoints, t.polygon.ypoints, t.polygon.npoints);
@@ -46,8 +51,7 @@ public class RightAngledTriangle extends SceneShape {
     }
 
     @Override
-    public RightAngledTriangle clone()
-    {
+    public RightAngledTriangle clone() {
         return new RightAngledTriangle(this);
     }
 }

@@ -12,11 +12,21 @@ import java.util.Enumeration;
 import java.util.Stack;
 
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class BinaryOperation extends Transformation
 {
     Shape shape;
     Shape baseShape;
 
+    /**
+     *
+     * @param s
+     * @param sg1
+     * @param sg2
+     */
     public BinaryOperation(String s, SceneGraph sg1, SceneGraph sg2)
     {
         super(sg1.getView(), s);
@@ -26,28 +36,50 @@ public class BinaryOperation extends Transformation
 
     }
 
+    /**
+     *
+     * @return
+     */
     public double getWidth()
     {
         return shape.getBounds2D().getWidth() / 2;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getHeight()
     {
         return shape.getBounds2D().getHeight() / 2;
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean contains(Point2D p)
     {
         return shape.contains(p);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Rectangle2D getBounds2D()
     {
         return shape.getBounds2D();
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     @Override
     public void translate(double x, double y)
     {
@@ -56,6 +88,10 @@ public class BinaryOperation extends Transformation
         baseShape = t.createTransformedShape(baseShape);
     }
 
+    /**
+     *
+     * @param g2d
+     */
     @Override
     public void draw(Graphics2D g2d)
     {
@@ -71,18 +107,30 @@ public class BinaryOperation extends Transformation
         g2d.draw(shape);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getBarycenterX()
     {
         return shape.getBounds2D().getCenterX();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getBarycenterY()
     {
         return shape.getBounds2D().getCenterY();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Shape getShape()
     {
@@ -90,6 +138,10 @@ public class BinaryOperation extends Transformation
     }
 
     //Applique une pile de transformations à la shape
+    /**
+     *
+     * @param ops
+     */
     @Override
     public void applyUnaryOperations(Stack<UnaryOperation> ops)
     {

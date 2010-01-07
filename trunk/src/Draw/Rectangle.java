@@ -3,6 +3,10 @@ package Draw;
 import java.awt.geom.Rectangle2D;
 
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class Rectangle extends SceneShape implements PolygonShape
 {
     private Rectangle2D.Double rect;
@@ -10,6 +14,14 @@ public class Rectangle extends SceneShape implements PolygonShape
     int[] xs = new int[4];
     int[] ys = new int[4];
 
+    /**
+     *
+     * @param v
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
     public Rectangle(View v, double x, double y, double width, double height) {
         super(v);
         rect = new Rectangle2D.Double(x ,y, width, height);
@@ -33,16 +45,30 @@ public class Rectangle extends SceneShape implements PolygonShape
         setUserObject("Rectangle");
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getPointsNb() {
         return 4;
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public int getX(int i) {
         return xs[i];
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public int getY(int i) {
         return ys[i];

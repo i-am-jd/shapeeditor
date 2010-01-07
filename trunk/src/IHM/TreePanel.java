@@ -16,14 +16,30 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+/**
+ * Class instantiating the JTree Panel
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class TreePanel extends JPanel {
 
     /* La vue associee au graphe de scene */
+    /**
+     *
+     */
     public JTree arbre;
+    /**
+     *
+     */
     public SceneGraph sceneGraph = null;
     /* Le menu contextuel ouvert lors du clic droit sur un noeud de l'arbre */
+    /**
+     *
+     */
     public SelectionContextMenu popupMenu;
     
+    /**
+     *
+     */
     public TreePanel() {
         super();
 
@@ -38,6 +54,10 @@ public class TreePanel extends JPanel {
 
     }
 
+    /**
+     *
+     * @param drawZone
+     */
     public void initializeListeners(final DrawPanel drawZone) {
         // Selection du noeud sur lequel on clique
         arbre.addTreeSelectionListener(new TreeSelectionListener() {
@@ -105,6 +125,9 @@ public class TreePanel extends JPanel {
 
     }
 
+    /**
+     *
+     */
     public void repaintJTree() {
         ((DefaultTreeModel) arbre.getModel()).reload();
     }

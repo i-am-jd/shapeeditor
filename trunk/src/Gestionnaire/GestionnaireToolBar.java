@@ -8,6 +8,7 @@ import IHM.*;
  * Classe de gestion des evenements boutons de la barre d'outils, des instances de cette
  * classe sont utilisees dans {@link ToolBar}.
  * @see ToolBar
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class GestionnaireToolBar implements ActionListener
 {
@@ -27,39 +28,84 @@ public class GestionnaireToolBar implements ActionListener
         /** Action pour ouvrir une boite de dialogue "A propos" */
         DRAW_POLYGON,
 
+        /**
+         *
+         */
         MODE_SELECTION,
 
+        /**
+         *
+         */
         GROUP,
 
+        /**
+         *
+         */
         DEGROUP,
 
+        /**
+         *
+         */
         COPY,
 
+        /**
+         *
+         */
         DELETE,
 
+        /**
+         *
+         */
         UNDO,
 
+        /**
+         *
+         */
         ROTATE,
 
+        /**
+         *
+         */
         SCALE,
 
+        /**
+         *
+         */
         SHEAR,
 
+        /**
+         *
+         */
         UNION,
 
+        /**
+         *
+         */
         INTERSECTION,
 
+        /**
+         *
+         */
         SUBSTRACTION,
 
+        /**
+         *
+         */
         EXCLUSION,
 
+        /**
+         *
+         */
         INCLUSION,
 
+        /**
+         *
+         */
         INTERPOLATION;
 
         /**
          * Action � r�aliser en fonction de la valeur de l'enum
-         * @param ga le gestionnaire d'actions
+         * @param g
          * @param e l'action event
          * @throws AssertionError
          */
@@ -177,8 +223,7 @@ public class GestionnaireToolBar implements ActionListener
     /**
      * Constructeur utilise pour traiter l'action d'un bouton
      * @param id indentifiant de l'action demandee
-     * @param zone r�f�rence vers la zone graphique qui sera modifi�e par cette
-     *            action
+     * @param optionZone
      */
     public GestionnaireToolBar(ButtonPressed id, OptionPanel optionZone)
     {

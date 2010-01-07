@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Listeners;
 
 import IHM.DrawPanel;
@@ -10,12 +6,16 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author Boris
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class DeleteActionListener implements ActionListener {
 
     private DrawPanel drawZone;
 
+    /**
+     *
+     * @param drawZone
+     */
     public DeleteActionListener(DrawPanel drawZone) {
         super();
         this.drawZone = drawZone;

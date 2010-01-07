@@ -9,12 +9,16 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 /**
- *
- * @author Boris
+ * A text field control only accepting numeric values
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class JNumTextField extends JTextField {
 
-        public JNumTextField(int maxLength) {
+    /**
+     *
+     * @param maxLength
+     */
+    public JNumTextField(int maxLength) {
             super();
             AbstractDocument doc = (AbstractDocument) getDocument();
             doc.setDocumentFilter(new TextLimiter(maxLength));

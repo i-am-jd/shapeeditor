@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Classe contenant un titre et une liste d�roulante utilisant des JLabel avec
- * des icones
+ * Control containing a title and numetic text field
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class JLabeledTextField extends JPanel {
 
@@ -23,10 +23,8 @@ public class JLabeledTextField extends JPanel {
     /**
      * Constructeur
      * @param title le titre du panel
-     * @param captions les l�gendes des �l�ments de la liste
-     * @param selectedIndex l'�l�ment s�lectionn� initialement
-     * @param listener le listener � appeller quand l'�lement s�lectionn� de la
-     *            liste change
+     * @param max
+     * @param drawZone
      * @see #createImageIcon(String)
      */
     public JLabeledTextField(String title, int max, final DrawPanel drawZone) {

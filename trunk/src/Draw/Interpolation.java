@@ -3,12 +3,21 @@ package Draw;
 import java.awt.Polygon;
 
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class Interpolation extends BinaryOperation implements PolygonShape
 {
     int[] xs;
     int[] ys;
     int n;
 
+    /**
+     *
+     * @param sg1
+     * @param sg2
+     */
     public Interpolation(SceneGraph sg1, SceneGraph sg2)
     {
         super("Interpolation", sg1, sg2);
@@ -40,16 +49,30 @@ public class Interpolation extends BinaryOperation implements PolygonShape
         baseShape = new Polygon(xs, ys, p1.getPointsNb());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getPointsNb() {
         return n;
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public int getX(int i) {
         return xs[i];
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public int getY(int i) {
         return ys[i];

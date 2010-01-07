@@ -3,6 +3,10 @@ package Draw;
 import java.awt.Polygon;
 
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class Star extends SceneShape {
 
     final Polygon polygon;
@@ -10,7 +14,15 @@ public class Star extends SceneShape {
     double originX;
     double originY;
 
-    public Star (View v, double x, double y, double r, int nbBranch)
+    /**
+     *
+     * @param v
+     * @param x
+     * @param y
+     * @param r
+     * @param nbBranch
+     */
+    public Star(View v, double x, double y, double r, int nbBranch)
     {
         super(v);
 
@@ -40,7 +52,11 @@ public class Star extends SceneShape {
         setUserObject("Star");
     }
 
-    public Star (Star s) {
+    /**
+     *
+     * @param s
+     */
+    public Star(Star s) {
         super(s.view);
         originX = s.originX + 5;
         originY = s.originY + 5;

@@ -21,7 +21,15 @@ public class RegularPolygon extends SceneShape implements PolygonShape
 
     int[][] tab;
 
-    public RegularPolygon (View v, double x, double y, double rad, int n)
+    /**
+     *
+     * @param v
+     * @param x
+     * @param y
+     * @param rad
+     * @param n
+     */
+    public RegularPolygon(View v, double x, double y, double rad, int n)
     {
         super(v);
 
@@ -48,7 +56,11 @@ public class RegularPolygon extends SceneShape implements PolygonShape
         setUserObject("RegularPolygon");
     }
 
-     public RegularPolygon (RegularPolygon p) {
+    /**
+     *
+     * @param p
+     */
+    public RegularPolygon(RegularPolygon p) {
         super(p.view);
         originX = p.originX + 5;
         originY = p.originY + 5;
@@ -64,16 +76,30 @@ public class RegularPolygon extends SceneShape implements PolygonShape
         return new RegularPolygon(this);
     }
 
-    @Override
+     /**
+      *
+      * @return
+      */
+     @Override
     public int getPointsNb() {
         return nbSides;
     }
 
-    @Override
+     /**
+      * 
+      * @param i
+      * @return
+      */
+     @Override
     public int getX(int i) {
         return tab[0][i];
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public int getY(int i) {
         return tab[1][i];
