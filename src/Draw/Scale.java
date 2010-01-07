@@ -7,25 +7,27 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- *
+ * Noeud représentant un redimensionnement.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Scale extends UnaryOperation
 {
 
-    protected double factorX;
-    /**
-     *
-     */
-    protected double factorY;
+    /** Facteurs de redimensionnement */
+    private double factorX;
+    private double factorY;
+
+    /** Coordonnées du centre de la figure à redimensionner */
     private double centerX;
     private double centerY;
+
+    /** Largeur et hauteur de la figure à redimensionner */
     private double initWidth;
     private double initHeight;
 
     /**
-     *
-     * @param child Child of the shearing transformation
+     * Constructeur recevant le sous-graphe à modifier
+     * @param child sous-graphe soumis au redimensionnement
      */
     public Scale(SceneGraph child)
     {
@@ -35,13 +37,15 @@ public class Scale extends UnaryOperation
     }
 
     /**
-     *
-     * @param to
+     * Redimensionne le sous-graphe par rapport à un point.
+     * Les paramètres de redimensionnement dépendent de la distance du point au centre
+     * du sous-graphe modifié, et des dimensions de ce dernier.
+     * @param p point par rapport auquel on effectue le redimensionnement
      */
-    public void scaleTo(Point to)
+    public void scaleTo(Point p)
     {
-        this.factorX = (to.getX() - centerX)/(this.initWidth / 2);
-        this.factorY = (to.getY() - centerY)/(this.initHeight / 2);
+        this.factorX = (p.getX() - centerX)/(this.initWidth / 2);
+        this.factorY = (p.getY() - centerY)/(this.initHeight / 2);
         System.out.println(factorX);
         System.out.println(factorY);
     }

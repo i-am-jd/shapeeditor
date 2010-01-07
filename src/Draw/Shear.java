@@ -7,24 +7,28 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
+ * Noeud représentant un cisaillement.
+ * Contient nécessairement un seul sous-graphe
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Shear extends UnaryOperation {
 
+    /** Facteurs de cisaillement */
     protected double factorX;
-    /**
-     *
-     */
     protected double factorY;
+
+    /** Coordonnées du centre de la figure à redimensionner */
     private double centerX;
     private double centerY;
+
+    /** Largeur et hauteur de la figure à redimensionner */
     private double initWidth;
     private double initHeight;
 
     /**
-     *
-     * @param child Child of the shearing transformation
+     * Constructeur recevant le sous-graphe à modifier
+     * @param child sous-graphe soumis au cisaillement
      */
     public Shear(SceneGraph child)
     {
@@ -32,9 +36,12 @@ public class Shear extends UnaryOperation {
         factorX = 1;
         factorY = 1;
     }
-        /**
-     *
-     * @param to
+
+    /**
+     * Cisaille le sous-graphe par rapport à un point.
+     * Les facteurs de cisaillement dépendent de la distance du point au centre
+     * du sous-graphe modifié, et des dimensions de ce dernier.
+     * @param p point par rapport auquel on effectue le cisaillement
      */
     public void shearTo(Point to)
     {
