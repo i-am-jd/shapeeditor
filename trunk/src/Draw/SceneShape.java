@@ -104,8 +104,10 @@ public abstract class SceneShape extends SceneGraph {
     public void applyUnaryOperations(Stack<UnaryOperation> ops)
     {
         shape = baseShape;
-        for(Enumeration<UnaryOperation> en = ops.elements(); en.hasMoreElements();) {
-            ArrayList<AffineTransform> afl = en.nextElement().toAffineTransforms(shape);
+        int i = ops.size();
+        while(i --> 0) {
+            UnaryOperation uop = ops.get(i);
+            ArrayList<AffineTransform> afl = uop.toAffineTransforms(shape);
             for(AffineTransform af : afl) {
                 shape = af.createTransformedShape(shape);
             }
