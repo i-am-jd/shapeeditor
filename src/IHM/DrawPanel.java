@@ -563,10 +563,10 @@ public class DrawPanel extends JPanel
                 if (sg instanceof Rotation) {
                     //Si le noeud parent est deja une rotation on la modifie directement
                     r = (Rotation) sg;
-                    r.resetAnchor();
+                    r.beginEdit();
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
-                    r = new Rotation(selection.get(0), 0);
+                    r = new Rotation(selection.get(0));
                     selection.remove(sg);
                     selection.add(r);
                     Window.sceneGraph.add(r);

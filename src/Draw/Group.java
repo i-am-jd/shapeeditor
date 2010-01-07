@@ -3,7 +3,7 @@ package Draw;
 import java.util.Vector;
 
 /**
- *
+ * Noeud du graphe représentant un regroupement de plusieurs formes géométriques.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Group extends SceneGraph {

@@ -17,131 +17,21 @@ import java.util.Stack;
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class UnaryOperation extends Transformation {
+public abstract class UnaryOperation extends Transformation {
 
-    /**
-     *
-     */
-    public enum TransFlag {
-
-        /**
-         * 
-         */
-        Translate,
-        /**
-         *
-         */
-        Rotate,
-        /**
-         *
-         */
-        Scale,
-        /**
-         * 
-         */
-        Shear
-    };
-
-    TransFlag flag;
-
-    //SCALE
-    /**
-     *
-     */
-    protected double factorX;
-    /**
-     *
-     */
-    protected double factorY;
-    /**
-     *
-     */
-    protected double initWidth;
-    /**
-     *
-     */
-    protected double initHeight;
-    /**
-     *
-     */
-    protected double centerX;
-    /**
-     *
-     */
-    protected double centerY;
-
-    //ROTATE
-    private double angle;
-    //Coordonnées du point par rapport auquel on effectue la rotation
-    private double anchorX;
-    private double anchorY;
-
-    //TRANSLATE
-    private double dx;
-    private double dy;
+    public UnaryOperation(String name, SceneGraph child)
+    {
+        super(child.getView(), name);
+        this.add(child);
+        this.beginEdit();
+    }
     
     /**
      *
      * @param s
      * @return
      */
-    protected ArrayList<AffineTransform> toAffineTransforms(Shape s)
-    {
-        ArrayList<AffineTransform> al = new ArrayList();
-        Rectangle2D r;
-        switch(flag) {
-            case Translate:
-                al.add(AffineTransform.getTranslateInstance(dx, dy));
-                break;
-            case Rotate:
-                al.add(AffineTransform.getRotateInstance(angle, anchorX, anchorY));
-                break;
-            case Scale:
-                r = s.getBounds2D();
-                al.add(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
-                al.add(AffineTransform.getScaleInstance(factorX,factorY));
-                al.add(AffineTransform.getTranslateInstance(r.getCenterX(), r.getCenterY()));
-                //at.scale(factorX, factorY);
-                //at.translate(- r.getCenterX() * factorX, - r.getCenterY() * factorY);
-                //at.translate((- factorX / 2) * r.getCenterX(), (- factorY / 2) * r.getCenterY());
-                //at.scale(factorX, factorY);
-                //at.translate((2 - factorX) * r.getCenterX() , (2 - factorY) * r.getCenterY() );
-                break;
-            case Shear:
-                r = s.getBounds2D();
-                al.add(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
-                al.add(AffineTransform.getShearInstance(factorX,factorY));
-                al.add(AffineTransform.getTranslateInstance(r.getCenterX(), r.getCenterY()));
-        }
-        return al;
-    }
-
-    /**
-     *
-     * @param s
-     * @param f
-     * @param child
-     */
-    protected UnaryOperation(String s, TransFlag f, SceneGraph child)
-    {
-        super(child.getView(), s);
-        flag = f;
-        factorX = 1;
-        factorY = 1;
-        angle = 0;
-        anchorX = 0;
-        anchorY = 0;
-        dx = 0;
-        dx = 1;
-        centerX = child.getBarycenterX();
-        centerY = child.getBarycenterY();
-        initWidth = child.getBounds2D().getWidth();
-        initHeight = child.getBounds2D().getHeight();
-
-        //Ajouter l'enfant
-        child.removeFromParent();
-        this.add(child);
-    }
+    abstract protected ArrayList<AffineTransform> toAffineTransforms(Shape s);
 
     /*
     static public UnaryOperation rotation(double angle, double anchorX, double anchorY)
@@ -186,81 +76,11 @@ public class UnaryOperation extends Transformation {
         unaryOps.pop();
     }
 
-    /**
-     *
-     * @param angleDiff
-     */
-    public void rotate(double angleDiff)
-    {
-        angle += angleDiff;
-        update();
-    }
+    abstract public void beginEditNode(SceneGraph child);
 
-    /**
-     *
-     * @param f
-     */
-    public void setFlag(TransFlag f)
-    {
-        flag = f;
-    }
-
-    /**
-     *
-     * @param ax
-     * @param ay
-     */
-    public void setRotateAnchor(double ax, double ay)
-    {
-        this.anchorX = ax;
-        this.anchorY = ay;
-    }
-
-    /**
-     * 
-     */
-    public void resetAnchor()
+    public void beginEdit()
     {
         SceneGraph child = (SceneGraph) this.getChildAt(0);
-        this.anchorX = child.getBarycenterX();
-        this.anchorY = child.getBarycenterY();
-    }
-    
-    /**
-     *
-     * @param dx
-     * @param dy
-     */
-    public void setTranslate(double dx, double dy)
-    {
-        this.dx = dx;
-        this.dy = dy;
-    }
-
-    /**
-     *
-     * @param to
-     */
-    public void scaleTo(Point to)
-    {
-        this.factorX = (to.getX() - centerX)/(this.initWidth / 2);
-        this.factorY = (to.getY() - centerY)/(this.initHeight / 2);
-        System.out.println(factorX);
-        System.out.println(factorY);
-    }
-
-    /**
-     *
-     * @param to
-     */
-    public void shearTo(Point to)
-    {
-        scaleTo(to);
-    }
-
-    public void translate(double dx, double dy)
-    {
-        this.dx += dx;
-        this.dy += dy;
+        this.beginEditNode(child);
     }
 }
