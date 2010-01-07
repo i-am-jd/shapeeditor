@@ -74,21 +74,12 @@ public abstract class SceneShape extends SceneGraph {
         return shape.getBounds2D().getHeight() / 2;
     }
 
-    /**
-     *
-     * @param p
-     * @return
-     */
     @Override
     public boolean contains(Point2D p)
     {
         return shape.contains(p);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Rectangle2D getBounds2D()
     {
@@ -154,8 +145,7 @@ public abstract class SceneShape extends SceneGraph {
     }
 
     /**
-     * Retourne la forme géométrique à afficher
-     * @return
+     * @return la forme géométrique à afficher
      */
     @Override
     public Shape getShape()

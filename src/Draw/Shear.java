@@ -43,10 +43,10 @@ public class Shear extends UnaryOperation {
      * du sous-graphe modifié, et des dimensions de ce dernier.
      * @param p point par rapport auquel on effectue le cisaillement
      */
-    public void shearTo(Point to)
+    public void shearTo(Point p)
     {
-        this.factorX = (to.getX() - centerX)/(this.initWidth / 2);
-        this.factorY = (to.getY() - centerY)/(this.initHeight / 2);
+        this.factorX = (p.getX() - centerX)/(this.initWidth / 2);
+        this.factorY = (p.getY() - centerY)/(this.initHeight / 2);
     }
 
     @Override

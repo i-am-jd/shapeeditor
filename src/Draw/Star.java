@@ -73,7 +73,7 @@ public class Star extends SceneShape implements Interpolatable {
 
     /**
      * Copie de l'étoile courante
-     * @returns copie de l'étoile décalée de 5 pixels vers la droite et le bas
+     * @return copie de l'étoile décalée de 5 pixels vers la droite et le bas
      */
     @Override
     public Star clone()
