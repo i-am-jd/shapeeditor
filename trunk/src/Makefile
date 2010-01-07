@@ -96,7 +96,7 @@ $(SRC)/*/package.html $(LISTDIR)/*.pdf
 # pour générer l'application
 all : $(BIN)/Main.class
 
-$(BIN)/JApplicationEditeur.class : $(SRC)/Main.java
+$(BIN)/Main.class : $(SRC)/Main.java
 
 #règle de compilation générique
 $(BIN)/%.class : $(SRC)/%.java
