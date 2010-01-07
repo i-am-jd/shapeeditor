@@ -1,33 +1,28 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Draw;
 
 import java.awt.Polygon;
 
 /**
- *
+ * Feuille du graphe de scène représentant un polygône régulier.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class RegularPolygon extends SceneShape implements PolygonShape
+public class RegularPolygon extends SceneShape implements Interpolatable
 {
+    private Polygon polygon;
+
     int nbSides;
-    final Polygon polygon;
-
-    double originX;
-    double originY;
-
     int[][] tab;
+    
+    private double originY;
+    private double originX;
 
     /**
-     *
-     * @param v
-     * @param x
-     * @param y
-     * @param rad
-     * @param n
+     * Constructeur du polygône régulier
+     * @param v   vue
+     * @param x   coordonnée horizontale du centre
+     * @param y   coordonnée verticale du centre
+     * @param rad rayon
+     * @param n   nombre de côtés
      */
     public RegularPolygon(View v, double x, double y, double rad, int n)
     {
@@ -57,8 +52,9 @@ public class RegularPolygon extends SceneShape implements PolygonShape
     }
 
     /**
-     *
+     * Constructeur de copie
      * @param p
+     * @return une copie du polygône décalée de 5 pixels vers le bas et vers la droite
      */
     public RegularPolygon(RegularPolygon p) {
         super(p.view, "Regular Polygon");
@@ -70,36 +66,29 @@ public class RegularPolygon extends SceneShape implements PolygonShape
         baseShape = polygon;
     }
 
+    /**
+     * Copie un polygône
+     * @param p
+     * @return une copie du polygône décalée de 5 pixels vers le bas et vers la droite
+     */
      @Override
     public RegularPolygon clone()
     {
         return new RegularPolygon(this);
     }
 
-     /**
-      *
-      * @return
-      */
+    // Méthodes de l'interface Interpolatable
+
      @Override
     public int getPointsNb() {
         return nbSides;
     }
 
-     /**
-      * 
-      * @param i
-      * @return
-      */
      @Override
     public int getX(int i) {
         return tab[0][i];
     }
 
-    /**
-     *
-     * @param i
-     * @return
-     */
     @Override
     public int getY(int i) {
         return tab[1][i];

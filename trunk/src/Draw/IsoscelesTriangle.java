@@ -13,7 +13,7 @@ import java.awt.Polygon;
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class IsoscelesTriangle extends SceneShape implements PolygonShape {
+public class IsoscelesTriangle extends SceneShape implements Interpolatable {
 
     final Polygon polygon;
 

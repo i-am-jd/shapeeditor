@@ -9,7 +9,7 @@ package Draw;
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public interface PolygonShape {
+public interface Interpolatable {
     
     /**
      * 
