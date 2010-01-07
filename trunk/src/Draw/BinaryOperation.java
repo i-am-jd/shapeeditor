@@ -77,19 +77,6 @@ public class BinaryOperation extends Transformation
 
     /**
      *
-     * @param x
-     * @param y
-     */
-    @Override
-    public void translate(double x, double y)
-    {
-        AffineTransform t = AffineTransform.getTranslateInstance(x, y);
-        shape = t.createTransformedShape(shape);
-        baseShape = t.createTransformedShape(baseShape);
-    }
-
-    /**
-     *
      * @param g2d
      */
     @Override
