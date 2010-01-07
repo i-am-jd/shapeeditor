@@ -7,14 +7,28 @@ package Draw;
 
 /**
  *
- * @author jdkoeck
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public interface PolygonShape {
     
+    /**
+     * 
+     * @return
+     */
     public int getPointsNb();
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     public int getX(int index);
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     public int getY(int index);
 
 }

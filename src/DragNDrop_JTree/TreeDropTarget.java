@@ -23,12 +23,21 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class TreeDropTarget implements DropTargetListener {
 
     DropTarget target;
     JTree targetTree;
     private DrawPanel drawZone;
 
+    /**
+     *
+     * @param tree
+     * @param drawZone
+     */
     public TreeDropTarget(JTree tree, DrawPanel drawZone) {
         targetTree = tree;
         target = new DropTarget(targetTree, this);
@@ -50,15 +59,16 @@ public class TreeDropTarget implements DropTargetListener {
         return (TreeNode) path.getLastPathComponent();
     }
 
+    @Override
     public void dragEnter(DropTargetDragEvent dtde) {
-     
     }
 
+    @Override
     public void dragOver(DropTargetDragEvent dtde) {
         MutableTreeNode selectedNode = (MutableTreeNode) targetTree.getSelectionPath().getLastPathComponent();
 
         MutableTreeNode node = (MutableTreeNode) getNodeForEvent(dtde);
-       
+
         MutableTreeNode tmp = node;
 
         while (null != tmp) {
@@ -68,19 +78,22 @@ public class TreeDropTarget implements DropTargetListener {
             }
             tmp = (MutableTreeNode) tmp.getParent();
         }
-        
+
         dtde.acceptDrag(dtde.getDropAction());
         return;
     }
 
+    @Override
     public void dragExit(DropTargetEvent dte) {
         //System.out.println("dropExit");
     }
 
+    @Override
     public void dropActionChanged(DropTargetDragEvent dtde) {
         //System.out.println("dropActionChanged");
     }
 
+    @Override
     public void drop(DropTargetDropEvent dtde) {
         Point pt = dtde.getLocation();
         DropTargetContext dtc = dtde.getDropTargetContext();
@@ -89,9 +102,9 @@ public class TreeDropTarget implements DropTargetListener {
         MutableTreeNode parent = (MutableTreeNode) parentpath.getLastPathComponent();
 
         /*if (parent instanceof UnaryOperation || parent instanceof BinaryOperation){
-                System.out.println("Drop impossible à cause de l'arité");
-                return;
-            }*/
+        System.out.println("Drop impossible à cause de l'arité");
+        return;
+        }*/
 
         MutableTreeNode selectedNode = (MutableTreeNode) targetTree.getSelectionPath().getLastPathComponent();
         MutableTreeNode clonedNode = ((SceneGraph) selectedNode).clone();
@@ -115,16 +128,16 @@ public class TreeDropTarget implements DropTargetListener {
             System.out.println(clonedNode);
             Vector<SceneGraph> sel = new Vector<SceneGraph>();
 
-            sel.add((SceneGraph)parent);
-            sel.add((SceneGraph)clonedNode);
+            sel.add((SceneGraph) parent);
+            sel.add((SceneGraph) clonedNode);
 
-            SceneGraph tmpGraph = (SceneGraph)parent.getParent();
+            SceneGraph tmpGraph = (SceneGraph) parent.getParent();
 
-            ((SceneGraph)clonedNode).removeFromParent();
-            ((SceneGraph)parent).removeFromParent();
+            ((SceneGraph) clonedNode).removeFromParent();
+            ((SceneGraph) parent).removeFromParent();
 
             Group gr = new Group(new View(Window.sceneGraph.getView()));
-            for(Enumeration<SceneGraph> en = sel.elements(); en.hasMoreElements();) {
+            for (Enumeration<SceneGraph> en = sel.elements(); en.hasMoreElements();) {
                 SceneGraph g = en.nextElement();
                 gr.add(g);
             }

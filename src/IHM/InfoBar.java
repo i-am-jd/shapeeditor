@@ -10,25 +10,22 @@ import javax.swing.JPanel;
 import java.awt.geom.Point2D;
 
 /**
- * La barre d'infos situee en bas de la fenetre pour afficher 
- * differentes informations
+ * Class instantiating the information bar, which displays
+ * information
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class InfoBar extends JPanel
 {
 
-    /** Le premier label */
+    /** First label */
     private JLabel info;
-    /** Le second label */
+    /** Second label */
     private JLabel coordinates;
-    /**
-     * le format des coordonn�es dans la barre d'�tat
-     * sur 3 digits, sans d�cimales
-     */
+    /** Format to print the coordinates with */
     private final static String NUMBERFORMAT = "000";
 
     /**
-     * Constructeur de la barre d'infos
+     * Returns an information bar
      */
     public InfoBar()
     {
@@ -39,9 +36,11 @@ public class InfoBar extends JPanel
         printDefaultCoordinates();
         this.setBorder(BorderFactory.createEtchedBorder());
     }
-
-    /* (non-Javadoc)
-     * @see widgets.Etat#afficheCoord(float, float)
+    
+    /**
+     * Prints the coordinates of the mouse, when it is in the draw panel
+     * @param x The x coordinate where the mouse is
+     * @param y The y coordinate where the mouse is
      */
     public void printCoordinates(float x, float y)
     {
@@ -51,6 +50,10 @@ public class InfoBar extends JPanel
         coordinates.setText("x : " + xs + " y : " + ys);
     }
 
+    /**
+     * Prints the coordinates of the mouse, when it is in the draw panel
+     * @param p The point where the mouse is
+     */
     public void printCoordinates(Point2D p)
     {
         DecimalFormat coordFormat = new DecimalFormat(NUMBERFORMAT);
@@ -59,14 +62,18 @@ public class InfoBar extends JPanel
         coordinates.setText("x : " + xs + " y : " + ys);
     }
 
-    /* (non-Javadoc)
-     * @see widgets.Etat#afficheMessage(java.lang.String)
+    /**
+     * Prints a message (first label)
+     * @param message
      */
     public void printMessage(String message)
     {
         info.setText(message);
     }
 
+    /**
+     * Prints a default message when the mouse is not in the draw panel
+     */
     public void printDefaultCoordinates() {
         coordinates.setText("x : ___ y : ___");
     }

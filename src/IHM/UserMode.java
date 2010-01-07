@@ -6,7 +6,30 @@
 package IHM;
 
 /**
- *
- * @author jdkoeck
+ * Enumeration for the differents modes available : drawing,
+ * selecting, rotating, ...
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
-public enum UserMode { Drawing, Selecting, Rotating, Scaling, Shearing };
+public enum UserMode {
+
+    /**
+     *
+     */
+    Drawing,
+    /**
+     * 
+     */
+    Selecting,
+    /**
+     *
+     */
+    Rotating,
+    /**
+     *
+     */
+    Scaling,
+    /**
+     * 
+     */
+    Shearing
+};

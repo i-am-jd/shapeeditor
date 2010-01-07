@@ -1,6 +1,5 @@
 package IHM;
 
-import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -9,8 +8,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 
 /**
- * Classe contenant un titre et une liste d�roulante utilisant des JLabel avec
- * des icones
+ * Control containing a title and a slider
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class JLabeledSlider extends JPanel
 {
@@ -23,11 +22,13 @@ public class JLabeledSlider extends JPanel
 	/**
 	 * Constructeur
 	 * @param title le titre du panel
-	 * @param captions les l�gendes des �l�ments de la liste
-	 * @param selectedIndex l'�l�ment s�lectionn� initialement
+         * @param orient
+         * @param min
 	 * @param listener le listener � appeller quand l'�lement s�lectionn� de la
 	 *            liste change
-	 * @see #createImageIcon(String)
+         * @param max
+         * @param init
+         * @see #createImageIcon(String)
 	 */
 	public JLabeledSlider(String title, int orient, int min, int max, int init, ChangeListener listener)
 	{

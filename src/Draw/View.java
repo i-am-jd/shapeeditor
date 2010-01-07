@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.TexturePaint;
 
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class View {
 
 	/** Couleur du trait */
@@ -15,7 +19,14 @@ public class View {
 	/** Motif de remplissage */
 	private TexturePaint fillPattern;
 	
-	public View (Color c, float w, Color fillC, TexturePaint fillP)
+        /**
+         *
+         * @param c
+         * @param w
+         * @param fillC
+         * @param fillP
+         */
+        public View(Color c, float w, Color fillC, TexturePaint fillP)
 	{
 		setLineColor(c);
 		setLineWidth(w);
@@ -23,7 +34,11 @@ public class View {
 		fillPattern = fillP;
 	}
         /* Constructeur de copie (copie profonde) */
-        public View (View v)
+        /**
+         *
+         * @param v
+         */
+        public View(View v)
         {
 		setLineColor(v.getLineColor());
 		setLineWidth(new Float(v.getLineWidth()));
@@ -31,33 +46,65 @@ public class View {
 		fillPattern = v.getFillPattern();
 	}
 	
-	public void setLineColor(Color lineColor) {
+        /**
+         *
+         * @param lineColor
+         */
+        public void setLineColor(Color lineColor) {
 		this.lineColor = lineColor;
 	}
-	public Color getLineColor() {
+        /**
+         *
+         * @return
+         */
+        public Color getLineColor() {
 		return lineColor;
 	}
 
-	public void setLineWidth(float lineWidth) {
+        /**
+         *
+         * @param lineWidth
+         */
+        public void setLineWidth(float lineWidth) {
 		this.lineWidth = lineWidth;
 	}
-	public float getLineWidth() {
+        /**
+         *
+         * @return
+         */
+        public float getLineWidth() {
 		return lineWidth;
 	}
 
-	public void setFillColor(Color fillColor) 
+        /**
+         *
+         * @param fillColor
+         */
+        public void setFillColor(Color fillColor)
 	{
 		this.fillColor = fillColor;
 	}
-	public Color getFillColor() {
+        /**
+         *
+         * @return
+         */
+        public Color getFillColor() {
 		return fillColor;
 	}
 	
-	public void setFillPattern(TexturePaint fillPattern)
+        /**
+         *
+         * @param fillPattern
+         */
+        public void setFillPattern(TexturePaint fillPattern)
 	{
 		this.fillPattern = fillPattern;
 	}
-	public TexturePaint getFillPattern()
+        /**
+         *
+         * @return
+         */
+        public TexturePaint getFillPattern()
 	{
 		return fillPattern;
 	}

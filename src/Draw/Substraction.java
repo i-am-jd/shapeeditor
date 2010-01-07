@@ -9,9 +9,18 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class Substraction extends BinaryOperation
 {
 
+    /**
+     *
+     * @param sg1
+     * @param sg2
+     */
     public Substraction(SceneGraph sg1, SceneGraph sg2)
     {
         super("Substraction", sg1, sg2);

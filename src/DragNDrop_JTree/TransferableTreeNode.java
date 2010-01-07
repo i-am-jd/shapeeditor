@@ -7,41 +7,38 @@ import java.io.IOException;
 
 import javax.swing.tree.TreePath;
 
-class TransferableTreeNode implements Transferable
-{
+/**
+ * @author Boris Dadachev & Jean-Denis Koeck
+ *
+ */
+class TransferableTreeNode implements Transferable {
 
-	public static DataFlavor TREE_PATH_FLAVOR = new DataFlavor(TreePath.class,
-	        "Tree Path");
+    public static DataFlavor TREE_PATH_FLAVOR = new DataFlavor(TreePath.class,
+            "Tree Path");
+    DataFlavor flavors[] = {TREE_PATH_FLAVOR};
+    TreePath path;
 
-	DataFlavor flavors[] = { TREE_PATH_FLAVOR };
+    public TransferableTreeNode(TreePath tp) {
+        path = tp;
+    }
 
-	TreePath path;
+    @Override
+    public synchronized DataFlavor[] getTransferDataFlavors() {
+        return flavors;
+    }
 
-	public TransferableTreeNode(TreePath tp)
-	{
-		path = tp;
-	}
+    @Override
+    public boolean isDataFlavorSupported(DataFlavor flavor) {
+        return (flavor.getRepresentationClass() == TreePath.class);
+    }
 
-	public synchronized DataFlavor[] getTransferDataFlavors()
-	{
-		return flavors;
-	}
-
-	public boolean isDataFlavorSupported(DataFlavor flavor)
-	{
-		return (flavor.getRepresentationClass() == TreePath.class);
-	}
-
-	public synchronized Object getTransferData(DataFlavor flavor)
-	        throws UnsupportedFlavorException, IOException
-	{
-		if (isDataFlavorSupported(flavor))
-		{
-			return path;
-		}
-		else
-		{
-			throw new UnsupportedFlavorException(flavor);
-		}
-	}
+    @Override
+    public synchronized Object getTransferData(DataFlavor flavor)
+            throws UnsupportedFlavorException, IOException {
+        if (isDataFlavorSupported(flavor)) {
+            return path;
+        } else {
+            throw new UnsupportedFlavorException(flavor);
+        }
+    }
 }

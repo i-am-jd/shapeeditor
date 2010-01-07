@@ -15,19 +15,59 @@ import java.util.Stack;
 
 /**
  *
- * @author jdkoeck
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class UnaryOperation extends Transformation {
-    public enum TransFlag { Translate, Rotate, Scale, Shear };
+
+    /**
+     *
+     */
+    public enum TransFlag {
+
+        /**
+         * 
+         */
+        Translate,
+        /**
+         *
+         */
+        Rotate,
+        /**
+         *
+         */
+        Scale,
+        /**
+         * 
+         */
+        Shear
+    };
 
     TransFlag flag;
 
     //SCALE
+    /**
+     *
+     */
     protected double factorX;
+    /**
+     *
+     */
     protected double factorY;
+    /**
+     *
+     */
     protected double initWidth;
+    /**
+     *
+     */
     protected double initHeight;
+    /**
+     *
+     */
     protected double centerX;
+    /**
+     *
+     */
     protected double centerY;
 
     //ROTATE
@@ -40,6 +80,11 @@ public class UnaryOperation extends Transformation {
     private double dx;
     private double dy;
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     protected ArrayList<AffineTransform> toAffineTransforms(Shape s)
     {
         ArrayList<AffineTransform> al = new ArrayList();
@@ -71,6 +116,12 @@ public class UnaryOperation extends Transformation {
         return al;
     }
 
+    /**
+     *
+     * @param s
+     * @param f
+     * @param child
+     */
     protected UnaryOperation(String s, TransFlag f, SceneGraph child)
     {
         super(child.getView(), s);
@@ -119,6 +170,10 @@ public class UnaryOperation extends Transformation {
     }
      */
 
+    /**
+     *
+     * @param unaryOps
+     */
     @Override
     public void applyUnaryOperations(Stack<UnaryOperation> unaryOps)
     {
@@ -131,23 +186,39 @@ public class UnaryOperation extends Transformation {
         unaryOps.pop();
     }
 
+    /**
+     *
+     * @param angleDiff
+     */
     public void rotate(double angleDiff)
     {
         angle += angleDiff;
         update();
     }
 
+    /**
+     *
+     * @param f
+     */
     public void setFlag(TransFlag f)
     {
         flag = f;
     }
 
+    /**
+     *
+     * @param ax
+     * @param ay
+     */
     public void setRotateAnchor(double ax, double ay)
     {
         this.anchorX = ax;
         this.anchorY = ay;
     }
 
+    /**
+     * 
+     */
     public void resetAnchor()
     {
         SceneGraph child = (SceneGraph) this.getChildAt(0);
@@ -155,12 +226,21 @@ public class UnaryOperation extends Transformation {
         this.anchorY = child.getBarycenterY();
     }
     
+    /**
+     *
+     * @param dx
+     * @param dy
+     */
     public void setTranslate(double dx, double dy)
     {
         this.dx = dx;
         this.dy = dy;
     }
 
+    /**
+     *
+     * @param to
+     */
     public void scaleTo(Point to)
     {
         this.factorX = (to.getX() - centerX)/(this.initWidth / 2);
@@ -169,6 +249,10 @@ public class UnaryOperation extends Transformation {
         System.out.println(factorY);
     }
 
+    /**
+     *
+     * @param to
+     */
     public void shearTo(Point to)
     {
         scaleTo(to);

@@ -11,14 +11,19 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
- *
- * @author Boris
+ * Class instantiating a context menu allowing to copy and delete
+ * a node of the scene graph
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class SelectionContextMenu extends JPopupMenu {
 
     private JMenuItem copyItem;
     private JMenuItem delItem;
 
+    /**
+     *
+     * @param drawZone
+     */
     public SelectionContextMenu(DrawPanel drawZone) {
         super();
         copyItem = new JMenuItem("Copy");

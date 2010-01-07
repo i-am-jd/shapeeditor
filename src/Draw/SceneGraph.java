@@ -12,6 +12,10 @@ import java.util.Stack;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
+/**
+ *
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class SceneGraph extends DefaultMutableTreeNode {
 	/**
 	 * @uml.property  name="view"
@@ -19,17 +23,30 @@ public class SceneGraph extends DefaultMutableTreeNode {
 	 */
 	protected View view;
 
-	public SceneGraph(View v, String name)
+        /**
+         *
+         * @param v
+         * @param name
+         */
+        public SceneGraph(View v, String name)
 	{
             super(name);
             setView(v);
 	}
-	public SceneGraph(String name)
+        /**
+         *
+         * @param name
+         */
+        public SceneGraph(String name)
 	{
             super(name);
             view = new View(Color.BLACK, 1, Color.BLACK, null);
 	}
 
+        /**
+         *
+         * @param s
+         */
         public SceneGraph(SceneShape s)
         {
             super();
@@ -70,6 +87,10 @@ public class SceneGraph extends DefaultMutableTreeNode {
 		this.view = view;
 	}
         
+        /**
+         *
+         * @param g2d
+         */
         public void draw(Graphics2D g2d) {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
                 en.nextElement().draw(g2d); //, scale, shear);
@@ -77,12 +98,26 @@ public class SceneGraph extends DefaultMutableTreeNode {
                 //this.draw(g2d, 0, 1, 1, 0, 0);
         }
 
+        /**
+         *
+         * @param g2d
+         * @param rotate
+         * @param scaleX
+         * @param scaleY
+         * @param shearX
+         * @param shearY
+         */
         public void draw(Graphics2D g2d, double rotate, double scaleX, double scaleY, double shearX, double shearY) {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
                 en.nextElement().draw(g2d, rotate, scaleX, scaleY, shearX, shearY); //, scale, shear);
             }
         }
 
+        /**
+         *
+         * @param p
+         * @return
+         */
         public boolean contains(Point2D p)
         {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
@@ -93,6 +128,10 @@ public class SceneGraph extends DefaultMutableTreeNode {
             return false;
         }
 
+        /**
+         * 
+         * @return
+         */
         public Rectangle2D getBounds2D()
         {
             Rectangle2D r;
@@ -110,6 +149,9 @@ public class SceneGraph extends DefaultMutableTreeNode {
         }
 
         //Monte un graphe de scène enfant un premier plan (sera dessiné en priorité)
+        /**
+         *
+         */
         public void moveToFront()
         {
             SceneGraph parent = (SceneGraph) this.getParent();
@@ -117,6 +159,10 @@ public class SceneGraph extends DefaultMutableTreeNode {
             parent.add(this);
         }
 
+        /**
+         *
+         * @param unaryOps
+         */
         public void applyUnaryOperations(Stack<UnaryOperation> unaryOps)
         {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
@@ -124,11 +170,18 @@ public class SceneGraph extends DefaultMutableTreeNode {
             }
         }
 
+        /**
+         *
+         */
         public void update()
         {
             ((SceneGraph) this.getRoot()).applyUnaryOperations(new Stack());
         }
 
+        /**
+         *
+         * @return
+         */
         public double getBarycenterX()
         {
             double x = 0;
@@ -138,6 +191,10 @@ public class SceneGraph extends DefaultMutableTreeNode {
             return x / this.getChildCount();
         }
 
+        /**
+         *
+         * @return
+         */
         public double getBarycenterY()
         {
             double y = 0;
@@ -147,6 +204,11 @@ public class SceneGraph extends DefaultMutableTreeNode {
             return y / this.getChildCount();
         }
 
+        /**
+         *
+         * @param x
+         * @param y
+         */
         public void translate(double x, double y)
         {
             for(Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
@@ -155,6 +217,10 @@ public class SceneGraph extends DefaultMutableTreeNode {
 
         }
 
+        /**
+         *
+         * @return
+         */
         public Shape getShape()
         {
             Area area = new Area();

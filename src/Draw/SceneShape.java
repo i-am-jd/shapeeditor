@@ -15,20 +15,33 @@ import java.util.Stack;
 
 /**
  *
- * @author jdkoeck
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public abstract class SceneShape extends SceneGraph {
 
     final View view;
 
     //Forme de base, aucune transformation appliquée
+    /**
+     *
+     */
     protected Shape baseShape;
 
     //Forme affichée à l'écran, à laquelle on a appliquée les transformations nécessaires
+    /**
+     *
+     */
     protected Shape shape;
 
+    /**
+     *
+     */
     protected Point offset = new Point();
 
+    /**
+     *
+     * @param v
+     */
     public SceneShape(View v)
     {
         super(v, "Shape");
@@ -37,28 +50,50 @@ public abstract class SceneShape extends SceneGraph {
         //System.out.println("Creation de shape");
     }
 
+    /**
+     *
+     * @param v
+     * @param s
+     */
     public SceneShape(View v, String s)
     {
         super(v, s);
         view = v;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getWidth()
     {
         return shape.getBounds2D().getWidth() / 2;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getHeight()
     {
         return shape.getBounds2D().getHeight() / 2;
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean contains(Point2D p)
     {
         return shape.contains(p);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Rectangle2D getBounds2D()
     {
@@ -66,6 +101,10 @@ public abstract class SceneShape extends SceneGraph {
     }
 
     //Applique une pile de transformations à la shape
+    /**
+     *
+     * @param ops
+     */
     @Override
     public void applyUnaryOperations(Stack<UnaryOperation> ops)
     {
@@ -78,6 +117,11 @@ public abstract class SceneShape extends SceneGraph {
         }
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     @Override
     public void translate(double x, double y)
     {
@@ -86,6 +130,10 @@ public abstract class SceneShape extends SceneGraph {
         baseShape = t.createTransformedShape(baseShape);
     }
 
+    /**
+     *
+     * @param g2d
+     */
     @Override
     public void draw(Graphics2D g2d)
     {
@@ -101,18 +149,30 @@ public abstract class SceneShape extends SceneGraph {
         g2d.draw(shape);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getBarycenterX()
     {
         return shape.getBounds2D().getCenterX();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getBarycenterY()
     {
         return shape.getBounds2D().getCenterY();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Shape getShape()
     {

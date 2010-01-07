@@ -10,12 +10,16 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author Boris
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class CopyActionListener implements ActionListener {
 
     private DrawPanel drawZone;
 
+    /**
+     *
+     * @param drawZone
+     */
     public CopyActionListener(DrawPanel drawZone) {
         super();
         this.drawZone = drawZone;

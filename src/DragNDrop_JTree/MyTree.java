@@ -7,14 +7,20 @@ import javax.swing.tree.TreeNode;
 
 
 /**
- * @author David Roussel
+ * @author Boris Dadachev & Jean-Denis Koeck
  *
  */
 public class MyTree
 {
-	protected MutableTreeNode root;
+    /**
+     *
+     */
+    protected MutableTreeNode root;
 	
-	@SuppressWarnings("unused")
+        /**
+         *
+         */
+        @SuppressWarnings("unused")
 	public MyTree()
 	{
 		root = new MyBranchNode();
@@ -32,7 +38,13 @@ public class MyTree
 		
 	}
 
-	public static String toStringNode(TreeNode node, int level)
+        /**
+         *
+         * @param node
+         * @param level
+         * @return
+         */
+        public static String toStringNode(TreeNode node, int level)
 	{
 		StringBuffer sb = new StringBuffer();
 
@@ -57,7 +69,11 @@ public class MyTree
 		return new String(sb);
 	}
 
-	public MutableTreeNode getRoot()
+        /**
+         *
+         * @return
+         */
+        public MutableTreeNode getRoot()
     {
     	return root;
     }

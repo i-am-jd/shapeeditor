@@ -10,6 +10,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+/**
+ * Class instantiating the menu bar
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class MenuBar extends JMenuBar {
 
     /* Definition des categories et sous-categories de la barre de menu */
@@ -25,6 +29,9 @@ public class MenuBar extends JMenuBar {
     private JMenu menuAbout = new JMenu("About");
     private JMenuItem optAbout = new JMenuItem("About");
 
+    /**
+     *
+     */
     public MenuBar() {
         
         /* Mise en place des raccourcis clavier */
@@ -44,6 +51,10 @@ public class MenuBar extends JMenuBar {
         this.add(menuAbout);
     }
 
+    /**
+     *
+     * @param drawZone
+     */
     public void initializeListeners(final DrawPanel drawZone)
     {
         /* Ajout des ActionListener associes aux sous categories */
@@ -68,6 +79,7 @@ public class MenuBar extends JMenuBar {
         //});
         optAbout.addActionListener(new ActionListener() {
             @Override
+            @SuppressWarnings("static-access")
             public void actionPerformed(ActionEvent arg0) {
                 JOptionPane jop = new JOptionPane();
                 //ImageIcon img = new ImageIcon("images/img.png");
@@ -77,7 +89,7 @@ public class MenuBar extends JMenuBar {
                         "    - Boris Dadachev\n" +
                         "    - Jean-Denis Koeck\n" +
                         "All rights reserved. \n";
-                jop.showMessageDialog(null, mess, "About", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, mess, "About", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }

@@ -7,6 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
+/**
+ * Class instantiating the tool bar
+ * @author Boris Dadachev & Jean-Denis Koeck
+ */
 public class ToolBar extends JToolBar {
 
     private JButton btn1;
@@ -29,6 +33,10 @@ public class ToolBar extends JToolBar {
     private JButton btn18;
     private JButton btn19;
 
+    /**
+     *
+     * @param optionZone
+     */
     public ToolBar(OptionPanel optionZone) {
         /* Creation de la barre d'outils avec une orientation verticale */
         super(1);

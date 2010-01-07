@@ -11,7 +11,7 @@ import java.awt.Polygon;
 
 /**
  *
- * @author Boris
+ * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class IsoscelesTriangle extends SceneShape implements PolygonShape {
 
@@ -20,6 +20,12 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
     int[] xs;
     int[] ys;
 
+    /**
+     *
+     * @param v
+     * @param xpoints
+     * @param ypoints
+     */
     public IsoscelesTriangle(View v, int[] xpoints, int[] ypoints)
     {
         super(v);
@@ -30,6 +36,14 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
         baseShape = polygon;
     }
     
+    /**
+     *
+     * @param v
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
     public IsoscelesTriangle(View v, double x, double y, double width, double height) {
         super(v);
 
@@ -50,7 +64,11 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
         setUserObject("IsoscelesTriangle");
     }
 
-     public IsoscelesTriangle(IsoscelesTriangle t) {
+    /**
+     *
+     * @param t
+     */
+    public IsoscelesTriangle(IsoscelesTriangle t) {
         super(t.view);
         polygon = new Polygon(t.polygon.xpoints, t.polygon.ypoints, t.polygon.npoints);
         polygon.translate(5, 5);
@@ -58,11 +76,21 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
         baseShape = polygon;
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
      public int getX(int i) {
         return xs[i];
      }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
      public int getY(int i) {
          return ys[i];
@@ -74,7 +102,11 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
         return new IsoscelesTriangle(this);
     }
 
-    @Override
+     /**
+      *
+      * @return
+      */
+     @Override
     public int getPointsNb() {
         return 3;
     }
