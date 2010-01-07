@@ -581,6 +581,7 @@ public class DrawPanel extends JPanel
                 Scale s;
                 if (sg instanceof Scale) {
                     s = (Scale) sg;
+                    s.beginEdit();
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
                     s = new Scale(sg);
@@ -598,6 +599,7 @@ public class DrawPanel extends JPanel
                 if (sg instanceof Shear) {
                     //Si le noeud parent est deja une rotation on la modifie directement
                     s = (Shear) sg;
+                    s.beginEdit();
                 } else {
                     //sinon on ajoute un nouveau noeud dans le graphe
                     s = new Shear(sg);
