@@ -13,23 +13,23 @@ package IHM;
 public enum UserMode {
 
     /**
-     *
+     * Draw
      */
     Drawing,
     /**
-     * 
+     * Selection
      */
     Selecting,
     /**
-     *
+     * Rotation
      */
     Rotating,
     /**
-     *
+     * Scale factor
      */
     Scaling,
     /**
-     * 
+     * Shear
      */
     Shearing
 };

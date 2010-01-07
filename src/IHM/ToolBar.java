@@ -13,28 +13,47 @@ import javax.swing.JToolBar;
  */
 public class ToolBar extends JToolBar {
 
+    /** The "4-sides shapes" button */
     private JButton btn1;
+    /** The "elliptic shapes" button */
     private JButton btn2;
+    /** The "3-sides shapes" button */
     private JButton btn3;
+    /** The "star shapes" button */
     private JButton btn4;
+    /** The "polygon shapes" button */
     private JButton btn5;
+    /** The "select" button */
     private JButton btn6;
+    /** The "group" button */
     private JButton btn7;
+    /** The "copy" button */
     private JButton btn8;
+    /** The "delete" button */
     private JButton btn9;
+    /** The "undo" button */
     private JButton btn10;
+    /** The "rotate" button */
     private JButton btn11;
+    /** The "scale" button */
     private JButton btn12;
+    /** The "shear" button */
     private JButton btn13;
+    /** The "union" button */
     private JButton btn14;
+    /** The "intersection" button */
     private JButton btn15;
+    /** The "substraction" button */
     private JButton btn16;
+    /** The "exclusion" button */
     private JButton btn17;
+    /** The "inclusion" button */
     private JButton btn18;
+    /** The "interpolation" button */
     private JButton btn19;
 
     /**
-     *
+     * Returns a tool bar
      * @param optionZone
      */
     public ToolBar(OptionPanel optionZone) {
@@ -51,18 +70,18 @@ public class ToolBar extends JToolBar {
         btn7 = new JButton(new ImageIcon(getClass().getResource("../images/group.png")));
         btn8 = new JButton(new ImageIcon(getClass().getResource("../images/copy.png")));
         btn9 = new JButton(new ImageIcon(getClass().getResource("../images/delete.png")));
-        btn19 = new JButton(new ImageIcon(getClass().getResource("../images/undo.png")));
+        btn10 = new JButton(new ImageIcon(getClass().getResource("../images/undo.png")));
 
-        btn10 = new JButton(new ImageIcon(getClass().getResource("../images/rotate.png")));
-        btn11 = new JButton(new ImageIcon(getClass().getResource("../images/scale.png")));
-        btn12 = new JButton(new ImageIcon(getClass().getResource("../images/shear.png")));
+        btn11 = new JButton(new ImageIcon(getClass().getResource("../images/rotate.png")));
+        btn12 = new JButton(new ImageIcon(getClass().getResource("../images/scale.png")));
+        btn13 = new JButton(new ImageIcon(getClass().getResource("../images/shear.png")));
 
-        btn13 = new JButton(new ImageIcon(getClass().getResource("../images/union.png")));
-        btn14 = new JButton(new ImageIcon(getClass().getResource("../images/intersection.png")));
-        btn15 = new JButton(new ImageIcon(getClass().getResource("../images/substraction.png")));
-        btn16 = new JButton(new ImageIcon(getClass().getResource("../images/exclusion.png")));
-        btn17 = new JButton(new ImageIcon(getClass().getResource("../images/inclusion.png")));
-        btn18 = new JButton(new ImageIcon(getClass().getResource("../images/interpolation.png")));
+        btn14 = new JButton(new ImageIcon(getClass().getResource("../images/union.png")));
+        btn15 = new JButton(new ImageIcon(getClass().getResource("../images/intersection.png")));
+        btn16 = new JButton(new ImageIcon(getClass().getResource("../images/substraction.png")));
+        btn17 = new JButton(new ImageIcon(getClass().getResource("../images/exclusion.png")));
+        btn18 = new JButton(new ImageIcon(getClass().getResource("../images/inclusion.png")));
+        btn19 = new JButton(new ImageIcon(getClass().getResource("../images/interpolation.png")));
 
         btn1.setToolTipText("Rectangles & Squares");
         btn2.setToolTipText("Ellipses & Circles");
@@ -74,18 +93,18 @@ public class ToolBar extends JToolBar {
         btn7.setToolTipText("Group");
         btn8.setToolTipText("Copy");
         btn9.setToolTipText("Delete");
-        btn19.setToolTipText("Undo operation");
+        btn10.setToolTipText("Undo operation");
 
-        btn10.setToolTipText("Rotation");
-        btn11.setToolTipText("Scale Factor");
-        btn12.setToolTipText("Shearing");
+        btn11.setToolTipText("Rotation");
+        btn12.setToolTipText("Scale Factor");
+        btn13.setToolTipText("Shearing");
 
-        btn13.setToolTipText("Union");
-        btn14.setToolTipText("Intersection");
-        btn15.setToolTipText("Substraction");
-        btn16.setToolTipText("Exclusion");
-        btn17.setToolTipText("Inclusion");
-        btn18.setToolTipText("Interpolation");
+        btn14.setToolTipText("Union");
+        btn15.setToolTipText("Intersection");
+        btn16.setToolTipText("Substraction");
+        btn17.setToolTipText("Exclusion");
+        btn18.setToolTipText("Inclusion");
+        btn19.setToolTipText("Interpolation");
 
 
         btn1.addActionListener(new GestionnaireToolBar(ButtonPressed.DRAW_RECTANGLE, optionZone));
@@ -97,16 +116,16 @@ public class ToolBar extends JToolBar {
         btn7.addActionListener(new GestionnaireToolBar(ButtonPressed.GROUP, optionZone));
         btn8.addActionListener(new GestionnaireToolBar(ButtonPressed.COPY, optionZone));
         btn9.addActionListener(new GestionnaireToolBar(ButtonPressed.DELETE, optionZone));
-        btn19.addActionListener(new GestionnaireToolBar(ButtonPressed.DEGROUP, optionZone));
-        btn10.addActionListener(new GestionnaireToolBar(ButtonPressed.ROTATE, optionZone));
-        btn11.addActionListener(new GestionnaireToolBar(ButtonPressed.SCALE, optionZone));
-        btn12.addActionListener(new GestionnaireToolBar(ButtonPressed.SHEAR, optionZone));
-        btn13.addActionListener(new GestionnaireToolBar(ButtonPressed.UNION, optionZone));
-        btn14.addActionListener(new GestionnaireToolBar(ButtonPressed.INTERSECTION, optionZone));
-        btn15.addActionListener(new GestionnaireToolBar(ButtonPressed.SUBSTRACTION, optionZone));
-        btn16.addActionListener(new GestionnaireToolBar(ButtonPressed.EXCLUSION, optionZone));
-        btn17.addActionListener(new GestionnaireToolBar(ButtonPressed.INCLUSION, optionZone));
-        btn18.addActionListener(new GestionnaireToolBar(ButtonPressed.INTERPOLATION, optionZone));
+        btn10.addActionListener(new GestionnaireToolBar(ButtonPressed.DEGROUP, optionZone));
+        btn11.addActionListener(new GestionnaireToolBar(ButtonPressed.ROTATE, optionZone));
+        btn12.addActionListener(new GestionnaireToolBar(ButtonPressed.SCALE, optionZone));
+        btn13.addActionListener(new GestionnaireToolBar(ButtonPressed.SHEAR, optionZone));
+        btn14.addActionListener(new GestionnaireToolBar(ButtonPressed.UNION, optionZone));
+        btn15.addActionListener(new GestionnaireToolBar(ButtonPressed.INTERSECTION, optionZone));
+        btn16.addActionListener(new GestionnaireToolBar(ButtonPressed.SUBSTRACTION, optionZone));
+        btn17.addActionListener(new GestionnaireToolBar(ButtonPressed.EXCLUSION, optionZone));
+        btn18.addActionListener(new GestionnaireToolBar(ButtonPressed.INCLUSION, optionZone));
+        btn19.addActionListener(new GestionnaireToolBar(ButtonPressed.INTERPOLATION, optionZone));
         this.add(btn1);
         this.add(btn2);
         this.add(btn3);
@@ -117,18 +136,18 @@ public class ToolBar extends JToolBar {
         this.add(btn7);
         this.add(btn8);
         this.add(btn9);
-        this.add(btn19);
-        this.addSeparator();
         this.add(btn10);
+        this.addSeparator();
         this.add(btn11);
         this.add(btn12);
-        this.addSeparator();
         this.add(btn13);
+        this.addSeparator();
         this.add(btn14);
         this.add(btn15);
         this.add(btn16);
         this.add(btn17);
         this.add(btn18);
+        this.add(btn19);
 
         this.setBorder(BorderFactory.createEtchedBorder());
     }

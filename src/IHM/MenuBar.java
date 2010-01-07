@@ -16,24 +16,22 @@ import javax.swing.KeyStroke;
  */
 public class MenuBar extends JMenuBar {
 
-    /* Definition des categories et sous-categories de la barre de menu */
-    /* menu Fichier */
-
+    /** "File" menu */
     private JMenu menuFile = new JMenu("File");
+    /** "New" sub-menu */
     private JMenuItem optNew = new JMenuItem("New");
+    /** "Exit" sub-menu */
     private JMenuItem optExit = new JMenuItem("Exit");
-    /* menu Dessin */
-    //private JMenu menuDessin = new JMenu("Dessin");
-    //private JMenuItem optLancer = new JMenuItem("Lancer");
-    /* menu A propos */
+    /** "About" menu */
     private JMenu menuAbout = new JMenu("About");
+    /** "About" sub-menu */
     private JMenuItem optAbout = new JMenuItem("About");
 
     /**
-     *
+     * Return a menu bar
      */
     public MenuBar() {
-        
+
         /* Mise en place des raccourcis clavier */
         optNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
         optExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
@@ -52,13 +50,13 @@ public class MenuBar extends JMenuBar {
     }
 
     /**
-     *
+     * Initialize the listeners needed by the menu bar
      * @param drawZone
      */
-    public void initializeListeners(final DrawPanel drawZone)
-    {
+    public void initializeListeners(final DrawPanel drawZone) {
         /* Ajout des ActionListener associes aux sous categories */
         optNew.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 Window.sceneGraph.removeAllChildren();
@@ -66,18 +64,14 @@ public class MenuBar extends JMenuBar {
             }
         });
         optExit.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.exit(0);
             }
         });
-        //optLancer.addActionListener(new ActionListener() {
-        //    @Override
-        //    public void actionPerformed(ActionEvent arg0) {
-        //        //...
-        //    }
-        //});
         optAbout.addActionListener(new ActionListener() {
+
             @Override
             @SuppressWarnings("static-access")
             public void actionPerformed(ActionEvent arg0) {
