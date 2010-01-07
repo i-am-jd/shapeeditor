@@ -36,49 +36,28 @@ public class BinaryOperation extends Transformation
 
     }
 
-    /**
-     *
-     * @return
-     */
     public double getWidth()
     {
         return shape.getBounds2D().getWidth() / 2;
     }
 
-    /**
-     *
-     * @return
-     */
     public double getHeight()
     {
         return shape.getBounds2D().getHeight() / 2;
     }
 
-    /**
-     *
-     * @param p
-     * @return
-     */
     @Override
     public boolean contains(Point2D p)
     {
         return shape.contains(p);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Rectangle2D getBounds2D()
     {
         return shape.getBounds2D();
     }
 
-    /**
-     *
-     * @param g2d
-     */
     @Override
     public void draw(Graphics2D g2d)
     {
@@ -94,20 +73,12 @@ public class BinaryOperation extends Transformation
         g2d.draw(shape);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public double getBarycenterX()
     {
         return shape.getBounds2D().getCenterX();
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public double getBarycenterY()
     {
@@ -115,8 +86,7 @@ public class BinaryOperation extends Transformation
     }
 
     /**
-     *
-     * @return
+     * @return la figure résultant de la transformation appliquée aux deux sous-graphes
      */
     @Override
     public Shape getShape()

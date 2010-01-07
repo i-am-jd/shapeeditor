@@ -14,8 +14,8 @@ public class Ellipse extends SceneShape {
     /**
      * Construit une ellipse à partir du rectangle qui la contient
      * @param v      vue
-     * @param x      coordonée horizontale du point haut-gauche du rectangle
-     * @param y      coordonée verticale du point haut-gauche du rectangle
+     * @param x      coordonnée horizontale du sommet haut-gauche du rectangle
+     * @param y      coordonnée verticale du sommet haut-gauche du rectangle
      * @param width  largeur
      * @param height hauteur
      */
@@ -28,8 +28,7 @@ public class Ellipse extends SceneShape {
 
     /**
      * Copie de l'ellipse courante
-     * @param e ellipse à copier
-     * @returns copie de l'ellipse décalée de 5 pixels vers la droite et le bas
+     * @return copie de l'ellipse décalée de 5 pixels vers la droite et le bas
      */
     @Override
     public Ellipse clone() {

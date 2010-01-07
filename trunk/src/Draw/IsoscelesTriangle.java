@@ -65,8 +65,9 @@ public class IsoscelesTriangle extends SceneShape implements Interpolatable {
     }
 
     /**
-     *
-     * @param t
+     * Constructeur de copie
+     * L'objet est décalé de (5,5) pixels par rapport au triangle isocèle copié
+     * @param t triangle à copier
      */
     public IsoscelesTriangle(IsoscelesTriangle t) {
         super(t.getView(), "Isosceles Triangle");
@@ -77,37 +78,30 @@ public class IsoscelesTriangle extends SceneShape implements Interpolatable {
     }
 
     /**
-     *
-     * @param i
-     * @return
+     * Copie le triangle isocèle courant
+     * @return une copie décalée de (5,5) pixels
      */
-    @Override
-     public int getX(int i) {
-        return xs[i];
-     }
-
-    /**
-     *
-     * @param i
-     * @return
-     */
-    @Override
-     public int getY(int i) {
-         return ys[i];
-     }
-     
      @Override
     public IsoscelesTriangle clone()
     {
         return new IsoscelesTriangle(this);
     }
 
-     /**
-      *
-      * @return
-      */
-     @Override
+    //Méthodes de l'interface Interpolatable
+
+    @Override
     public int getPointsNb() {
         return 3;
     }
+
+    @Override
+     public int getX(int i) {
+        return xs[i];
+     }
+
+    @Override
+     public int getY(int i) {
+         return ys[i];
+     }
+     
 }

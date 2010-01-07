@@ -167,8 +167,7 @@ public class OptionPanel extends JPanel {
     }
 
     /**
-     *
-     * @return
+     * @return la zone de dessin courante
      */
     public DrawPanel getDrawZone() {
         return this.drawZone;

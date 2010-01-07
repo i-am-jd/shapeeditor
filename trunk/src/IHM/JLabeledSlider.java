@@ -8,7 +8,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 
 /**
- * Control containing a title and a slider
+ * Composant constitué d'un titre et un ascenseur
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class JLabeledSlider extends JPanel

@@ -12,12 +12,12 @@ import java.util.ArrayList;
  */
 public class Translation extends UnaryOperation {
 
-    /** Déplacements selon les axes hozirontal et vertical */
+    /** Déplacements selon les axes horizontal et vertical */
     private double dx;
     private double dy;
 
     /** 
-     * Constructeur
+     * Constructeur par défaut
      * @param child sous-graphe à modifier
      */
     public Translation(SceneGraph child)

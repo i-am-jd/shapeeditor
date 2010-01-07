@@ -12,23 +12,18 @@ package Draw;
 public interface Interpolatable {
     
     /**
-     * 
-     * @return
+     * @return le nombre de sommets de la figure
      */
     public int getPointsNb();
 
     /**
-     *
-     * @param index
-     * @return
+     * @return la coordonée horizontale du <tt>i</tt>-ième sommet
      */
-    public int getX(int index);
+    public int getX(int i);
 
     /**
-     *
-     * @param index
-     * @return
+     * @return la coordonée verticale du <tt>i</tt>-ième sommet
      */
-    public int getY(int index);
+    public int getY(int i);
 
 }

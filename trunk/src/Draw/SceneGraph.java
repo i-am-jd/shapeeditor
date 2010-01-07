@@ -30,7 +30,7 @@ public class SceneGraph extends DefaultMutableTreeNode {
      * @uml.property  name="view"
      * @uml.associationEnd  inverse="sceneGraph:View"
      * Paramètres de dessin : contient couleur et trait d'affichage.
-     * @see view
+     * @see View
      */
     protected View view;
 
@@ -72,10 +72,9 @@ public class SceneGraph extends DefaultMutableTreeNode {
      * Copie profonde du graphe de scène.
      * Chaque sous-noeud est copié, il n'y a pas de partage
      * de données entre un graphe de scène et sa copie.
-     * @param sg graphe de scène à copier
      */
     @Override
-	public SceneGraph clone() {
+    public SceneGraph clone() {
         SceneGraph node = (SceneGraph) super.clone();
         for (Enumeration<SceneGraph> en = this.children(); en.hasMoreElements();) {
             node.add((en.nextElement()).clone());
