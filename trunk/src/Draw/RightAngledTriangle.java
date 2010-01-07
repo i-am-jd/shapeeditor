@@ -19,7 +19,7 @@ public class RightAngledTriangle extends SceneShape {
      * @param height
      */
     public RightAngledTriangle(View v, double x, double y, double width, double height) {
-        super(v);
+        super(v, "Right Angled Triangle");
 
         int[] xpoints = new int[3];
         int[] ypoints = new int[3];
@@ -43,7 +43,7 @@ public class RightAngledTriangle extends SceneShape {
      * @param t
      */
     public RightAngledTriangle(RightAngledTriangle t) {
-        super(t.view);
+        super(t.view, "Right Angled Triangle");
         polygon = new Polygon(t.polygon.xpoints, t.polygon.ypoints, t.polygon.npoints);
         polygon.translate(5, 5);
         shape = polygon;

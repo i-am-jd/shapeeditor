@@ -20,7 +20,7 @@ public class Ellipse extends SceneShape {
      * @param height
      */
     public Ellipse(View v, double x, double y, double width, double height) {
-        super(v);
+        super(v, "Ellipse");
         ellipse = new Ellipse2D.Double(x, y, width, height);
         shape = ellipse;
         baseShape = ellipse;
@@ -33,7 +33,7 @@ public class Ellipse extends SceneShape {
      * @param e
      */
     public Ellipse(Ellipse e) {
-        super(e.view);
+        super(e.view, "Ellipse");
         ellipse = new Ellipse2D.Double(e.ellipse.x+5, e.ellipse.y+5, e.ellipse.width, e.ellipse.height);
         shape = ellipse;
     }

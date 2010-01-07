@@ -31,7 +31,7 @@ public class RegularPolygon extends SceneShape implements PolygonShape
      */
     public RegularPolygon(View v, double x, double y, double rad, int n)
     {
-        super(v);
+        super(v, "Regular Polygon");
 
         originX = x;
         originY = y;
@@ -61,7 +61,7 @@ public class RegularPolygon extends SceneShape implements PolygonShape
      * @param p
      */
     public RegularPolygon(RegularPolygon p) {
-        super(p.view);
+        super(p.view, "Regular Polygon");
         originX = p.originX + 5;
         originY = p.originY + 5;
         polygon = new Polygon(p.polygon.xpoints, p.polygon.ypoints, p.polygon.npoints);

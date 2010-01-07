@@ -23,7 +23,7 @@ public class Rectangle extends SceneShape implements PolygonShape
      * @param height
      */
     public Rectangle(View v, double x, double y, double width, double height) {
-        super(v);
+        super(v, "Rectangle");
         rect = new Rectangle2D.Double(x ,y, width, height);
         baseShape = rect;
         shape = rect;
