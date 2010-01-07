@@ -28,7 +28,7 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
      */
     public IsoscelesTriangle(View v, int[] xpoints, int[] ypoints)
     {
-        super(v);
+        super(v, "Isosceles Triangle");
         this.xs = xpoints;
         this.ys = ypoints;
         polygon = new Polygon(xpoints, ypoints, 3);
@@ -45,7 +45,7 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
      * @param height
      */
     public IsoscelesTriangle(View v, double x, double y, double width, double height) {
-        super(v);
+        super(v, "Isosceles Triangle");
 
         xs = new int[3];
         ys = new int[3];
@@ -69,7 +69,7 @@ public class IsoscelesTriangle extends SceneShape implements PolygonShape {
      * @param t
      */
     public IsoscelesTriangle(IsoscelesTriangle t) {
-        super(t.view);
+        super(t.getView(), "Isosceles Triangle");
         polygon = new Polygon(t.polygon.xpoints, t.polygon.ypoints, t.polygon.npoints);
         polygon.translate(5, 5);
         shape = polygon;

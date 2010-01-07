@@ -28,7 +28,7 @@ public class IrregularPolygon extends SceneShape implements PolygonShape {
      */
     public IrregularPolygon(View v, int[][] vertices)
     {
-        super(v);
+        super(v, "Irregular Polygon");
 
         this.vertices = vertices;
 

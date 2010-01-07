@@ -663,7 +663,6 @@ public class DrawPanel extends JPanel
             SceneGraph sg = selection.get(0);
             if (sg instanceof Translation) {
                 ((Translation) sg).translate(dx, dy);
-                Window.sceneGraph.update();
             } else {
                 //sinon on ajoute un nouveau noeud dans le graphe
                 Translation t = new Translation(sg);

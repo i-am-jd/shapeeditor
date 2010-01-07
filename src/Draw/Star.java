@@ -24,7 +24,7 @@ public class Star extends SceneShape {
      */
     public Star(View v, double x, double y, double r, int nbBranch)
     {
-        super(v);
+        super(v, "Star");
 
         originX = x;
         originY = y;
@@ -57,7 +57,7 @@ public class Star extends SceneShape {
      * @param s
      */
     public Star(Star s) {
-        super(s.view);
+        super(s.view, "Star");
         originX = s.originX + 5;
         originY = s.originY + 5;
         polygon = new Polygon(s.polygon.xpoints, s.polygon.ypoints, s.polygon.npoints);
