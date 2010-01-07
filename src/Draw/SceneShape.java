@@ -14,7 +14,8 @@ import java.util.Enumeration;
 import java.util.Stack;
 
 /**
- *
+ * Implante une forme géométrique qui est feuille du graphe de scène.
+ * 
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public abstract class SceneShape extends SceneGraph {
@@ -115,19 +116,6 @@ public abstract class SceneShape extends SceneGraph {
                 shape = af.createTransformedShape(shape);
             }
         }
-    }
-
-    /**
-     *
-     * @param x
-     * @param y
-     */
-    @Override
-    public void translate(double x, double y)
-    {
-        AffineTransform t = AffineTransform.getTranslateInstance(x, y);
-        shape = t.createTransformedShape(shape);
-        baseShape = t.createTransformedShape(baseShape);
     }
 
     /**

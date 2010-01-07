@@ -257,4 +257,10 @@ public class UnaryOperation extends Transformation {
     {
         scaleTo(to);
     }
+
+    public void translate(double dx, double dy)
+    {
+        this.dx += dx;
+        this.dy += dy;
+    }
 }
