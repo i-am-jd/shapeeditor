@@ -49,30 +49,16 @@ public class Interpolation extends BinaryOperation implements Interpolatable
         baseShape = new Polygon(xs, ys, p1.getPointsNb());
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getPointsNb() {
         return n;
     }
 
-    /**
-     *
-     * @param i
-     * @return
-     */
     @Override
     public int getX(int i) {
         return xs[i];
     }
 
-    /**
-     *
-     * @param i
-     * @return
-     */
     @Override
     public int getY(int i) {
         return ys[i];

@@ -42,7 +42,7 @@ public class MyTree
          *
          * @param node
          * @param level
-         * @return
+         * @return chaîne de caractères répréntant l'arbre <tt>node</tt> jusqu'au niveau <tt>level</tt>
          */
         public static String toStringNode(TreeNode node, int level)
 	{
@@ -70,8 +70,7 @@ public class MyTree
 	}
 
         /**
-         *
-         * @return
+         * @return Racine de l'arbre
          */
         public MutableTreeNode getRoot()
     {

@@ -293,9 +293,8 @@ public class DrawPanel extends JPanel
     }
 
     /**
-     * Returns the shape located at the p coordinates
-     * @param p The point to search at
-     * @return
+     * Cherche une figure incluant le point <tt>p</tt>
+     * @return <code>null</code> s'il n'y a aucune figure au point <tt>p</tt>
      */
     public SceneGraph getSceneGraphAt(Point2D p) {
         SceneGraph foundGraph = null;
@@ -774,8 +773,7 @@ public class DrawPanel extends JPanel
     }
 
     /**
-     * Returns the current selection
-     * @return 
+     * @return la sélection courante
      */
     public Vector<SceneGraph> getSelection() {
         return selection;

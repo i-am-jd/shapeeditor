@@ -3,7 +3,7 @@ package Draw;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Feuille du graphe de scène représentant un rectangle.
+ * Feuille du graphe de scène représentant un rectangle
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Rectangle extends SceneShape implements Interpolatable
@@ -16,8 +16,8 @@ public class Rectangle extends SceneShape implements Interpolatable
     /**
      * Constructeur d'un rectangle
      * @param v      vue
-     * @param x      coordonnée horizontale du point haut-gauche
-     * @param y      coordonnée verticale du point haut-gauche
+     * @param x      coordonnée horizontale du sommet haut-gauche
+     * @param y      coordonnée verticale du sommet haut-gauche
      * @param width  largeur
      * @param height hauteur
      */

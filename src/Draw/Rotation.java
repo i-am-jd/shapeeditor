@@ -19,7 +19,7 @@ public class Rotation extends UnaryOperation {
     private double anchorY;
 
     /**
-     * Constructeur recevant le sous-graphe à modifier
+     * Constructeur par défaut
      * @param child sous-graphe soumis à la rotation
      */
     public Rotation(SceneGraph child)
