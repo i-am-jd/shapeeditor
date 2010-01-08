@@ -26,8 +26,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class SceneGraph extends DefaultMutableTreeNode {
 
     /**
-     * @uml.property  name="view"
-     * @uml.associationEnd  inverse="sceneGraph:View"
      * Paramètres de dessin : contient couleur et trait d'affichage.
      * @see View
      */
@@ -85,7 +83,6 @@ public class SceneGraph extends DefaultMutableTreeNode {
     /**
      * Getter pour la propriété <tt>view</tt>
      * @return  Retourne la vue
-     * @uml.property  name="view"
      */
     public View getView() {
 	return view;
@@ -94,7 +91,6 @@ public class SceneGraph extends DefaultMutableTreeNode {
     /**
      * Setter pour la propriété <tt>view</tt>
      * @param view  La vue à appliquer.
-     * @uml.property  name="view"
      */
     public void setView(View view) {
 	this.view = view;
@@ -113,7 +109,6 @@ public class SceneGraph extends DefaultMutableTreeNode {
     /**
      * Retourne <code>true</code> si le point p est contenu dans la forme géométrique
      * résultant de l'affichage du graphe de scène
-     *
      * @param  p point
      * @return true si p contenu dans le graphe de scène
      */
