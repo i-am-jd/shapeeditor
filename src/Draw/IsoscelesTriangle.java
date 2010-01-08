@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Draw;
 
 import java.awt.Point;
@@ -10,23 +5,26 @@ import java.awt.geom.Point2D;
 import java.awt.Polygon;
 
 /**
- *
+ * Triangle isocèle (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class IsoscelesTriangle extends SceneShape implements Interpolatable {
+public class IsoscelesTriangle extends SceneShape implements PolygonLike {
 
+    /** Polygône à afficher */
     final Polygon polygon;
 
+    /** Coordonées horizontales des sommets */
     int[] xs;
+    /** Coordonées verticales des sommets */
     int[] ys;
 
     /**
-     *
-     * @param v
-     * @param xpoints
-     * @param ypoints
+     * Constructeur
+     * @param view    paramètres de dessin
+     * @param xpoints coordonées horizontales des sommets
+     * @param ypoints coordonées verticales des sommets
      */
-    public IsoscelesTriangle(View v, int[] xpoints, int[] ypoints)
+    public IsoscelesTriangle(View view, int[] xpoints, int[] ypoints)
     {
         super(v, "Isosceles Triangle");
         this.xs = xpoints;
@@ -37,14 +35,14 @@ public class IsoscelesTriangle extends SceneShape implements Interpolatable {
     }
     
     /**
-     *
-     * @param v
-     * @param x
+     * Constructeur
+     * @param view   paramètres de dessin
+     * @param x 
      * @param y
-     * @param width
-     * @param height
+     * @param width  largeur
+     * @param height hauteur
      */
-    public IsoscelesTriangle(View v, double x, double y, double width, double height) {
+    public IsoscelesTriangle(View view, double x, double y, double width, double height) {
         super(v, "Isosceles Triangle");
 
         xs = new int[3];
@@ -87,7 +85,7 @@ public class IsoscelesTriangle extends SceneShape implements Interpolatable {
         return new IsoscelesTriangle(this);
     }
 
-    //Méthodes de l'interface Interpolatable
+    //Méthodes de l'interface PolygonLike
 
     @Override
     public int getPointsNb() {

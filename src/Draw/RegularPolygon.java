@@ -3,16 +3,20 @@ package Draw;
 import java.awt.Polygon;
 
 /**
- * Feuille du graphe de scène représentant un polygône régulier.
+ * Polygône régulier (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class RegularPolygon extends SceneShape implements Interpolatable
+public class RegularPolygon extends SceneShape implements PolygonLike
 {
+    /** Polygône à afficher */
     private Polygon polygon;
 
-    int nbSides;
-    int[][] tab;
+    /** Nombre de côtés */
+    private int nbSides;
+    /** Coordonnées des sommets */
+    private int[][] tab;
     
+    /** Coordonnées du centre de la figure */
     private double originY;
     private double originX;
 
@@ -47,14 +51,11 @@ public class RegularPolygon extends SceneShape implements Interpolatable
         polygon = new Polygon(tab[0], tab[1], nbSides);
         shape = polygon;
         baseShape = polygon;
-
-        setUserObject("RegularPolygon");
     }
 
     /**
-     * Constructeur de copie
+     * Constructeur de copie, le plygône résultant est décalé de (5,5) pixels
      * @param p
-     * @return une copie du polygône décalée de 5 pixels vers le bas et vers la droite
      */
     public RegularPolygon(RegularPolygon p) {
         super(p.view, "Regular Polygon");
@@ -77,7 +78,7 @@ public class RegularPolygon extends SceneShape implements Interpolatable
         return new RegularPolygon(this);
     }
 
-    // Méthodes de l'interface Interpolatable
+    // Méthodes de l'interface PolygonLike
 
      @Override
     public int getPointsNb() {

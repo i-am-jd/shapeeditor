@@ -4,49 +4,40 @@ import java.awt.Polygon;
 
 
 /**
+ * Interpolation de deux sous-graphes de scène.
+ * Dans cette implémentation l'interpolation n'est possible
+ * qu'entre formes assimilables à des polygônes.
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class Interpolation extends BinaryOperation implements Interpolatable
+public class Interpolation extends BinaryOperation implements PolygonLike
 {
-    int[] xs;
-    int[] ys;
-    int n;
+    /** Coordonnées horizontales des sommets */
+    private int[] xs;
+    /** Coordonnées verticales des sommets */
+    private int[] ys;
+    /** Nombre de sommets */
+    private int n;
 
     /**
-     *
-     * @param sg1
-     * @param sg2
+     * Construit une interpolation à partir de deux formes assimilables à des polygônes
+     * @param pl1 premier sous-graphe de scène
+     * @param pl2 deuxième sous-graphe de scène
      */
-    public Interpolation(SceneGraph sg1, SceneGraph sg2)
+    public Interpolation(PolygonLike pl1, PolygonLike pl2)
     {
-        super("Interpolation", sg1, sg2);
-        
-        /*if(sg1 instanceof Rectangle && sg2 instanceof Rectangle) {
-            Rectangle2D r1 = (Rectangle2D) ((Rectangle) sg1).getShape();
-            Rectangle2D r2 = (Rectangle2D) ((Rectangle) sg2).getShape();
+        super("Interpolation", (SceneGraph) pl1, (SceneGraph) pl2);
 
-            double minx = (r1.getMinX() + r2.getMinX()) / 2;
-            double miny = (r1.getMinY() + r2.getMinY()) / 2;
-            double width = (r1.getWidth() + r2.getWidth()) / 2;
-            double height = (r1.getHeight() + r2.getHeight()) / 2;
-            Rectangle2D rect = new Rectangle2D.Double(minx, miny, width, height);
-            shape = rect;
-            baseShape = rect;
-        }*/
-
-        Interpolatable p1 = (Interpolatable) sg1;
-        Interpolatable p2 = (Interpolatable) sg2;
-        assert(p1.getPointsNb() == p2.getPointsNb());
-        n = p1.getPointsNb();
+        assert(pl1.getPointsNb() == pl2.getPointsNb());
+        n = pl1.getPointsNb();
         xs = new int[n];
         ys = new int[n];
         for(int i = 0; i < n; i++) {
-            xs[i] = (p1.getX(i) + p2.getX(i))/2;
-            ys[i] = (p1.getY(i) + p2.getY(i))/2;
+            xs[i] = (pl1.getX(i) + pl2.getX(i))/2;
+            ys[i] = (pl1.getY(i) + pl2.getY(i))/2;
         }
-        shape = new Polygon(xs, ys, p1.getPointsNb());
-        baseShape = new Polygon(xs, ys, p1.getPointsNb());
+        shape = new Polygon(xs, ys, pl1.getPointsNb());
+        baseShape = new Polygon(xs, ys, pl1.getPointsNb());
     }
 
     @Override

@@ -59,13 +59,14 @@ $(SRC)/Draw/Ellipse.java \
 $(SRC)/Draw/Exclusion.java \
 $(SRC)/Draw/Group.java \
 $(SRC)/Draw/Inclusion.java \
-$(SRC)/Draw/Interpolatable.java \
+$(SRC)/Draw/PolygonLike.java \
 $(SRC)/Draw/Interpolation.java \
 $(SRC)/Draw/Intersection.java \
 $(SRC)/Draw/IrregularPolygon.java \
 $(SRC)/Draw/IsoscelesTriangle.java \
 $(SRC)/Draw/Rectangle.java \
 $(SRC)/Draw/RightAngledTriangle.java \
+$(SRC)/Draw/RegularPolygon.java \
 $(SRC)/Draw/Rotation.java \
 $(SRC)/Draw/Scale.java \
 $(SRC)/Draw/SceneGraph.java \

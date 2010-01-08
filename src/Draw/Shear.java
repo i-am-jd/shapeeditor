@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Cisaillement d'un sous-graphe de scène.
- * Contient nécessairement un seul sous-graphe
+ * Contient nécessairement un seul sous-graphe.
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */

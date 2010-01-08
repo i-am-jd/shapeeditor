@@ -12,8 +12,8 @@ import java.util.Stack;
  *
  * Notons que cette classe ne contient pas directement une liste de transformations
  * affines, mais plutôt une méthode renvoyant les transformations affines à effectuer
- * sur une figure donnée. En effet, le calcul des transformations affines du redimensionnement
- * nécessite de connaire le barycentre de la figure à modifier.
+ * sur une figure donnée. En effet, le calcul des transformations affines liées à un
+ * redimensionnement nécessite de connaire le barycentre de la figure à transformer.
  *
  * @author Boris Dadachev & Jean-Denis Koeck
  */
