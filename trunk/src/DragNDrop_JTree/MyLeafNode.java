@@ -1,6 +1,3 @@
-/**
- * 
- */
 package DragNDrop_JTree;
 
 import java.util.Enumeration;
@@ -9,8 +6,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 /**
- * @author Boris Dadachev & Jean-Denis Koeck
- * 
+ * @author David Roussel
  */
 class MyLeafNode extends MyNode
 {
