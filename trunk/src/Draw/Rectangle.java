@@ -3,18 +3,22 @@ package Draw;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Feuille du graphe de scène représentant un rectangle
+ * Rectangle (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Rectangle extends SceneShape implements Interpolatable
 {
+
+    /** Rectangle à afficher */
     private Rectangle2D.Double rect;
 
-    int[] xs = new int[4];
-    int[] ys = new int[4];
+    /** Coordonnées horizontales des sommets du rectangle */
+    private int[] xs = new int[4];
+    /** Coordonnées verticales des sommets du rectangle */
+    private int[] ys = new int[4];
 
     /**
-     * Constructeur d'un rectangle
+     * Constructeur
      * @param v      vue
      * @param x      coordonnée horizontale du sommet haut-gauche
      * @param y      coordonnée verticale du sommet haut-gauche
@@ -45,7 +49,7 @@ public class Rectangle extends SceneShape implements Interpolatable
         ys[3] = (int) maxy;
     }
 
-    //Méthodes de l'interface Interpolatable
+    /** Méthodes de l'interface Interpolatable */
 
     @Override
     public int getPointsNb() {

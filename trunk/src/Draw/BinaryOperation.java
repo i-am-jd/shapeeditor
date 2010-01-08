@@ -13,37 +13,37 @@ import java.util.Stack;
 
 
 /**
- *
+ * Transformation binaire.
+ * Ce noeud du graphe de scène contient nécessairement deux sous-graphes.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class BinaryOperation extends Transformation
 {
-    Shape shape;
-    Shape baseShape;
 
     /**
-     *
-     * @param s
-     * @param sg1
-     * @param sg2
+     * Forme géométrique initiale.
      */
-    public BinaryOperation(String s, SceneGraph sg1, SceneGraph sg2)
+    protected Shape shape;
+
+    /**
+     * Forme géométrique résultant de l'application successive des transformations
+     * unaires à la forme de base.
+     */
+    protected Shape baseShape;
+
+    /**
+     * Constructeur
+     * @param name nom de la transformation binaire
+     * @param sg1  premier sous-graphe
+     * @param sg2  deuxième sous-graphe
+     */
+    public BinaryOperation(String name, SceneGraph sg1, SceneGraph sg2)
     {
-        super(sg1.getView(), s);
+        super(sg1.getView(), name);
 
         this.add(sg1);
         this.add(sg2);
 
-    }
-
-    public double getWidth()
-    {
-        return shape.getBounds2D().getWidth() / 2;
-    }
-
-    public double getHeight()
-    {
-        return shape.getBounds2D().getHeight() / 2;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class BinaryOperation extends Transformation
     {
         if (view.getFillPattern()==null) {
             g2d.setPaint(view.getFillColor());
-        } else { // view.getFillPattern() != null
+        } else {
             g2d.setPaint(view.getFillPattern());
         }
         g2d.fill(shape);
@@ -86,6 +86,7 @@ public class BinaryOperation extends Transformation
     }
 
     /**
+     * Calcule la figure résultant de la transformation appliquée aux deux sous-graphes
      * @return la figure résultant de la transformation appliquée aux deux sous-graphes
      */
     @Override
@@ -94,11 +95,6 @@ public class BinaryOperation extends Transformation
         return shape;
     }
 
-    //Applique une pile de transformations à la shape
-    /**
-     *
-     * @param ops
-     */
     @Override
     public void applyUnaryOperations(Stack<UnaryOperation> ops)
     {

@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 /**
- * Noeud représentant une rotation
+ * Rotation (transformation unaire).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Rotation extends UnaryOperation {

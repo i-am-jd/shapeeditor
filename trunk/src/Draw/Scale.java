@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- * Noeud représentant un redimensionnement.
+ * Redimensionnement (transformation unaire).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Scale extends UnaryOperation

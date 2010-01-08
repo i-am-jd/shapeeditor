@@ -4,7 +4,7 @@ import java.awt.geom.Ellipse2D;
 
 
 /**
- * Feuille du graphe de scène représentant une ellipse.
+ * Ellipse (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Ellipse extends SceneShape {
@@ -12,8 +12,8 @@ public class Ellipse extends SceneShape {
     private Ellipse2D.Double ellipse;
 
     /**
-     * Construit une ellipse à partir du rectangle qui la contient
-     * @param v      vue
+     * Construit une ellipse à partir des coordonnées du rectangle qui la contient
+     * @param v      vue (paramètres de dessin)
      * @param x      coordonnée horizontale du sommet haut-gauche du rectangle
      * @param y      coordonnée verticale du sommet haut-gauche du rectangle
      * @param width  largeur
