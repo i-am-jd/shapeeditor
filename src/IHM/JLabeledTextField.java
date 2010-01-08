@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Control containing a title and numetic text field
+ * Control made of a title and numetic text field
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class JLabeledTextField extends JPanel {
