@@ -13,7 +13,7 @@ import java.util.Enumeration;
 import java.util.Stack;
 
 /**
- * Feuille du graphe de scène.
+ * Implantation générique d'une feuille du graphe de scène.
  * Elle contient en fait deux formes géométriques de type 
  * <tt>Shape</tt>.
  * <p>

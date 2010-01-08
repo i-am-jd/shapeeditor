@@ -12,7 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 
 /**
- * Implantation du graphe de scène.
+ * Implantation générique du graphe de scène.
  * Chaque noeud du graphe est lui-même un graphe de scène, et possède
  * un attribut <tt>view</tt> contenant les paramètres de dessin
  * (couleurs et épaisseur de trait).

@@ -3,15 +3,15 @@ package Draw;
 import java.awt.geom.Area;
 
 /**
- *
+ * Union géométrique de deux sous-graphe de scène.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Union extends BinaryOperation {
 
     /**
-     *
-     * @param sg1
-     * @param sg2
+     * Constructeur
+     * @param sg1 premier sous-graphe de scène
+     * @param sg2 deuxième sous-graphe de scène
      */
     public Union(SceneGraph sg1, SceneGraph sg2) {
         super("Union", sg1, sg2);

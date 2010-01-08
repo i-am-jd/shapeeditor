@@ -3,7 +3,7 @@ package Draw;
 
 
 /**
- * Carré (feuille du graphe de scène).
+ * Feuille du graphe de scène
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Square extends Rectangle {

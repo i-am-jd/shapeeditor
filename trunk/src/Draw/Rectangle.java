@@ -3,7 +3,7 @@ package Draw;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Rectangle (feuille du graphe de scène).
+ * Feuille du graphe de scène
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Rectangle extends SceneShape implements Interpolatable

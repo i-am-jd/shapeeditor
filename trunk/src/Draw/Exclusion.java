@@ -4,16 +4,16 @@ import java.awt.geom.Area;
 
 
 /**
- *
+ * Exclusion géométrique de deux sous-graphe de scène.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Exclusion extends BinaryOperation
 {
 
     /**
-     *
-     * @param sg1
-     * @param sg2
+     * Constructeur
+     * @param sg1 premier sous-graphe de scène
+     * @param sg2 deuxième sous-graphe de scène
      */
     public Exclusion(SceneGraph sg1, SceneGraph sg2)
     {

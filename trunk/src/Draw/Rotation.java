@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 /**
- * Rotation (transformation unaire).
+ * Rotation d'un sous-graphe de scène.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Rotation extends UnaryOperation {

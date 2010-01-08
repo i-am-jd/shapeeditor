@@ -3,7 +3,7 @@ package Draw;
 import java.util.Vector;
 
 /**
- * Regroupement de plusieurs formes géométriques (noeud du graphe de scène)
+ * Noeud du graphe de scène regroupant plusieurs formes géométriques
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Group extends SceneGraph {
