@@ -419,7 +419,7 @@ public class DrawPanel extends JPanel
 
             if (sg1 instanceof PolygonLike && sg2 instanceof PolygonLike) {
                 if (((PolygonLike) sg1).getPointsNb() == ((PolygonLike) sg2).getPointsNb()) {
-                    Interpolation interp = new Interpolation(sg1, sg2);
+                    Interpolation interp = new Interpolation((PolygonLike)sg1, (PolygonLike)sg2);
                     Window.sceneGraph.add(interp);
 
                     selection.clear();
