@@ -15,7 +15,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
 /**
- *
+ * A drag source objet to drag'N'drop in the JTree
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class TreeDragSource implements DragSourceListener, DragGestureListener {
@@ -27,7 +27,7 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener {
     JTree sourceTree;
 
     /**
-     *
+     * Returns a drag source objet
      * @param tree
      * @param actions
      */
@@ -83,43 +83,9 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener {
 
     @Override
     public void dragDropEnd(DragSourceDropEvent dsde) {
-        /*
-         * to support move or copy, we have to check which occurred:
-         */
-        //System.out.println("Drop Action: " + dsde.getDropAction());
-        //sourceTree.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-
         if (dsde.getDropSuccess()) {
             ((DefaultTreeModel) sourceTree.getModel()).removeNodeFromParent(oldNode);
             System.out.println(((DefaultTreeModel) sourceTree.getModel()).getClass().toString());
-            /*if( dsde.getDropAction() == 2 )
-            {
-            ((SceneGraph) oldNode).removeFromParent();
-            }*/
-            //tm.removeFromParentFromParent(oldNode);
-            //TreeNode root = (TreeNode) tm.getRoot();
-            //System.out.println("TreeDragSource after drop : \n" + MyTree.toStringNode(root, 0));
         }
     }
-
-    /*
-    public void dragDropEnd(DragSourceDropEvent dsde)
-    {
-    // to support move or copy, we have to check which occurred:
-
-    System.out.println("Drop Action: " + dsde.getDropAction());
-    if (dsde.getDropSuccess()
-    && (dsde.getDropAction() == DnDConstants.ACTION_MOVE))
-    {
-    DefaultTreeModel tm = (DefaultTreeModel) sourceTree.getModel();
-    tm.removeNodeFromParent(oldNode);
-    TreeNode root = (TreeNode) tm.getRoot();
-    System.out.println("TreeDragSource after drop : \n" + MyTree.toStringNode(root, 0));
-    }
-
-    // to support move only... if (dsde.getDropSuccess()) {
-    // ((DefaultTreeModel
-    // )sourceTree.getModel()).removeNodeFromParent(oldNode); }
-    //
-    }*/
 }

@@ -24,7 +24,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 /**
- *
+ * A drag targer objet to drag'N'drop in the JTree
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class TreeDropTarget implements DropTargetListener {
@@ -34,7 +34,7 @@ public class TreeDropTarget implements DropTargetListener {
     private DrawPanel drawZone;
 
     /**
-     *
+     * Returns a drag target object
      * @param tree
      * @param drawZone
      */

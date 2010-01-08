@@ -8,7 +8,7 @@ import javax.swing.tree.TreeNode;
 
 /**
  * Noeud du graphe contenant d'autres noeuds
- * @author Boris Dadachev & Jean-Denis Koeck
+ * @author David Roussel
  */
 class MyBranchNode extends MyNode {
 

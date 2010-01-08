@@ -9,23 +9,23 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 /**
- * Classe repr�sentant un noeud d'un graphe
- * Cette classe impl�mente {@link MutableTreeNode} de mani�re � ce que le noeud
+ * Classe representant un noeud d'un graphe
+ * Cette classe implemente {@link MutableTreeNode} de maniere a ce que le noeud
  * soit modifiable dans un JTree.
- * Cette Classe impl�mente l'interface {@link Cloneable} de mani�re � ce qu'une 
- * copie de noeud poss�de exactement les m�mes caract�ristiques (Non utilis� ici)
- * Cette classe impl�mente l'interface {@link Serializable} car c'est le m�canisme
- * utilis� dans les JTree pour d�placer les noeuds avec le DragNDrop. Cela suppose
+ * Cette Classe implemente l'interface {@link Cloneable} de maniere a ce qu'une
+ * copie de noeud possede exactement les memes caracteristiques (Non utilise ici)
+ * Cette classe implemente l'interface {@link Serializable} car c'est le mecanisme
+ * utilise dans les JTree pour deplacer les noeuds avec le DragNDrop. Cela suppose
  * implicitement que la classe doit impl�menter les m�thodes writeObject et
  * readObject
- * @author Boris Dadachev & Jean-Denis Koeck
+ * @author David Roussel
  *
  */
 abstract class MyNode implements MutableTreeNode, Cloneable, Serializable {
 
     /**
      * Le parent du noeud courant
-     * (peut �tre null si on est � la racine du graphe)
+     * (peut etre null si on est a la racine du graphe)
      */
     protected MutableTreeNode parent;
     /**
@@ -34,7 +34,7 @@ abstract class MyNode implements MutableTreeNode, Cloneable, Serializable {
     protected String name;
 
     /**
-     * Constructeur par d�faut prot�g� d'un noeud (utilis� uniquement dans les
+     * Constructeur par defaut protege d'un noeud (utilise uniquement dans les
      * classes filles).
      */
     protected MyNode() {
@@ -42,7 +42,7 @@ abstract class MyNode implements MutableTreeNode, Cloneable, Serializable {
     }
 
     /**
-     * Constructeur prot�g� d'un noeud avec un parent (utilis� uniquement dans
+     * Constructeur protege d'un noeud avec un parent (utilise uniquement dans
      * les classes filles).
      * @param parent le parent de ce noeud.
      */
