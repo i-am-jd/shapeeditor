@@ -5,7 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 /**
- * Noeud représentant une translation.
+ * Translation d'un sous-graphe de scène.
  * Contient nécessairement un seul sous-graphe
  *
  * @author Boris Dadachev & Jean-Denis Koeck

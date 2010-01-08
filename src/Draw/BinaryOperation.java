@@ -13,7 +13,7 @@ import java.util.Stack;
 
 
 /**
- * Transformation binaire.
+ * Noeud du graphe de scène.
  * Ce noeud du graphe de scène contient nécessairement deux sous-graphes.
  * @author Boris Dadachev & Jean-Denis Koeck
  */

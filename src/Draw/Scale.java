@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- * Redimensionnement (transformation unaire).
+ * Redimensionnement d'un sous-graphe de scène.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Scale extends UnaryOperation

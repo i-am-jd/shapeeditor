@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- * Cisaillement (transformation unaire).
+ * Cisaillement d'un sous-graphe de scène.
  * Contient nécessairement un seul sous-graphe
  *
  * @author Boris Dadachev & Jean-Denis Koeck
