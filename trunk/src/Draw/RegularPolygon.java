@@ -69,7 +69,6 @@ public class RegularPolygon extends SceneShape implements PolygonLike
 
     /**
      * Copie un polygône
-     * @param p
      * @return une copie du polygône décalée de 5 pixels vers le bas et vers la droite
      */
      @Override
