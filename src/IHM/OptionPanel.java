@@ -1,7 +1,7 @@
 package IHM;
 
-import gestionnaire.GestionnaireColors;
-import gestionnaire.GestionnaireWidth;
+import Gestionnaire.GestionnaireColors;
+import Gestionnaire.GestionnaireWidth;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 

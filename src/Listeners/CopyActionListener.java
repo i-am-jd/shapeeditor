@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Listener user for the context menu displayed when the user performs a
+ * right click on a selected shape or a node of the JTree and wants to copy it
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class CopyActionListener implements ActionListener {
@@ -17,7 +18,7 @@ public class CopyActionListener implements ActionListener {
     private DrawPanel drawZone;
 
     /**
-     *
+     * Returns a listener
      * @param drawZone
      */
     public CopyActionListener(DrawPanel drawZone) {
