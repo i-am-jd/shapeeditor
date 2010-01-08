@@ -1,7 +1,7 @@
 package Draw;
 
 /**
- * Feuille du graphe de scène.
+ * Cercle (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Circle extends Ellipse {

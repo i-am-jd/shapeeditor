@@ -4,10 +4,10 @@ import java.awt.Polygon;
 
 
 /**
- * Feuille du graphe de scène représentant une étoile à n branches
+ * Étoile (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class Star extends SceneShape implements Interpolatable {
+public class Star extends SceneShape implements PolygonLike {
 
     /** Polygône à afficher */
     final Polygon polygon;

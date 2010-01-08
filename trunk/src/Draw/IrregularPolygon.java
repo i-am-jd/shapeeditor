@@ -5,10 +5,10 @@ import java.awt.geom.Point2D;
 import java.awt.Polygon;
 
 /**
- * Feuille du scène de graphe représentant un polygône irrégulier
+ * Polygône irrégulier (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
-public class IrregularPolygon extends SceneShape implements Interpolatable {
+public class IrregularPolygon extends SceneShape implements PolygonLike {
     /** Polygône à afficher */
     private Polygon polygon;
 
@@ -31,7 +31,7 @@ public class IrregularPolygon extends SceneShape implements Interpolatable {
         baseShape = polygon;
     }
 
-    //Méthodes de l'interface Interpolatable
+    //Méthodes de l'interface PolygonLike
 
     @Override
     public int getPointsNb() {

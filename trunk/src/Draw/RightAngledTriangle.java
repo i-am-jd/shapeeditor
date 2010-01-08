@@ -3,20 +3,21 @@ package Draw;
 import java.awt.Polygon;
 
 /**
- *
+ * Triangle rectangle (feuille du graphe de scène)..
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class RightAngledTriangle extends SceneShape {
 
-    final Polygon polygon;
+    /** Polygône à afficher */
+    private final Polygon polygon;
 
     /**
-     *
-     * @param v
-     * @param x
-     * @param y
-     * @param width
-     * @param height
+     * Constructeur
+     * @param v      paramètres de dessin
+     * @param x      coordonnée horizontale de l'angle droit
+     * @param y      coordonnée verticale de l'angle droit
+     * @param width  largeur
+     * @param height hauteur
      */
     public RightAngledTriangle(View v, double x, double y, double width, double height) {
         super(v, "Right Angled Triangle");
@@ -34,13 +35,11 @@ public class RightAngledTriangle extends SceneShape {
         polygon = new Polygon(xpoints, ypoints, 3);
         shape = polygon;
         baseShape = polygon;
-
-        setUserObject("RightAngledTriangle");
     }
 
     /**
-     *
-     * @param t
+     * Constructeur de copie
+     * @param t triangle rectangle à copier
      */
     public RightAngledTriangle(RightAngledTriangle t) {
         super(t.view, "Right Angled Triangle");
@@ -50,6 +49,9 @@ public class RightAngledTriangle extends SceneShape {
         baseShape = polygon;
     }
 
+    /**
+     * Copie le triangle rectangle courant.
+     */
     @Override
     public RightAngledTriangle clone() {
         return new RightAngledTriangle(this);

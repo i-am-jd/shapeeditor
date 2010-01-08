@@ -1,9 +1,9 @@
 package Draw;
 
 /**
- * Noeud du graphe de scène représentant une transformation géométrique.
- * Une transformation est unaire ({link UnaryOperation}) ou bien binaire
- * ({link BinaryOperation}).
+ * Transformation géométrique de un ou deux sous-graphes de scène.
+ * Une transformation est unaire (@see UnaryOperation) ou bien binaire
+ * (@see BinaryOperation).
  * <p>
  *
  * Cette classe abstraite sert à distinguer groupes simples (regroupant

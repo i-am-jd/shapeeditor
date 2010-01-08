@@ -417,8 +417,8 @@ public class DrawPanel extends JPanel
             SceneGraph sg1 = selection.get(0);
             SceneGraph sg2 = selection.get(1);
 
-            if (sg1 instanceof Interpolatable && sg2 instanceof Interpolatable) {
-                if (((Interpolatable) sg1).getPointsNb() == ((Interpolatable) sg2).getPointsNb()) {
+            if (sg1 instanceof PolygonLike && sg2 instanceof PolygonLike) {
+                if (((PolygonLike) sg1).getPointsNb() == ((PolygonLike) sg2).getPointsNb()) {
                     Interpolation interp = new Interpolation(sg1, sg2);
                     Window.sceneGraph.add(interp);
 

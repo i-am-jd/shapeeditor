@@ -10,16 +10,16 @@ import java.awt.geom.Rectangle2D;
 
 
 /**
- *
+ * Soustraction géométrique de deux sous-graphes de scène.
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Substraction extends BinaryOperation
 {
 
     /**
-     *
-     * @param sg1
-     * @param sg2
+     * Constructeur
+     * @param sg1 premier sous-graphe
+     * @param sg2 premier sous-graphe
      */
     public Substraction(SceneGraph sg1, SceneGraph sg2)
     {

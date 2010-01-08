@@ -4,7 +4,7 @@ import java.awt.geom.Ellipse2D;
 
 
 /**
- * Feuille du graphe de scène.
+ * Ellipse (feuille du graphe de scène).
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Ellipse extends SceneShape {

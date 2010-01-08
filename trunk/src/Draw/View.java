@@ -5,7 +5,7 @@ import java.awt.TexturePaint;
 
 
 /**
- * Contient les paramètres du dessin d'une forme géométrique :
+ * Contient les paramètres de dessin d'une forme géométrique :
  * couleur et épaisseur de trait, couleur ou motif de remplissage
  * @author Boris Dadachev & Jean-Denis Koeck
  */
