@@ -13,10 +13,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * Implantation du graphe de scène.
- * Chaque noeud du graphe est lui-même un graphe de scène, qui
- * contient sa propre vue (ou <tt>view</tt>).
- * Ce champ <tt>view</tt> contient les paramètres de dessin (couleur et épaisseur de trait).
- * <p>
+ * Chaque noeud du graphe est lui-même un graphe de scène, et possède
+ * un attribut <tt>view</tt> contenant les paramètres de dessin
+ * (couleurs et épaisseur de trait).
  * Les feuilles de ce graphe sont des formes géométriques.
  * Chaque noeud est un regroupement de formes (groupe) ou une
  * transformation géométrique (binaire ou unaire).
@@ -36,13 +35,13 @@ public class SceneGraph extends DefaultMutableTreeNode {
 
     /**
      * Constructeur par défaut.
-     * @param v     Contient couleur et trait d'affichage
+     * @param view     Contient couleur et trait d'affichage
      * @param name  Rôle du noeud dans le graphe de scène
      */
-    public SceneGraph(View v, String name)
+    public SceneGraph(View view, String name)
     {
 	super(name);
-	setView(v);
+	setView(view);
     }
 
     /**
@@ -58,14 +57,14 @@ public class SceneGraph extends DefaultMutableTreeNode {
     /**
      * Constructeur recevant une forme géométrique, qui
      * est reparentée pour être un sous-noeud de l'objet courant.
-     * @param s sous-noeud 
+     * @param shape sous-noeud 
      * @see SceneShape
      */
-    public SceneGraph(SceneShape s)
+    public SceneGraph(SceneShape shape)
     {
 	super();
 	view = new View(Color.BLACK, 1, Color.BLACK, null);
-	this.add(s);
+	this.add(shape);
     }
 
     /**
@@ -166,7 +165,7 @@ public class SceneGraph extends DefaultMutableTreeNode {
 
     /**
      * Applique des transformations géométriques aux formes contenues dans
-     * le graphe de scène.
+     * le graphe de scène
      * @param unaryOps Pile contenant des transformations géométriques unaires
      */
     public void applyUnaryOperations(Stack<UnaryOperation> unaryOps)
@@ -186,7 +185,7 @@ public class SceneGraph extends DefaultMutableTreeNode {
     }
 
     /**
-     * Calcule de manière approximative le barycentre du graphe de scène.
+     * Calcule de manière approximative le barycentre du graphe de scène
      * @return coordonnée hozirontale du barycentre du graphe de scène.
      */
     public double getBarycenterX()
@@ -199,7 +198,7 @@ public class SceneGraph extends DefaultMutableTreeNode {
     }
 
     /**
-     * Calcule de manière approximative le barycentre du graphe de scène.
+     * Calcule de manière approximative le barycentre du graphe de scène
      * @return coordonnée verticale du barycentre du graphe de scène
      */
     public double getBarycenterY()
@@ -212,8 +211,8 @@ public class SceneGraph extends DefaultMutableTreeNode {
     }
 
     /**
-     * Calcule une forme géométrique à partir des formes géométriques contenues
-     * dans le graphe de scène.
+     * Calcule une forme géométrique à partir des formes et transformations contenues
+     * dans le graphe de scène
      * @return forme géométrique représentant le graphe de scène
      */
     public Shape getShape()

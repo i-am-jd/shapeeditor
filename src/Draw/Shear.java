@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- * Noeud représentant un cisaillement.
+ * Cisaillement (transformation unaire).
  * Contient nécessairement un seul sous-graphe
  *
  * @author Boris Dadachev & Jean-Denis Koeck

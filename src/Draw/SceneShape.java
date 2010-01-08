@@ -13,21 +13,23 @@ import java.util.Enumeration;
 import java.util.Stack;
 
 /**
- * Implante une feuille du graphe de scène.
- * Contient en deux formes géométriques.
+ * Feuille du graphe de scène.
+ * Elle contient en fait deux formes géométriques de type 
+ * <tt>Shape</tt>.
  * <p>
  *
  * <tt>baseShape</tt> est la forme géométrique de base telle qu'elle a été
- * dessinée par l'utilisateur, sans aucune des transformations géométriques
+ * dessinée par l'utilisateur, sans aucune des transformations unaires
  * subséquentes.
- *
- * <tt>shape</tt> est la forme géométrique résultant des transformations appliquées
- * à la forme de base; c'est celle qui sera affichée à l'écran.
- * Elle est mis à jour au fur et à mesure que l'utilisateur modifie le graphe de scène.
  * <p>
  *
- * Les transformations à appliquer sont celles contenues dans la chaîne de noeuds
- * menant de la racine du graphe de scène à cette feuille.
+ * <tt>shape</tt> est la forme géométrique résultant des transformations unaires  appliquées
+ * à <tt>baseShape</tt>. Elle est affichée à l'écran et mise à jour au fur et
+ * à mesure que l'utilisateur modifie le graphe de scène.
+ * <p>
+ *
+ * Note: Les transformations unaires appliquées à <tt>baseShape</tt> sont celles contenues
+ * dans la chaîne de noeuds menant de la racine du graphe de scène à cette feuille.
  * 
  * @author Boris Dadachev & Jean-Denis Koeck
  */
@@ -40,7 +42,7 @@ public abstract class SceneShape extends SceneGraph {
 
     /**
      * Forme géométrique résultant de l'application successive des transformations
-     * géométriques à la forme de base.
+     * unaires à la forme de base.
      */
     protected Shape shape;
 
@@ -56,24 +58,6 @@ public abstract class SceneShape extends SceneGraph {
         this.view = view;
     }
 
-    /**
-     * Largeur de la forme géométrique à afficher
-     * @return largeur
-     */
-    public double getWidth()
-    {
-        return shape.getBounds2D().getWidth() / 2;
-    }
-
-    /**
-     * Largeur de la forme géométrique à afficher
-     * @return largeur
-     */
-    public double getHeight()
-    {
-        return shape.getBounds2D().getHeight() / 2;
-    }
-
     @Override
     public boolean contains(Point2D p)
     {
@@ -87,8 +71,8 @@ public abstract class SceneShape extends SceneGraph {
     }
 
     /**
-     * Applique successivement les transformations contenues dans une pile
-     * à <tt>baseShape</tt>, retourne le résultat dans <tt>shape</tt>.
+     * Applique à <tt>baseShape</tt> les transformations unaires contenues dans
+     * une pile, retourne le résultat dans <tt>shape</tt>
      * @param ops
      */
     @Override
@@ -106,8 +90,9 @@ public abstract class SceneShape extends SceneGraph {
     }
 
     /**
-     * Dessine la forme géométrique en prenant en compte la vue.
+     * Dessine la forme géométrique en prenant en compte les paramètres de <tt>view</tt>
      * @param g2d objet graphique
+     * @see Graphics2D
      */
     @Override
     public void draw(Graphics2D g2d)
@@ -125,8 +110,8 @@ public abstract class SceneShape extends SceneGraph {
     }
 
     /**
-     * Calcule une approximation du barycentre de la figure
-     * @return coordonnée horizontale du barycentre
+     * Calcule la coordonnée horizontale du barycentre de la figure
+     * @return coordonnée horizontale du barycentre de la figure
      */
     @Override
     public double getBarycenterX()
@@ -135,7 +120,7 @@ public abstract class SceneShape extends SceneGraph {
     }
 
     /**
-     * Calcule une approximation du barycentre de la figure
+     * Calcule la coordonnée verticale du barycentre de la figure
      * @return coordonnée verticale du barycentre
      */
     @Override

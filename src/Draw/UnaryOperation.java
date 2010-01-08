@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.Stack;
 
 /**
- * Noeud représentant une transformation unaire appliquée à un sous-graphe de scène.
+ * Transformation unaire appliquée à un sous-graphe de scène.
  * Contient nécessairement un seul sous-graphe.
  *
  * Notons que cette classe ne contient pas directement une liste de transformations

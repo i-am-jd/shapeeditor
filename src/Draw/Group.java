@@ -3,30 +3,31 @@ package Draw;
 import java.util.Vector;
 
 /**
- * Noeud du graphe représentant un regroupement de plusieurs formes géométriques.
+ * Regroupement de plusieurs formes géométriques (noeud du graphe de scène)
  * @author Boris Dadachev & Jean-Denis Koeck
  */
 public class Group extends SceneGraph {
 		
     /**
-     *
-     * @param v
+     * Constructeur par défaut
+     * @param view paramètres de dessin
      */
-    public Group(View v) {
-        super(v, "Group");
+    public Group(View view) {
+        super(view, "Group");
     }
 
     /**
-     *
-     * @param v
-     * @param s
+     * Constructeur pour un noeud particulier
+     * @param view paramètres de dessin
+     * @param name nom du groupe
      */
-    public Group(View v, String s) {
-        super(v, s);
+    public Group(View view, String name) {
+        super(view, name);
     }
 
     /**
-     *
+     * Détruit le groupe : ses sous-graphes sont réattachés à son parent
+     * et le groupe est retiré du graphe de scène
      */
     public void ungroup()
     {
