@@ -1,0 +1,1 @@
+A shape editor (2D) using a scene graph (general data structure used by modern computer games and 3D applications).
